@@ -1,22 +1,22 @@
 /*
- * Copyright (C) 2018 The ontology Authors
- * This file is part of The ontology library.
+ * Copyright (C) 2019-2020 The TersaSupernet Authors
+ * This file is part of The TesraSupernet library.
  *
- * The ontology is free software: you can redistribute it and/or modify
+ * The TesraSupernet is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ontology is distributed in the hope that it will be useful,
+ * The TesraSupernet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+ * along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { TEST_ONT_URL } from '../../consts';
+import { TEST_TST_URL } from '../../consts';
 import { Address } from '../../crypto/address';
 import { Deferred } from './deferred';
 import * as Builder from './websocketBuilder';
@@ -34,7 +34,7 @@ export class WebsocketClient {
 
     promises: Map<string, Deferred<any>>;
 
-    constructor(url = TEST_ONT_URL.SOCKET_URL, debug = false, autoClose = true) {
+    constructor(url = TEST_TST_URL.SOCKET_URL, debug = false, autoClose = true) {
         this.autoClose = autoClose;
         this.promises = new Map();
         this.sender = new WebsocketSender(url, debug);
@@ -166,7 +166,7 @@ export class WebsocketClient {
 
     /**
      * Get the balance of some address.
-     * The result contains ONT and ONG.
+     * The result contains TST and TSG.
      * @param address Address
      */
     async getBalance(address: Address): Promise<any> {
@@ -175,12 +175,12 @@ export class WebsocketClient {
     }
 
     /**
-     * Get unbound ong of this address
-     * The result contains ONG.
+     * Get unbound tsg of this address
+     * The result contains TSG.
      * @param address Address
      */
-    async getUnboundong(address: Address): Promise<any> {
-        const raw = Builder.getUnboundOng(address);
+    async getUnboundtsg(address: Address): Promise<any> {
+        const raw = Builder.getUnboundTsg(address);
         return this.send(raw);
     }
 
@@ -245,7 +245,7 @@ export class WebsocketClient {
 
     /**
      * Get allowanece
-     * @param asset Asset's type.Only ONT and ONG supported.
+     * @param asset Asset's type.Only TST and TSG supported.
      * @param from Address of allowance's sender.
      * @param to Address of allowance's receiver.
      */
@@ -281,11 +281,11 @@ export class WebsocketClient {
     }
 
     /**
-     * Get grant ong
+     * Get grant tsg
      * @param address Address
      */
-    async getGrantOng(address: Address): Promise<any> {
-        const raw = Builder.getGrantOng(address);
+    async getGrantTsg(address: Address): Promise<any> {
+        const raw = Builder.getGrantTsg(address);
         return this.send(raw);
     }
 

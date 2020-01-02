@@ -1,27 +1,27 @@
 /*
- * Copyright (C) 2018 The ontology Authors
- * This file is part of The ontology library.
+ * Copyright (C) 2019-2020 The TersaSupernet Authors
+ * This file is part of The TesraSupernet library.
  *
- * The ontology is free software: you can redistribute it and/or modify
+ * The TesraSupernet is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ontology is distributed in the hope that it will be useful,
+ * The TesraSupernet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+ * along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 import { Account } from '../src/account';
-import { extractKeyId, extractOntId, Message, retrievePublicKey } from '../src/claim/message';
+import { extractKeyId, extractTstId, Message, retrievePublicKey } from '../src/claim/message';
 import { Address, PrivateKey } from '../src/crypto';
 import { Identity } from '../src/identity';
 import { WebsocketClient } from '../src/network/websocket/websocketClient';
-import { buildRegisterOntidTx } from '../src/smartcontract/nativevm/ontidContractTxBuilder';
+import { buildRegisterTstidTx } from '../src/smartcontract/nativevm/tstidContractTxBuilder';
 import { signTransaction } from '../src/transaction/transactionBuilder';
 
 describe('test message', () => {
@@ -31,9 +31,9 @@ describe('test message', () => {
     const publicKey = privateKey.getPublicKey();
     const account = Account.create(privateKey, '123456', '');
     const identity = Identity.create(privateKey, '123456', '');
-    const ontid =  identity.ontid;
-    const publicKeyId = ontid + '#keys-1';
-    const publicKeyId2 = ontid + '#keys-2';
+    const tstId =  identity.tstId;
+    const publicKeyId = tstId + '#keys-1';
+    const publicKeyId2 = tstId + '#keys-2';
     const address = account.address;
 
     let serialized: string;
@@ -53,7 +53,7 @@ describe('test message', () => {
     }
 
     beforeAll(async () => {
-        const tx = buildRegisterOntidTx(ontid, publicKey, '500', '30000');
+        const tx = buildRegisterTstidTx(tstId, publicKey, '500', '30000');
         tx.payer = account.address;
         signTransaction(tx, privateKey);
 
@@ -61,19 +61,19 @@ describe('test message', () => {
         await client.sendRawTransaction(tx.serialize(), false, true);
     }, 10000);
 
-    test('test extractOntId and extractKeyId', () => {
-        const ontId = extractOntId(publicKeyId);
+    test('test extractTstId and extractKeyId', () => {
+        const tstId = extractTstId(publicKeyId);
         const keyId = extractKeyId(publicKeyId);
 
-        expect(ontId).toBe(ontid);
+        expect(tstId).toBe(tstId);
         expect(keyId).toBe(1);
     });
 
-    test('test extractOntId and extractKeyId wrong', () => {
-        const publicKeyIdWrong = 'did:ont:AXmQDzzvpEtPkNwBEFsREzApTTDZFW6frD#notkeys-1';
+    test('test extractTstId and extractKeyId wrong', () => {
+        const publicKeyIdWrong = 'did:tst:AXmQDzzvpEtPkNwBEFsREzApTTDZFW6frD#notkeys-1';
 
         expect(() => {
-            extractOntId(publicKeyIdWrong);
+            extractTstId(publicKeyIdWrong);
         }).toThrowError();
 
         expect(() => {
@@ -92,8 +92,8 @@ describe('test message', () => {
     test('test unsigned message serialization', async () => {
         const msg: TestMessage = new TestMessage({
             messageId: '1',
-            issuer: ontid,
-            subject: ontid,
+            issuer: tstId,
+            subject: tstId,
             issuedAt: 1525800823015
         }, undefined);
 
@@ -103,8 +103,8 @@ describe('test message', () => {
 
     test('test messageId generation', async () => {
         const msg: TestMessage = new TestMessage({
-            issuer: ontid,
-            subject: ontid,
+            issuer: tstId,
+            subject: tstId,
             issuedAt: 1525800823015
         }, undefined);
 
@@ -114,8 +114,8 @@ describe('test message', () => {
     test('test signature', async () => {
         const msg: TestMessage = new TestMessage({
             messageId: '1',
-            issuer: ontid,
-            subject: ontid,
+            issuer: tstId,
+            subject: tstId,
             issuedAt: 1525800823015,
             expireAt: 1849046400
         }, undefined);
@@ -129,8 +129,8 @@ describe('test message', () => {
     test('test signature non existant key', async () => {
         const msg: TestMessage = new TestMessage({
             messageId: '1',
-            issuer: ontid,
-            subject: ontid,
+            issuer: tstId,
+            subject: tstId,
             issuedAt: 1525800823015
         }, undefined);
 
@@ -141,8 +141,8 @@ describe('test message', () => {
         const msg = TestMessage.deserialize(serialized);
 
         expect(msg.metadata.messageId).toEqual('1');
-        expect(msg.metadata.issuer).toEqual(ontid);
-        expect(msg.metadata.subject).toEqual(ontid);
+        expect(msg.metadata.issuer).toEqual(tstId);
+        expect(msg.metadata.subject).toEqual(tstId);
         expect(msg.metadata.issuedAt).toEqual(1525800823015);
         expect(msg.signature).toBeUndefined();
     });
@@ -151,8 +151,8 @@ describe('test message', () => {
         const msg = TestMessage.deserialize(signed);
 
         expect(msg.metadata.messageId).toEqual('1');
-        expect(msg.metadata.issuer).toEqual(ontid);
-        expect(msg.metadata.subject).toEqual(ontid);
+        expect(msg.metadata.issuer).toEqual(tstId);
+        expect(msg.metadata.subject).toEqual(tstId);
         expect(msg.metadata.issuedAt).toEqual(1525800823015);
         expect(msg.signature.algorithm).toBeDefined();
         expect(msg.signature.publicKeyId).toBe(publicKeyId);

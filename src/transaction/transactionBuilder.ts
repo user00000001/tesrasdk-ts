@@ -1,19 +1,19 @@
 /*
- * Copyright (C) 2018 The ontology Authors
- * This file is part of The ontology library.
+ * Copyright (C) 2019-2020 The TersaSupernet Authors
+ * This file is part of The TesraSupernet library.
  *
- * The ontology is free software: you can redistribute it and/or modify
+ * The TesraSupernet is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ontology is distributed in the hope that it will be useful,
+ * The TesraSupernet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+ * along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
  */
 import Fixed64 from '../common/fixed64';
 import { REST_API, TX_MAX_SIG_SIZE } from '../consts';
@@ -36,8 +36,8 @@ import { comparePublicKeys } from './program';
 import { buildWasmContractParam, createCodeParamsScript, serializeAbiFunction, writeVarBytes } from './scriptBuilder';
 import { Transaction, TxType } from './transaction';
 
-import { makeTransferTx } from '../smartcontract/nativevm/ontAssetTxBuilder';
-import { buildGetDDOTx, buildRegisterOntidTx } from '../smartcontract/nativevm/ontidContractTxBuilder';
+import { makeTransferTx } from '../smartcontract/nativevm/tstAssetTxBuilder';
+import { buildGetDDOTx, buildRegisterTstidTx } from '../smartcontract/nativevm/tstidContractTxBuilder';
 import { VmType } from './payload/deployCode';
 import { TxSignature } from './txSignature';
 
@@ -508,8 +508,8 @@ export function makeTransactionsByJson(json: any, ledgerCompatible: boolean = tr
 export function buildNativeTxFromJson(json: any) {
     const funcArgs = json.functions[0];
     const args = funcArgs.args;
-    if (json.contractHash.indexOf('02') > -1 || json.contractHash.indexOf('01') > -1) { // ONT ONG contract
-        const tokenType = json.contractHash.indexOf('02') > -1 ? 'ONG' : 'ONT';
+    if (json.contractHash.indexOf('02') > -1 || json.contractHash.indexOf('01') > -1) { // TST TSG contract
+        const tokenType = json.contractHash.indexOf('02') > -1 ? 'TSG' : 'TST';
         if (funcArgs.operation === 'transfer') {
             const from = new Address(args[0].value.split(':')[1]);
             const to = new Address(args[1].value.split(':')[1]);
@@ -518,16 +518,16 @@ export function buildNativeTxFromJson(json: any) {
             const tx = makeTransferTx(tokenType, from, to, amount, json.gasPrice, json.gasLimit, payer);
             return tx;
         }
-    } else if (json.contractHash.indexOf('03') > -1) { // ONT ID contract
+    } else if (json.contractHash.indexOf('03') > -1) { // TST ID contract
         if (funcArgs.operation === 'regIDWithPublicKey') {
-            const ontid = args[0].value.substr(args[0].value.indexOf(':') + 1);
+            const tstId = args[0].value.substr(args[0].value.indexOf(':') + 1);
             const pk = new PublicKey(args[1].value.split(':')[1]);
             const payer = new Address(json.payer);
-            const tx = buildRegisterOntidTx(ontid, pk, json.gasPrice, json.gasLimit, payer);
+            const tx = buildRegisterTstidTx(tstId, pk, json.gasPrice, json.gasLimit, payer);
             return tx;
         } else if (funcArgs.operation === 'getDDO') {
-            const ontid = args[0].value.substr(args[0].value.indexOf(':') + 1);
-            const tx = buildGetDDOTx(ontid);
+            const tstId = args[0].value.substr(args[0].value.indexOf(':') + 1);
+            const tx = buildGetDDOTx(tstId);
             return tx;
         }
     }

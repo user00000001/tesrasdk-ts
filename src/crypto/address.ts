@@ -1,19 +1,19 @@
 /*
- * Copyright (C) 2018 The ontology Authors
- * This file is part of The ontology library.
+ * Copyright (C) 2019-2020 The TersaSupernet Authors
+ * This file is part of The TesraSupernet library.
  *
- * The ontology is free software: you can redistribute it and/or modify
+ * The TesraSupernet is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ontology is distributed in the hope that it will be useful,
+ * The TesraSupernet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+ * along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
  */
 import * as base58 from 'base-58';
 import * as cryptoJS from 'crypto-js';
@@ -33,7 +33,7 @@ import { PublicKey } from './PublicKey';
  * 1. Public key based
  * 2. Multi public key based (m, n)
  * 3. Contract based
- * 4. ONT ID based
+ * 4. TST ID based
  *
  * The value is stored as base58 or hex encoded, therefore always use
  * toBase58() or serialize() according to requirements.
@@ -56,10 +56,10 @@ export class Address {
 
     /**
      * Generates identity based address.
-     * @param ontid ONT ID in the form did:ont:AXmQDzzvpEtPkNwBEFsREzApTTDZFW6frD
+     * @param tstId TST ID in the form did:tst:AXmQDzzvpEtPkNwBEFsREzApTTDZFW6frD
      */
-    static fromOntid(ontid: string): Address {
-        const address = ontid.substr(8);
+    static fromTstid(tstId: string): Address {
+        const address = tstId.substr(8);
         return new Address(address);
     }
 
@@ -105,13 +105,13 @@ export class Address {
     }
 
     /**
-     * Deterministicaly generates ONT ID from this public key.
+     * Deterministicaly generates TST ID from this public key.
      */
-    static generateOntid(publicKey: PublicKey): string {
+    static generateTstid(publicKey: PublicKey): string {
         const address = Address.fromPubKey(publicKey);
-        const ontid = 'did:ont:' + address.toBase58();
+        const tstId = 'did:tst:' + address.toBase58();
 
-        return ontid;
+        return tstId;
     }
 
     /**

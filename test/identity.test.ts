@@ -1,26 +1,26 @@
 /*
-* Copyright (C) 2018 The ontology Authors
-* This file is part of The ontology library.
+* Copyright (C) 2019-2020 The TersaSupernet Authors
+* This file is part of The TesraSupernet library.
 *
-* The ontology is free software: you can redistribute it and/or modify
+* The TesraSupernet is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* The ontology is distributed in the hope that it will be useful,
+* The TesraSupernet is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public License
-* along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+* along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import axios from 'axios';
 import { Address, PrivateKey } from '../src/crypto';
 import { ERROR_CODE } from '../src/error';
 import { Identity } from '../src/identity';
-import { buildRegisterOntidTx } from '../src/smartcontract/nativevm/ontidContractTxBuilder';
+import { buildRegisterTstidTx } from '../src/smartcontract/nativevm/tstidContractTxBuilder';
 import * as utils from '../src/utils';
 import { Account } from './../src/account';
 import { signTransaction } from './../src/transaction/transactionBuilder';
@@ -80,14 +80,14 @@ describe('test identity', () => {
         // const pri = encrypt.decrypt('111111', new Address('TA8z22MRYHcFRKJznJWWGFz5brXBsmMTJZ'));
         // a.create(pri, '123456', 'test');
         const data = {
-            OwnerOntId : a.ontid
+            OwnerTstId : a.tstId
         };
         const msg = JSON.stringify(data);
-        const pkId = a.ontid + '#key-1';
+        const pkId = a.tstId + '#key-1';
         console.log('msg: ' + msg);
         const sig = pri.sign(msg, undefined, pkId);
         const body = {
-            OwnerOntId: a.ontid,
+            OwnerTstId: a.tstId,
             Signature : sig.serializePgp()
         };
         console.log('value: ' + body.Signature.Value);

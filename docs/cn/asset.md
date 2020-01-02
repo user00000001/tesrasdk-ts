@@ -3,16 +3,16 @@
 <h1 align="center">数字资产管理 </h1>
 <p align="center" class="version">Version 0.7.0 </p>
 
-## 钱包 Wallet
+## 钱包 TWallet
 
-钱包Wallet是一个Json格式的数据存储文件。在本体Ontology中， Wallet既可存储数字身份，也可以存储数字资产。
+钱包TWallet是一个Json格式的数据存储文件。在超算网络Tersa中， TWallet既可存储数字身份，也可以存储数字资产。
 
-### Wallet 数据规范
+### TWallet 数据规范
 
 ````
 {
 	name: string;
-    defaultOntid: string;
+    defaultTstid: string;
     defaultAccountAddress : string;
     createTime: string;
     version: string;
@@ -29,7 +29,7 @@
 
 `name` 是用户为钱包所取的名称。
 
-```defaultOntid``` 是钱包默认的数字身份的ONT ID。
+```defaultTstid``` 是钱包默认的数字身份的TST ID。
 
 ```defaultAccountAddress``` 是钱包默认的资产账户的地址
 
@@ -45,7 +45,7 @@
 
 ```extra``` 是客户端由开发者用来存储额外数据字段，可以为null。
 
-希望了解更多钱包数据规范请参考[Wallet_File_Specification](./Wallet_File_Specification.md).
+希望了解更多钱包数据规范请参考[TWallet_File_Specification](./TWallet_File_Specification.md).
 
 ### 创建钱包
 
@@ -56,9 +56,9 @@
 用户只需要传入钱包名称。
 
 ````
-import {Wallet} from 'Ont'
-//@param name {string} Name of the wallet
-var wallet = Wallet.create( name )
+import {TWallet} from 'Tst'
+//@param name {string} Name of the twallet
+var twallet = TWallet.create( name )
 ````
 
 #### 2) 创建账户并添加到钱包中
@@ -105,7 +105,7 @@ const DEFAULT_SCRYPT = {
 ECDSA 是默认的算法. SECP256R1是默认的曲线。
 
 ```typescript
-import { Crypto } from 'ontology-ts-sdk';
+import { Crypto } from 'tesra-ts-sdk';
 
 cont keyType = Crypto.KeyType.ECDSA;
 
@@ -120,11 +120,11 @@ const privateKey2 = Crypto.PrivateKey.random() // Use default params
 然后我们可以创建账户并添加到钱包中。
 
 ````
-import {Account, Crypto} from 'ontology-ts-sdk';
+import {Account, Crypto} from 'tesra-ts-sdk';
 
 var account = Account.create( privateKey, password, name ); //Use the default scrypt params
 
-wallet.addAccount(account)
+twallet.addAccount(account)
 
 ````
 
@@ -180,7 +180,7 @@ wallet.addAccount(account)
 ###  创建账户
 
 ````
-import {Account} from 'ontology-ts-sdk'
+import {Account} from 'tesra-ts-sdk'
 //@param {PrivateKey} The user's private key
 //@param {string} The user's password
 //@param {string} Optional. Name of the account
@@ -198,7 +198,7 @@ var account = Account.create(privateKey, password, label, params)
 导入账户的过程中会验证密码和加密后的私钥，如果不正确会抛出相应错误码。
 
 ````
-import { Account, Crypto } from 'ontology-ts-sdk'
+import { Account, Crypto } from 'tesra-ts-sdk'
 
 //@param label {srint} Name of the account
 //@param encryptedPrivateKey {PrivateKey} The encrypted private key
@@ -239,8 +239,8 @@ privateKey: 转账者公钥对应的私钥
 ####Token类型
 ````
 TOKEN_TYPE = {
-  ONT : 'ONT',  //Ontology Token
-  ONG : 'ONG'   //Ontology Gas
+  TST : 'TST',  //Tersa Token
+  TSG : 'TSG'   //Tersa Gas
 }
 ````
 
@@ -248,7 +248,7 @@ TOKEN_TYPE = {
 ````
 import { makeTransferTransaction, buildRestParam } from "../src/transaction/transactionBuilder";
 
-var tx = makeTransferTransaction( 'ONT', '0144587c1094f6929ed7362d6328cffff4fb4da2', 'ffeeddccbbaa99887766554433221100ffeeddcc', '1000000000', '760bb46952845a4b91b1df447c2f2d15bb40ab1d9a368d9f0ee4bf0d67500160' )
+var tx = makeTransferTransaction( 'TST', '0144587c1094f6929ed7362d6328cffff4fb4da2', 'ffeeddccbbaa99887766554433221100ffeeddcc', '1000000000', '760bb46952845a4b91b1df447c2f2d15bb40ab1d9a368d9f0ee4bf0d67500160' )
 
 var restData = buildRestParam(tx)
 

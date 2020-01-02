@@ -1,19 +1,19 @@
 /*
- * Copyright (C) 2018 The ontology Authors
- * This file is part of The ontology library.
+ * Copyright (C) 2019-2020 The TersaSupernet Authors
+ * This file is part of The TesraSupernet library.
  *
- * The ontology is free software: you can redistribute it and/or modify
+ * The TesraSupernet is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ontology is distributed in the hope that it will be useful,
+ * The TesraSupernet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+ * along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 import { Account } from '../src/account';
@@ -21,7 +21,7 @@ import { Claim, RevocationType } from '../src/claim/claim';
 import { Address, PrivateKey } from '../src/crypto';
 import { Identity } from '../src/identity';
 import { WebsocketClient } from '../src/network/websocket/websocketClient';
-import { buildRegisterOntidTx } from '../src/smartcontract/nativevm/ontidContractTxBuilder';
+import { buildRegisterTstidTx } from '../src/smartcontract/nativevm/tstidContractTxBuilder';
 import { addSign, signTransaction } from '../src/transaction/transactionBuilder';
 
 describe('test claim', () => {
@@ -31,9 +31,9 @@ describe('test claim', () => {
     const publicKey = privateKey.getPublicKey();
     const account = Account.create(privateKey, '123456', '');
     const identity = Identity.create(privateKey, '123456', '');
-    const ontid =  identity.ontid;
+    const tstId =  identity.tstId;
     const address = account.address;
-    const publicKeyId = ontid + '#keys-1';
+    const publicKeyId = tstId + '#keys-1';
 
     const adminPrivateKey = new PrivateKey('7c47df9664e7db85c1308c080f398400cb24283f5d922e76b478b5429e821b97');
     const adminAddress = new Address('AdLUBSSHUuFaak9j169hiamXUmPuCTnaRz');
@@ -42,12 +42,12 @@ describe('test claim', () => {
     let signed: string;
 
     // tslint:disable:no-console
-    console.log('did:' + ontid);
+    console.log('did:' + tstId);
     /**
-     * Registers new ONT ID to create transaction with Events and new block
+     * Registers new TST ID to create transaction with Events and new block
      */
     beforeAll(async () => {
-        const tx = buildRegisterOntidTx(ontid, publicKey, '500', '30000');
+        const tx = buildRegisterTstidTx(tstId, publicKey, '500', '30000');
         tx.payer = adminAddress;
         signTransaction(tx, adminPrivateKey);
         addSign(tx, privateKey);
@@ -59,8 +59,8 @@ describe('test claim', () => {
     test('test serialization', () => {
         const claim = new Claim({
             messageId: '1',
-            issuer: ontid,
-            subject: ontid,
+            issuer: tstId,
+            subject: tstId,
             issuedAt: 1525800823
         }, undefined, false);
         claim.version = '0.7.0';
@@ -84,8 +84,8 @@ describe('test claim', () => {
         const msg = Claim.deserialize(serialized);
 
         expect(msg.metadata.messageId).toEqual('1');
-        expect(msg.metadata.issuer).toEqual(ontid);
-        expect(msg.metadata.subject).toEqual(ontid);
+        expect(msg.metadata.issuer).toEqual(tstId);
+        expect(msg.metadata.subject).toEqual(tstId);
         expect(msg.metadata.issuedAt).toEqual(1525800823);
         expect(msg.signature).toBeUndefined();
         expect(msg.version).toEqual('0.7.0');
@@ -100,8 +100,8 @@ describe('test claim', () => {
     test('test signature', async () => {
         const claim = new Claim({
             messageId: '1',
-            issuer: ontid,
-            subject: ontid,
+            issuer: tstId,
+            subject: tstId,
             issuedAt: 1525800823
         }, undefined, false);
         claim.version = '0.7.0';
@@ -139,13 +139,13 @@ describe('test claim', () => {
     });
     test('claim', async () => {
         const restUrl = 'http://polaris1.ont.io:20334';
-        const ontid = 'did:ont:AN88DMMBZr5X9ChpMHX3LqRvQHqGxk2c3r';
-        const publicKeyId = ontid + '#keys-1';
+        const tstId = 'did:tst:AN88DMMBZr5X9ChpMHX3LqRvQHqGxk2c3r';
+        const publicKeyId = tstId + '#keys-1';
         const privateKey = new PrivateKey('4a8d6d61060998cf83acef4d6e7976d538b16ddeaa59a96752a4a7c0f7ec4860');
         const claim = new Claim({
             messageId: '1',
-            issuer: ontid,
-            subject: ontid,
+            issuer: tstId,
+            subject: tstId,
             issuedAt: 1525800823
         }, undefined, false);
         claim.version = '0.7.0';

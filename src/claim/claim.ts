@@ -1,19 +1,19 @@
 /*
-* Copyright (C) 2018 The ontology Authors
-* This file is part of The ontology library.
+* Copyright (C) 2019-2020 The TersaSupernet Authors
+* This file is part of The TesraSupernet library.
 *
-* The ontology is free software: you can redistribute it and/or modify
+* The TesraSupernet is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* The ontology is distributed in the hope that it will be useful,
+* The TesraSupernet is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public License
-* along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+* along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import * as b64 from 'base64-url';
@@ -87,7 +87,7 @@ export class Claim extends Message {
      *
      * TODO: return more than boolean
      *
-     * const VerifyOntidClaimResult = {
+     * const VerifyTstidClaimResult = {
      *   CLAIM_NOT_ONCHAIN : 'CLAIM_NOT_ONCHAIN',
      *   INVALID_SIGNATURE : 'INVALID_SIGNATURE',
      *   PK_IN_REVOKED     : 'PK_IN_REVOKED',
@@ -97,7 +97,7 @@ export class Claim extends Message {
      *   VALID_CLAIM       : 'VALID_CLAIM'
      * };
      *
-     * @param url Restful endpoint of Ontology node
+     * @param url Restful endpoint of Tersa node
      * @param checkAttest Should be the attest tested
      */
     async verify(url: string, checkAttest = true): Promise<boolean> {
@@ -129,7 +129,7 @@ export class Claim extends Message {
     /**
      * Attests the claim onto blockchain.
      *
-     * @param url Websocket endpoint of Ontology node
+     * @param url Websocket endpoint of Tersa node
      * @param privateKey Private key to sign the transaction
      * @param gasPrice gasPrice
      * @param gasLimit gasLimit
@@ -161,7 +161,7 @@ export class Claim extends Message {
      * @param gas the cost of the transactoin
      * @param payer the payer of the cost
      * @param privateKey Private key to sign the transaction
-     * @param url Websocket endpoint of Ontology node
+     * @param url Websocket endpoint of Tersa node
      * @param gasPrice gasPrice
      * @param gasLimit gasLimit
      * @param payer payer
@@ -186,7 +186,7 @@ export class Claim extends Message {
     /**
      * Gets status of the claim attest.
      *
-     * @param url Restful endpoint of Ontology node
+     * @param url Restful endpoint of Tersa node
      */
     async getStatus(url: string): Promise<boolean> {
         const attesterId = this.metadata.issuer;
@@ -261,7 +261,7 @@ export class Claim extends Message {
 
 /**
  * Helper class for deserializing GetStatus response.
- * fixme: Ontology node changed the response
+ * fixme: Tersa node changed the response
  */
 export class GetStatusResponse {
     static deserialize(r: any): GetStatusResponse {

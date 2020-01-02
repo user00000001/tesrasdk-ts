@@ -1,19 +1,19 @@
 /*
-* Copyright (C) 2018 The ontology Authors
-* This file is part of The ontology library.
+* Copyright (C) 2019-2020 The TersaSupernet Authors
+* This file is part of The TesraSupernet library.
 *
-* The ontology is free software: you can redistribute it and/or modify
+* The TesraSupernet is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* The ontology is distributed in the hope that it will be useful,
+* The TesraSupernet is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public License
-* along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+* along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
 */
 import { BigNumber } from 'bignumber.js';
 import BigInt from '../../common/bigInt';
@@ -28,18 +28,18 @@ import { buildNativeCodeScript } from './../abi/nativeVmParamsBuilder';
 import Struct from './../abi/struct';
 import { State } from './token';
 
-export const ONT_CONTRACT = '0000000000000000000000000000000000000001';
-export const ONG_CONTRACT = '0000000000000000000000000000000000000002';
+export const TST_CONTRACT = '0000000000000000000000000000000000000001';
+export const TSG_CONTRACT = '0000000000000000000000000000000000000002';
 
 /**
  * Get the address of native asset contract
- * @param tokenType Token type. Can only be ONT or ONG
+ * @param tokenType Token type. Can only be TST or TSG
  */
 export function getTokenContract(tokenType: string) {
-    if (tokenType === TOKEN_TYPE.ONT) {
-        return new Address(ONT_CONTRACT);
-    } else if (tokenType === TOKEN_TYPE.ONG) {
-        return new Address(ONG_CONTRACT);
+    if (tokenType === TOKEN_TYPE.TST) {
+        return new Address(TST_CONTRACT);
+    } else if (tokenType === TOKEN_TYPE.TSG) {
+        return new Address(TSG_CONTRACT);
     } else {
         throw new Error('Error token type.');
     }
@@ -59,7 +59,7 @@ export function verifyAmount(amount: number | string) {
 
 /**
  * Creates transaction to transfer native assets.
- * @param tokenType ONT or ONG
+ * @param tokenType TST or TSG
  * @param from sender's address
  * @param to receiver's address
  * @param amount Amount of amount to transfer
@@ -172,30 +172,30 @@ export function makeTransferToMany(
 }
 
 /**
- * Withdraw ong from sender's address and send to receiver's address
+ * Withdraw tsg from sender's address and send to receiver's address
  * @param from Sender's address
  * @param to Receiver's address
- * @param amount Amount of ONG to withdraw.The value needs to multiply 1e9 to keep precision
+ * @param amount Amount of TSG to withdraw.The value needs to multiply 1e9 to keep precision
  * @param payer Address to pay for transaction's gas
  * @param gasPrice Gas price
  * @param gasLimit Gas limit
  */
-export function makeWithdrawOngTx(from: Address, to: Address, amount: number | string, payer: Address,
+export function makeWithdrawTsgTx(from: Address, to: Address, amount: number | string, payer: Address,
                                   gasPrice: string, gasLimit: string): Transfer {
     verifyAmount(amount);
     const num = new BigNumber(amount);
 
-    // const tf = new TransferFrom(from, new Address(ONT_CONTRACT), to, amount);
+    // const tf = new TransferFrom(from, new Address(TST_CONTRACT), to, amount);
     // const params = tf.serialize();
     const list = [];
     const struct = new Struct();
-    struct.add(from, new Address(ONT_CONTRACT), to, num);
+    struct.add(from, new Address(TST_CONTRACT), to, num);
     list.push(struct);
     const args = buildNativeCodeScript(list);
     const tx: Transfer = makeNativeContractTx(
-        'transferFrom', args, new Address(ONG_CONTRACT) , gasPrice, gasLimit) as any;
+        'transferFrom', args, new Address(TSG_CONTRACT) , gasPrice, gasLimit) as any;
     tx.payer = payer;
-    tx.tokenType = 'ONG';
+    tx.tokenType = 'TSG';
     tx.from = from;
     tx.to = to;
     tx.amount = amount;
@@ -205,21 +205,21 @@ export function makeWithdrawOngTx(from: Address, to: Address, amount: number | s
 
 /**
  * Creates transaction to query allowance that can be sent from sender to receiver
- * @param asset Asset type. Only ONT or ONg.
+ * @param asset Asset type. Only TST or TSG.
  * @param from Sender's address
  * @param to Receiver's address
  */
 export function makeQueryAllowanceTx(asset: string, from: Address, to: Address): Transaction {
     asset = asset.toLowerCase();
-    if (asset !== 'ont' && asset !== 'ong') {
+    if (asset !== 'tst' && asset !== 'tsg') {
         throw ERROR_CODE.INVALID_PARAMS;
     }
 
     let contract = '';
-    if (asset === 'ong') {
-        contract = ONG_CONTRACT;
+    if (asset === 'tsg') {
+        contract = TSG_CONTRACT;
     } else {
-        contract = ONT_CONTRACT;
+        contract = TST_CONTRACT;
     }
     const list = [];
     const struct = new Struct();
@@ -232,19 +232,19 @@ export function makeQueryAllowanceTx(asset: string, from: Address, to: Address):
 
 /**
  * Creates transaction to query balance.
- * @param asset Token type,ont or ong
+ * @param asset Token type,tst or tsg
  * @param address Address to query balance
  */
 export function makeQueryBalanceTx(asset: string,  address: Address): Transaction {
     asset = asset.toLowerCase();
-    if (asset !== 'ont' && asset !== 'ong') {
+    if (asset !== 'tst' && asset !== 'tsg') {
         throw ERROR_CODE.INVALID_PARAMS;
     }
     let contract = '';
-    if (asset === 'ong') {
-        contract = ONG_CONTRACT;
+    if (asset === 'tsg') {
+        contract = TSG_CONTRACT;
     } else {
-        contract = ONT_CONTRACT;
+        contract = TST_CONTRACT;
     }
     const params = hex2VarBytes(address.serialize());
     const tx = makeNativeContractTx('balanceOf', params, new Address(contract), '0', '0');
@@ -257,9 +257,9 @@ export function deserializeTransferTx(str: string): Transfer {
     const contractIndex1 = code.lastIndexOf('14' + '000000000000000000000000000000000000000');
     const contractIndex2 = code.lastIndexOf('14' + '0000000000000000000000000000000000000002');
     if (contractIndex1 > 0 && code.substr(contractIndex1 + 41, 1) === '1') {
-        tx.tokenType = 'ONT';
+        tx.tokenType = 'TST';
     } else if (contractIndex1 > 0 && code.substr(contractIndex1 + 41, 1) === '2') {
-        tx.tokenType = 'ONG';
+        tx.tokenType = 'TSG';
     } else {
         throw new Error('Not a transfer tx');
     }

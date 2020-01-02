@@ -23,6 +23,6 @@
 | 44004 | UNKNWN_CONTRACT | 找不到合约 |
 | 45001 | INTERNAL_ERROR | 内部错误 |
 | 47001 | SMARTCODE_ERROR| 智能合约错误 |
-| 51000 | UNKNOWN_ONTID  | 不存在的ONT ID |
+| 51000 | UNKNOWN_TSTID  | 不存在的TST ID |
 | 52000 | NETWORK_ERROR  | 网络错误 |
 | 53000 | Decrypto_ERROR | 解密错误 |

@@ -5,18 +5,18 @@
 <p align="center" class="version">Version 0.9.0 </p>
 
 
-# Wallet
+# TWallet
 
-Wallet is a data storing file in JSON format. In Ontology, Wallet can store not only the digital identity but also digital assets.
+TWallet is a data storing file in JSON format. In Tersa, TWallet can store not only the digital identity but also digital assets.
 
 
 
-## Wallet Data Specification
+## TWallet Data Specification
 
 ````JSON
 {
 	name: string;
-	defaultOntid: string;
+	defaultTstid: string;
 	defaultAccountAddress: string;
 	createTime: string;
 	version: string;
@@ -32,41 +32,41 @@ Wallet is a data storing file in JSON format. In Ontology, Wallet can store not 
 }
 ````
 
-`name` is the name of wallet given by user.
+`name` is the name of twallet given by user.
 
-```defaultOntid``` is the default ontid of wallet.
+```defaultTstid``` is the default tstId of twallet.
 
-```defaultAccountAddress``` is the default account address of wallet.
+```defaultAccountAddress``` is the default account address of twallet.
 
-```createTime``` is the creation time of wallet of ISO format, such as "2018-02-06T03:05:12.360Z".
+```createTime``` is the creation time of twallet of ISO format, such as "2018-02-06T03:05:12.360Z".
 
 `version` is set to a constant 1.0. It is provided for future updates.
 
-`scrypt` is the parameter used in the encryption algorithm, which is used in the encryption of wallet and decryption of private key.
+`scrypt` is the parameter used in the encryption algorithm, which is used in the encryption of twallet and decryption of private key.
 
-`identities` is the array of all digital identity objects in the wallet.
+`identities` is the array of all digital identity objects in the twallet.
 
-```accounts``` is the array of all digital asset objects in the wallet.
+```accounts``` is the array of all digital asset objects in the twallet.
 
 ```extra``` is the field used by client developer to store extra informations. It can be null.
 
-More details about wallet data specification can be found in [Wallet_File_Specification](./Wallet_File_Specification.md).
+More details about twallet data specification can be found in [TWallet_File_Specification](./TWallet_File_Specification.md).
 
 
-## 1.1 Create a Wallet
+## 1.1 Create a TWallet
 
-Users could create their wallet from scratch.
+Users could create their twallet from scratch.
 
-### 1) Create an empty wallet
+### 1) Create an empty twallet
 
-Users only need to pass the name of their wallets.
+Users only need to pass the name of their twallets.
 
 ````
-import {Wallet} from 'ontology-ts-sdk';
-var wallet = Wallet.create('my_wallet')
+import {TWallet} from 'tesra-ts-sdk';
+var twallet = TWallet.create('my_twallet')
 ````
 
-### 2) Create an account and add it to your wallet
+### 2) Create an account and add it to your twallet
 
 Users need to provide below parameters to create an account:
 
@@ -110,7 +110,7 @@ We can generate a random private key with specific keypair algorithm and ellipti
 ECDSA is the default one. You can check TS SDK API reference for info.
 
 ```typescript
-import { Crypto } from 'ontology-ts-sdk';
+import { Crypto } from 'tesra-ts-sdk';
 
 cont keyType = Crypto.KeyType.ECDSA;
 
@@ -120,14 +120,14 @@ const privateKey = Crypto.PrivateKey.random(keyType, keyParameters)
 ```
 
 ### 2.2) Create account
-Then we can create the account and add it to the wallet.
+Then we can create the account and add it to the twallet.
 
 ````
-import {Account, Crypto} from 'ontology-ts-sdk';
+import {Account, Crypto} from 'tesra-ts-sdk';
 
 var account = Account.create( privateKey, password, name );
 
-wallet.addAccount(account)
+twallet.addAccount(account)
 
 ````
 
@@ -182,7 +182,7 @@ Account is used to manage user's assets.
 ###  Create an Account
 
 ````
-import {Account} from 'ontology-ts-sdk'
+import {Account} from 'tesra-ts-sdk'
 //@param {PrivateKey} The user's private key
 //@param {string} The user's password
 //@param {string} Optional. Name of the account
@@ -197,7 +197,7 @@ Users can import an account by the backup data.
 This method will check the password and the private key, an error will be thrown if they are not match.
 
 ````
-import { Account } from 'ontology-ts-sdk'
+import { Account } from 'tesra-ts-sdk'
 //@param label {srint} Name of the account
 //@param encryptedPrivateKey {PrivateKey} The encrypted private key
 //@param password {string} The password used to decrypt private key
@@ -217,15 +217,15 @@ try {
 # Digital Asset Transfer
 
 ##  Transfer native asset
-There are two kinds of native asset in Ontology: ONT and ONG.
+There are two kinds of native asset in Tersa: TST and TSG.
 
 In order to transfer native asset, we can create the specific transaction and send it to the blockchain. After the transaction has been packaged in the block, the transaction will succeed.
 
 ### Type of native asset
 ````
 TOKEN_TYPE = {
-  ONT : 'ONT',  //Ontology Token
-  ONG : 'ONG'   //Ontology Gas
+  TST : 'TST',  //Tersa Token
+  TSG : 'TSG'   //Tersa Gas
 }
 ````
 
@@ -235,7 +235,7 @@ TOKEN_TYPE = {
 First we need to create the transaction for transfer.
 The parameters are as below:
 
-`assetType` ONT or ONG.
+`assetType` TST or TSG.
 
 `from` Sender's address. Must be with enough balance.
 
@@ -252,8 +252,8 @@ The parameters are as below:
 In TestNet, we can set `gasPrice` as 0 for test.
 
 ````typescript
-import {OntAssetTxBuilder} from 'ontology-ts-sdk'
-//supppose we have an account with enough ONT and ONG
+import {TstAssetTxBuilder} from 'tesra-ts-sdk'
+//supppose we have an account with enough TST and TSG
 //Sender's address
 const from = account.address;
 //Receiver's address
@@ -261,13 +261,13 @@ const to = new Address('AXpNeebiUZZQxLff6czjpHZ3Tftj8go2TF')
 //Amount to send
 const amount = 100
 //Asset type
-const assetType = 'ONT'
+const assetType = 'TST'
 //Gas price and gas limit are to compute the gas costs of the transaction.
 const gasPrice = '500';
 const gasLimit = '20000';
 //Payer's address to pay for the transaction gas
 const payer = from;
-const tx = OntAssetTxBuilder.makeTransferTx(assetType, from, to, amount, gasPrice, gasLimit, payer);
+const tx = TstAssetTxBuilder.makeTransferTx(assetType, from, to, amount, gasPrice, gasLimit, payer);
 ````
 
 ### Send transaction
@@ -276,7 +276,7 @@ We can use RESTful API, RPC API, or WebSocket API to send transaction. Here we u
 > Use WebSocket API and wait for the transaction notice.
 
 ````typescript
-import {RestClient, CONST, TransactionBuilder} from 'ontology-ts-sdk'
+import {RestClient, CONST, TransactionBuilder} from 'tesra-ts-sdk'
 
 //we already got the transaction we created before
 
@@ -284,7 +284,7 @@ import {RestClient, CONST, TransactionBuilder} from 'ontology-ts-sdk'
 //Use user's private key to sign the transaction
 TransactionBuilder.signTransaction(tx, privateKey)
 
-const rest = new RestClient(CONST.TEST_ONT_URL.REST_URL);
+const rest = new RestClient(CONST.TEST_TST_URL.REST_URL);
 rest.sendRawTransaction(tx.serialize()).then(res => {
 	console.log(res)	
 })
@@ -321,17 +321,17 @@ rest.getBalance(address).then(res -> {
 	console.log(res)
 })
 ````
-The result contains balance of ONT and ONG.
+The result contains balance of TST and TSG.
 
-## Withdraw ONG
-Withdraw generated ONG from user's account address and send to other address. They can be the same address.
+## Withdraw TSG
+Withdraw generated TSG from user's account address and send to other address. They can be the same address.
 ### Create transaction
 
-`from` Sender's address to withdraw ONG.
+`from` Sender's address to withdraw TSG.
 
-`to` Receiver's address to receive ONG.
+`to` Receiver's address to receive TSG.
 
-`amount` Amount of ONG to withdraw. Need to multiply 1e9 to keep precision.
+`amount` Amount of TSG to withdraw. Need to multiply 1e9 to keep precision.
 
 `gasPrice` Gas price.
 
@@ -341,7 +341,7 @@ Withdraw generated ONG from user's account address and send to other address. Th
 
 
 ````typescript
-import {OntAssetTxBuilder} from 'ontology-ts-sdk'
+import {TstAssetTxBuilder} from 'tesra-ts-sdk'
 
 //suppose we have an account already
 const from = account.address;
@@ -350,7 +350,7 @@ const amount = 10 * 1e9;
 const gasPrice = '500';
 const gasLimit = '20000';
 const payer = account.address;
-const tx = OntAssetTxBuilder.makeWithdrawOngTx(from, to, amount, payer, gasPrice, gasLimit);
+const tx = TstAssetTxBuilder.makeWithdrawTsgTx(from, to, amount, payer, gasPrice, gasLimit);
 ````
 
 ### Send transaction
@@ -358,7 +358,7 @@ We can use RESTful API, RPC API, or WebSocket API to send a transaction. Here we
 
 ````typescript
 //sign transaction before send it
-import {RestClient, CONST, TransactionBuilder} from 'ontology-ts-sdk'
+import {RestClient, CONST, TransactionBuilder} from 'tesra-ts-sdk'
 
 //we already got the transaction we created before
 
@@ -366,7 +366,7 @@ import {RestClient, CONST, TransactionBuilder} from 'ontology-ts-sdk'
 //Use user's private key to sign the transaction
 TransactionBuilder.signTransaction(tx, privateKey)
 
-const rest = new RestClient(CONST.TEST_ONT_URL.REST_URL);
+const rest = new RestClient(CONST.TEST_TST_URL.REST_URL);
 rest.sendRawTransaction(tx.serialize()).then(res => {
 	console.log(res)	
 })

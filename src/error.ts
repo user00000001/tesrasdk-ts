@@ -1,19 +1,19 @@
 /*
- * Copyright (C) 2018 The ontology Authors
- * This file is part of The ontology library.
+ * Copyright (C) 2019-2020 The TersaSupernet Authors
+ * This file is part of The TesraSupernet library.
  *
- * The ontology is free software: you can redistribute it and/or modify
+ * The TesraSupernet is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ontology is distributed in the hope that it will be useful,
+ * The TesraSupernet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+ * along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 export enum ERROR_CODE {
@@ -34,7 +34,7 @@ export enum ERROR_CODE {
     INTERNAL_ERROR      = 45001,   // 内部错误 |
     SMARTCODE_ERROR     = 47001,   // 智能合约错误 |
 
-    UNKNOWN_ONTID       = 51000,   // 不存在的ONT ID,
+    UNKNOWN_TSTID       = 51000,   // 不存在的TST ID,
     NETWORK_ERROR       = 52000,   // 网络错误,
     Decrypto_ERROR      = 53000,    // 解密错误,
     INVALID_ADDR        = 53001,   // 地址验证失败

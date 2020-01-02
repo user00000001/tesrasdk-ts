@@ -1,19 +1,19 @@
 /*
-* Copyright (C) 2018 The ontology Authors
-* This file is part of The ontology library.
+* Copyright (C) 2019-2020 The TersaSupernet Authors
+* This file is part of The TesraSupernet library.
 *
-* The ontology is free software: you can redistribute it and/or modify
+* The TesraSupernet is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* The ontology is distributed in the hope that it will be useful,
+* The TesraSupernet is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public License
-* along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+* along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
 */
 import BigInt from '../../common/bigInt';
 import { GENESIS_BLOCK_TIMESTAMP } from '../../consts';
@@ -22,8 +22,8 @@ import { ERROR_CODE } from '../../error';
 import RestClient from '../../network/rest/restClient';
 import { Transaction } from '../../transaction/transaction';
 import { makeNativeContractTx } from '../../transaction/transactionUtils';
-import { calcUnboundOng, hex2VarBytes, hexstr2str,
-    num2hexstring, str2hexstr, str2VarBytes, StringReader, varifyPositiveInt, bigIntFromBytes } from '../../utils';
+import { bigIntFromBytes, calcUnboundTsg, hex2VarBytes, hexstr2str,
+    num2hexstring, str2hexstr, str2VarBytes, StringReader, varifyPositiveInt } from '../../utils';
 import { buildNativeCodeScript } from '../abi/nativeVmParamsBuilder';
 import Struct from '../abi/struct';
 
@@ -43,9 +43,9 @@ const contractAddress = new Address(GOVERNANCE_CONTRACT);
 /**
  * Register to be candidate node.
  * This tx needs signatures from userAddr and payer if these two address are not the same.
- * @param ontid user's ONT ID, must be assigned with the role.
+ * @param tstId user's TST ID, must be assigned with the role.
  * @param peerPubKey public key of user's peer
- * @param userAddr user's address to pledge ONT&ONG. This address must have enough ONT & ONG.
+ * @param userAddr user's address to pledge TST&TSG. This address must have enough TST & TSG.
  * @param keyNo user's pk id
  * @param initPos Initial state
  * @param payer Address to pay for the gas.
@@ -53,7 +53,7 @@ const contractAddress = new Address(GOVERNANCE_CONTRACT);
  * @param gasLimit Gas limit
  */
 export function makeRegisterCandidateTx(
-    ontid: string,
+    tstId: string,
     peerPubKey: string,
     keyNo: number,
     userAddr: Address,
@@ -66,11 +66,11 @@ export function makeRegisterCandidateTx(
         throw new Error('Parameter initPos must be number!');
     }
     varifyPositiveInt(initPos);
-    if (ontid.substr(0, 3) === 'did') {
-        ontid = str2hexstr(ontid);
+    if (tstId.substr(0, 3) === 'did') {
+        tstId = str2hexstr(tstId);
     }
     const struct = new Struct();
-    struct.add(str2hexstr(peerPubKey), userAddr.serialize(), initPos, ontid, keyNo);
+    struct.add(str2hexstr(peerPubKey), userAddr.serialize(), initPos, tstId, keyNo);
     const params = buildNativeCodeScript([struct]);
     return makeNativeContractTx('registerCandidate', params, contractAddress,
                                      gasPrice, gasLimit, payer);
@@ -78,7 +78,7 @@ export function makeRegisterCandidateTx(
 
 /**
  *
- * @param userAddr User's address to pledge ONT&ONG.
+ * @param userAddr User's address to pledge TST&TSG.
  * @param peerPubKey Public key of user's peer
  * @param payer Address to pay for the gas.
  * @param gasPrice Gas price
@@ -178,7 +178,7 @@ export function makeVoteForPeerTx(
  * User unvotes peer nodes
  * @param userAddr user's address
  * @param peerPubKeys peer's pks
- * @param posList amount of ONT to unvote
+ * @param posList amount of TST to unvote
  * @param payer Address to pay for the gas.
  * @param gasPrice Gas price
  * @param gasLimit Gas limit
@@ -210,7 +210,7 @@ export function makeUnvoteForPeerTx(
 }
 
 /**
- * Withdraw the unvote ONT
+ * Withdraw the unvote TST
  * Need two signatures if userAddr and payer are not the same
  * @param userAddr
  * @param peerPubKeys
@@ -382,7 +382,7 @@ export function makeUnauthorizeForPeerTx(
 /**
  * Peer add the init pos
  * @param peerPubkey Peer's public key
- * @param userAddr Stake wallet address
+ * @param userAddr Stake twallet address
  * @param pos Amount of pos to add
  * @param payer Payer of the transaction
  * @param gasPrice Gas price
@@ -405,7 +405,7 @@ export function makeAddInitPosTx(
 /**
  * Peer reduce the init pos
  * @param peerPubkey Peer's public key
- * @param userAddr Stake wallet address
+ * @param userAddr Stake twallet address
  * @param pos Amount of pos to reduce
  * @param payer Payer of the transaction
  * @param gasPrice Gas price
@@ -425,7 +425,7 @@ export function makeReduceInitPosTx(
     return makeNativeContractTx('reduceInitPos', params, contractAddress, gasPrice, gasLimit, payer);
 }
 
-export function makeWithdrawPeerUnboundOngTx(
+export function makeWithdrawPeerUnboundTsgTx(
     userAddr: Address,
     payer: Address,
     gasPrice: string,
@@ -434,7 +434,7 @@ export function makeWithdrawPeerUnboundOngTx(
     const struct = new Struct();
     struct.add(userAddr.serialize());
     const params = buildNativeCodeScript([struct]);
-    return makeNativeContractTx('withdrawOng', params, contractAddress, gasPrice, gasLimit, payer);
+    return makeNativeContractTx('withdrawTsg', params, contractAddress, gasPrice, gasLimit, payer);
 }
 
 /**
@@ -553,7 +553,7 @@ export async function getTotalStake(userAddr: Address, url?: string) {
     }
 }
 
-export async function getPeerUnboundOng(userAddr: Address, url?: string) {
+export async function getPeerUnboundTsg(userAddr: Address, url?: string) {
     const totalStake = await getTotalStake(userAddr, url);
     if (!totalStake.address) {
         return 0;
@@ -562,7 +562,7 @@ export async function getPeerUnboundOng(userAddr: Address, url?: string) {
     const blockHeight = (await restClient.getBlockHeight()).Result;
     const block = (await restClient.getBlockJson(blockHeight)).Result;
     const timeStamp = block.Header.Timestamp - GENESIS_BLOCK_TIMESTAMP;
-    return calcUnboundOng(totalStake.stake, totalStake.timeOffset, timeStamp);
+    return calcUnboundTsg(totalStake.stake, totalStake.timeOffset, timeStamp);
 }
 
 export async function getConfiguration(url?: string) {

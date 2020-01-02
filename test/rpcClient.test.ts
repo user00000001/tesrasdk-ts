@@ -4,7 +4,7 @@ import { Address } from '../src/crypto/address';
 import { Identity } from '../src/identity';
 import RpcClient from '../src/network/rpc/rpcClient';
 import { WebsocketClient } from '../src/network/websocket/websocketClient';
-import { buildGetDDOTx, buildRegisterOntidTx } from '../src/smartcontract/nativevm/ontidContractTxBuilder';
+import { buildGetDDOTx, buildRegisterTstidTx } from '../src/smartcontract/nativevm/tstidContractTxBuilder';
 import { signTransaction } from '../src/transaction/transactionBuilder';
 import { addSign } from './../src/transaction/transactionBuilder';
 
@@ -22,17 +22,17 @@ describe('test rpc client', () => {
     const publicKey = privateKey.getPublicKey();
     const account = Account.create(privateKey, '123456', '');
     const identity = Identity.create(privateKey, '123456', '');
-    const ontid =  identity.ontid;
+    const tstId =  identity.tstId;
     const address = account.address;
 
     const adminPrivateKey = new PrivateKey('7c47df9664e7db85c1308c080f398400cb24283f5d922e76b478b5429e821b97');
     const adminAddress = new Address('AdLUBSSHUuFaak9j169hiamXUmPuCTnaRz');
 
     /**
-     * Registers new ONT ID to create transaction with Events and new block
+     * Registers new TST ID to create transaction with Events and new block
      */
     beforeAll(async () => {
-        const tx = buildRegisterOntidTx(ontid, publicKey, '500', '30000');
+        const tx = buildRegisterTstidTx(tstId, publicKey, '500', '30000');
         tx.payer = adminAddress;
         signTransaction(tx, adminPrivateKey);
         addSign(tx, privateKey);
@@ -72,7 +72,7 @@ describe('test rpc client', () => {
     });
 
     test('test sendRawTransaction', async () => {
-        const tx = buildGetDDOTx(ontid);
+        const tx = buildGetDDOTx(tstId);
         const res = await rpcClient.sendRawTransaction(tx.serialize(), true);
         console.log(res);
         expect(res.desc).toEqual('SUCCESS');
@@ -164,8 +164,8 @@ describe('test rpc client', () => {
         expect(res.desc).toEqual('SUCCESS')
     }) */
 
-    test('test_getUnboundOng', async () => {
-        const res = await rpcClient.getUnboundOng(adminAddress);
+    test('test_getUnboundTsg', async () => {
+        const res = await rpcClient.getUnboundTsg(adminAddress);
         console.log(res);
         expect(res).toBeDefined();
     });
@@ -182,8 +182,8 @@ describe('test rpc client', () => {
         expect(res).toBeDefined();
     });
 
-    test('test_getGrangOng', async () => {
-        const res = await rpcClient.getGrantOng(adminAddress);
+    test('test_getGrangTsg', async () => {
+        const res = await rpcClient.getGrantTsg(adminAddress);
         console.log(res);
         expect(res).toBeDefined();
     });

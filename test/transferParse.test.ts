@@ -1,7 +1,7 @@
 import { Signature } from '../src/crypto';
 import { Address } from '../src/crypto/address';
 import { deserializeTransferTx,
-    makeTransferTx, makeWithdrawOngTx } from '../src/smartcontract/nativevm/ontAssetTxBuilder';
+    makeTransferTx, makeWithdrawTsgTx } from '../src/smartcontract/nativevm/ontAssetTxBuilder';
 import opcode from '../src/transaction/opcode';
 import { addSign, signTransaction } from '../src/transaction/transactionBuilder';
 import { num2hexstring, str2hexstr, StringReader } from '../src/utils';
@@ -13,53 +13,53 @@ import { Transaction } from './../src/transaction/transaction';
 describe('parse transfer tx', () => {
     const from = new Address('AJAhnApxyMTBTHhfpizua48EEFUxGg558x');
     const to = new Address('ALFZykMAYibLoj66jcBdbpTnrBCyczf4CL');
-    test('transfer 15 ONT', () => {
-        const tx = makeTransferTx('ONT', from, to, 15, '500', '20000', from);
+    test('transfer 15 TST', () => {
+        const tx = makeTransferTx('TST', from, to, 15, '500', '20000', from);
         const transfer = deserializeTransferTx(tx.serialize());
         expect(transfer.amount).toEqual(15);
         expect(transfer.from.toBase58()).toEqual('AJAhnApxyMTBTHhfpizua48EEFUxGg558x');
         expect(transfer.to.toBase58()).toEqual('ALFZykMAYibLoj66jcBdbpTnrBCyczf4CL');
-        expect(transfer.tokenType).toEqual('ONT');
+        expect(transfer.tokenType).toEqual('TST');
         // console.log(tx);
     });
 
-    test('transfer 10000 ONT', () => {
-        const tx = makeTransferTx('ONT', from, to, 10000, '500', '20000', from);
+    test('transfer 10000 TST', () => {
+        const tx = makeTransferTx('TST', from, to, 10000, '500', '20000', from);
         const transfer = deserializeTransferTx(tx.serialize());
         expect(transfer.amount).toEqual(10000);
         expect(transfer.from.toBase58()).toEqual('AJAhnApxyMTBTHhfpizua48EEFUxGg558x');
         expect(transfer.to.toBase58()).toEqual('ALFZykMAYibLoj66jcBdbpTnrBCyczf4CL');
-        expect(transfer.tokenType).toEqual('ONT');
+        expect(transfer.tokenType).toEqual('TST');
         // console.log(tx);
     });
 
-    test('transfer 0.33 ONG', () => {
-        const tx = makeTransferTx('ONG', from, to, 0.33 * 1e9, '500', '20000', from);
+    test('transfer 0.33 TSG', () => {
+        const tx = makeTransferTx('TSG', from, to, 0.33 * 1e9, '500', '20000', from);
         const transfer = deserializeTransferTx(tx.serialize());
         expect(transfer.amount).toEqual(0.33 * 1e9);
         expect(transfer.from.toBase58()).toEqual('AJAhnApxyMTBTHhfpizua48EEFUxGg558x');
         expect(transfer.to.toBase58()).toEqual('ALFZykMAYibLoj66jcBdbpTnrBCyczf4CL');
-        expect(transfer.tokenType).toEqual('ONG');
+        expect(transfer.tokenType).toEqual('TSG');
         // console.log(tx);
     });
 
-    test('transfer 123 ONG', () => {
-        const tx = makeTransferTx('ONG', from, to, 123 * 1e9, '500', '20000', from);
+    test('transfer 123 TSG', () => {
+        const tx = makeTransferTx('TSG', from, to, 123 * 1e9, '500', '20000', from);
         const transfer = deserializeTransferTx(tx.serialize());
         expect(transfer.amount).toEqual(123 * 1e9);
         expect(transfer.from.toBase58()).toEqual('AJAhnApxyMTBTHhfpizua48EEFUxGg558x');
         expect(transfer.to.toBase58()).toEqual('ALFZykMAYibLoj66jcBdbpTnrBCyczf4CL');
-        expect(transfer.tokenType).toEqual('ONG');
+        expect(transfer.tokenType).toEqual('TSG');
         // console.log(tx);
     });
 
-    test('transferFrom 1.533 ONG', () => {
-        const tx = makeWithdrawOngTx(from, from, 1.533 * 1e9, from, '500', '20000');
+    test('transferFrom 1.533 TSG', () => {
+        const tx = makeWithdrawTsgTx(from, from, 1.533 * 1e9, from, '500', '20000');
         const transfer = deserializeTransferTx(tx.serialize());
         expect(transfer.amount).toEqual(1.533 * 1e9);
         expect(transfer.from.toBase58()).toEqual('AJAhnApxyMTBTHhfpizua48EEFUxGg558x');
         expect(transfer.to.toBase58()).toEqual('AJAhnApxyMTBTHhfpizua48EEFUxGg558x');
-        expect(transfer.tokenType).toEqual('ONG');
+        expect(transfer.tokenType).toEqual('TSG');
     });
 
     test('oep11', async () => {
@@ -70,7 +70,7 @@ describe('parse transfer tx', () => {
         const address2 = new Address('AXK2KtCfcJnSMyRzSwTuwTKgNrtx5aXfFX');
 
         // make tx
-        const tx = makeTransferTx('ONT', address1, address2, 1, '500', '20000', address1);
+        const tx = makeTransferTx('TST', address1, address2, 1, '500', '20000', address1);
         signTransaction(tx, private2);
         const txStr = tx.serialize();
         // deserialize tx

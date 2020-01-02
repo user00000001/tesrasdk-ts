@@ -1,19 +1,19 @@
 /*
-* Copyright (C) 2018 The ontology Authors
-* This file is part of The ontology library.
+* Copyright (C) 2019-2020 The TersaSupernet Authors
+* This file is part of The TesraSupernet library.
 *
-* The ontology is free software: you can redistribute it and/or modify
+* The TesraSupernet is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* The ontology is distributed in the hope that it will be useful,
+* The TesraSupernet is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public License
-* along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+* along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /*
@@ -29,7 +29,7 @@ import axios from 'axios';
 import * as bip39 from 'bip39';
 import { Account } from '../account';
 import { Claim } from '../claim/claim';
-import { HTTP_REST_PORT, HTTP_WS_PORT, ONT_BIP44_PATH, REST_API, TEST_NODE } from '../consts';
+import { HTTP_REST_PORT, HTTP_WS_PORT, REST_API, TEST_NODE, TST_BIP44_PATH } from '../consts';
 import { Address, PgpSignature, PrivateKey, PublicKey } from '../crypto';
 import { ERROR_CODE } from '../error';
 import { Identity } from '../identity';
@@ -42,9 +42,9 @@ import * as scrypt from '../scrypt';
 import { ScryptParams } from '../scrypt';
 import AbiInfo from '../smartcontract/abi/abiInfo';
 import { Parameter } from '../smartcontract/abi/parameter';
-import { makeTransferTx, makeWithdrawOngTx, ONT_CONTRACT } from '../smartcontract/nativevm/ontAssetTxBuilder';
-import { buildAddAttributeTx, buildGetDDOTx, buildRegisterOntidTx
-} from '../smartcontract/nativevm/ontidContractTxBuilder';
+import { makeTransferTx, makeWithdrawTsgTx, TST_CONTRACT } from '../smartcontract/nativevm/tstAssetTxBuilder';
+import { buildAddAttributeTx, buildGetDDOTx, buildRegisterTstidTx
+} from '../smartcontract/nativevm/tstidContractTxBuilder';
 import { Oep8TxBuilder } from '../smartcontract/neovm/oep8TxBuilder';
 import { DDOAttribute } from '../transaction/ddo';
 import { Transaction } from '../transaction/transaction';
@@ -54,9 +54,9 @@ import {
     signTransaction,
     signTx
 } from '../transaction/transactionBuilder';
+import { TWallet } from '../twallet';
 import { generateMnemonic, hexstr2str, isBase64, isHexString, now, reverseHex,
     sendBackResult2Native, str2hexstr, StringReader } from '../utils';
-import { Wallet } from '../wallet';
 import { Ecies } from './../crypto/Ecies';
 import { ParameterType } from './../smartcontract/abi/parameter';
 import { Oep4TxBuilder } from './../smartcontract/neovm/oep4TxBuilder';
@@ -134,29 +134,30 @@ export class SDK {
         return password;
     }
 
-    static createWallet(name: string,
-                        password: string, payer: string, gasPrice: string, gasLimit: string, callback?: string) {
-        const wallet = Wallet.create(name);
+    static createTWallet(
+        name: string, password: string, payer: string, gasPrice: string, gasLimit: string, callback?: string
+        ) {
+        const twallet = TWallet.create(name);
         password = this.transformPassword(password);
         const privateKey = PrivateKey.random();
         const identity = Identity.create(privateKey, password, name);
 
-        wallet.defaultOntid = identity.ontid;
-        wallet.addIdentity(identity);
+        twallet.defaultTstid = identity.tstId;
+        twallet.addIdentity(identity);
 
         // let account = new Account()
         // account.create(privateKey, password, name)
-        // wallet.addAccount(account)
+        // twallet.addAccount(account)
 
-        const walletDataStr = wallet.toJson();
+        const twalletDataStr = twallet.toJson();
         let obj: any = {
             error: 0,
-            result: walletDataStr,
+            result: twalletDataStr,
             tx : ''
         };
 
         const publicKey = privateKey.getPublicKey();
-        const tx = buildRegisterOntidTx(identity.ontid, publicKey, gasPrice, gasLimit);
+        const tx = buildRegisterTstidTx(identity.tstId, publicKey, gasPrice, gasLimit);
         tx.payer = new Address(payer);
         signTransaction(tx, privateKey);
         // clear privateKey and password
@@ -220,14 +221,14 @@ export class SDK {
             error: ERROR_CODE.SUCCESS,
             result: identity.toJson()
         };
-        const tx = buildGetDDOTx(identity.ontid);
+        const tx = buildGetDDOTx(identity.tstId);
         const restClient = new RestClient(`http://${SDK.SERVER_NODE}:${SDK.REST_PORT}`);
         return restClient.sendRawTransaction(tx.serialize(), true).then((res: any) => {
             const result = res.Result;
             if (result.Result) {
                 //
             } else {
-                obj.error = ERROR_CODE.UNKNOWN_ONTID;
+                obj.error = ERROR_CODE.UNKNOWN_TSTID;
                 obj.result = '';
             }
 
@@ -272,14 +273,14 @@ export class SDK {
             error: ERROR_CODE.SUCCESS,
             result: identity.toJson()
         };
-        const tx = buildGetDDOTx(identity.ontid);
+        const tx = buildGetDDOTx(identity.tstId);
         const restClient = new RestClient(`http://${SDK.SERVER_NODE}:${SDK.REST_PORT}`);
         return restClient.sendRawTransaction(tx.serialize(), true).then((res: any) => {
             const result = res.Result;
             if (result.Result) {
                 //
             } else {
-                obj.error = ERROR_CODE.UNKNOWN_ONTID;
+                obj.error = ERROR_CODE.UNKNOWN_TSTID;
                 obj.result = '';
             }
 
@@ -330,7 +331,7 @@ export class SDK {
         return obj;
     }
 
-    static importIdentityWithWallet(
+    static importIdentityWithTWallet(
         label: string,
         encryptedPrivateKey: string,
         password: string,
@@ -341,7 +342,7 @@ export class SDK {
         let obj: any;
         let identity = new Identity();
         try {
-            // TODO check ontid
+            // TODO check tstId
             const encryptedPrivateKeyObj = new PrivateKey(encryptedPrivateKey);
             const addr = new Address(address);
             password = this.transformPassword(password);
@@ -358,8 +359,8 @@ export class SDK {
             error : ERROR_CODE.SUCCESS,
             result : identity.toJson()
         };
-        // check ontid on chain
-        const tx = buildGetDDOTx(identity.ontid);
+        // check tstId on chain
+        const tx = buildGetDDOTx(identity.tstId);
         const param = buildRestfulParam(tx);
         const restUrl = `http://${SDK.SERVER_NODE}:${SDK.REST_PORT}`;
         const url = sendRawTxRestfulUrl(restUrl, true);
@@ -370,7 +371,7 @@ export class SDK {
             if (result.Result) {
                 //
             } else {
-                obj.error = ERROR_CODE.UNKNOWN_ONTID;
+                obj.error = ERROR_CODE.UNKNOWN_TSTID;
                 obj.result = '';
             }
 
@@ -391,7 +392,7 @@ export class SDK {
     }
 
     // send http post to check
-    static importIdentityAndCreateWallet(
+    static importIdentityAndCreateTWallet(
         label: string,
         encryptedPrivateKey: string,
         password: string,
@@ -407,16 +408,16 @@ export class SDK {
             const encryptedPrivateKeyObj = new PrivateKey(encryptedPrivateKey);
             const addr = new Address(address);
             identity = Identity.importIdentity(label, encryptedPrivateKeyObj, password, addr, salt);
-            const wallet = Wallet.create(identity.label);
-            wallet.defaultOntid = identity.ontid;
-            wallet.addIdentity(identity);
-            const walletStr = wallet.toJson();
+            const twallet = TWallet.create(identity.label);
+            twallet.defaultTstid = identity.tstId;
+            twallet.addIdentity(identity);
+            const twalletStr = twallet.toJson();
             obj = {
                 error: ERROR_CODE.SUCCESS,
-                result: walletStr
+                result: twalletStr
             };
-            // check ontid on chain
-            const tx = buildGetDDOTx(identity.ontid);
+            // check tstId on chain
+            const tx = buildGetDDOTx(identity.tstId);
             const param = buildRestfulParam(tx);
             const restUrl = `http://${SDK.SERVER_NODE}:${SDK.REST_PORT}`;
             const url = sendRawTxRestfulUrl(restUrl, true);
@@ -425,7 +426,7 @@ export class SDK {
                 if (result.Result) {
                     //
                 } else {
-                    obj.error = ERROR_CODE.UNKNOWN_ONTID;
+                    obj.error = ERROR_CODE.UNKNOWN_TSTID;
                     obj.result = '';
                 }
                 // clear privateKey and password
@@ -467,9 +468,9 @@ export class SDK {
             result,
             tx : ''
         };
-        // register ontid
+        // register tstId
         const publicKey = privateKey.getPublicKey();
-        const tx = buildRegisterOntidTx(identity.ontid, publicKey, gasPrice, gasLimit);
+        const tx = buildRegisterTstidTx(identity.tstId, publicKey, gasPrice, gasLimit);
         tx.payer = new Address(payer);
         signTransaction(tx, privateKey);
         password = '';
@@ -555,7 +556,7 @@ export class SDK {
         return obj;
     }
 
-    static importAccountWithWallet(
+    static importAccountWithTWallet(
         label: string,
         encryptedPrivateKey: string,
         address: string,
@@ -597,7 +598,7 @@ export class SDK {
     static signSelfClaim(
         context: string,
         claimData: string,
-        ontid: string,
+        tstId: string,
         encryptedPrivateKey: string,
         password: string,
         address: string,
@@ -623,13 +624,13 @@ export class SDK {
 
         // const claimDataObj = JSON.parse(claimData);
         const metadata = {
-            issuer: ontid,
-            subject: ontid,
+            issuer: tstId,
+            subject: tstId,
             issuedAt: now()
         };
 
         // todo: pass real public key id
-        const publicKeyId = ontid + '#keys-1';
+        const publicKeyId = tstId + '#keys-1';
         const claim = new Claim(metadata, undefined, undefined);
         claim.sign(restUrl, publicKeyId, privateKey);
         const obj = {
@@ -907,7 +908,7 @@ export class SDK {
         return result;
     }
 
-    static claimOng(
+    static claimTsg(
         address: string,
         value: string,
         encryptedPrivateKey: string,
@@ -948,7 +949,7 @@ export class SDK {
             return result;
         }
 
-        const tx = makeWithdrawOngTx(addressObj, addressObj, value, new Address(payer), gasPrice, gasLimit);
+        const tx = makeWithdrawTsgTx(addressObj, addressObj, value, new Address(payer), gasPrice, gasLimit);
         signTransaction(tx, privateKey);
         const result = {
             error: ERROR_CODE.SUCCESS,
@@ -1060,7 +1061,7 @@ export class SDK {
         }
         const seed = bip39.mnemonicToSeedHex(mnemonic);
         const hdkey = HDKey.fromMasterSeed(Buffer.from(seed, 'hex'));
-        const pri = hdkey.derive(ONT_BIP44_PATH);
+        const pri = hdkey.derive(TST_BIP44_PATH);
         const key = Buffer.from(pri.privateKey).toString('hex');
         const privateKey = new PrivateKey(key);
         const account = Account.create(privateKey, password, label);
@@ -1216,9 +1217,9 @@ export class SDK {
         }
     }
 
-    static getUnclaimedOng(address: string, callback?: string) {
+    static getUnclaimedTsg(address: string, callback?: string) {
         const restClient = new RestClient(`http://${SDK.SERVER_NODE}:${SDK.REST_PORT}`);
-        return restClient.getAllowance('ong', new Address(ONT_CONTRACT), new Address(address)).then((res) => {
+        return restClient.getAllowance('tsg', new Address(TST_CONTRACT), new Address(address)).then((res) => {
             const result = {
                 error: ERROR_CODE.SUCCESS,
                 result: res.Result
@@ -1262,7 +1263,7 @@ export class SDK {
         });
     }
 
-    static createSharedWallet(requiredSignatureNum: string, allRelatedPks: string, callback?: string) {
+    static createSharedTWallet(requiredSignatureNum: string, allRelatedPks: string, callback?: string) {
         const M  = parseInt(requiredSignatureNum, 10);
         let pks = [];
         let pubs = [];
@@ -1492,7 +1493,7 @@ export class SDK {
         });
     }
 
-    // ope8 apis for ONTO
+    // ope8 apis for TSTO
     static queryOep8Balance(
         contractHash: string,
         account: string,
@@ -1668,7 +1669,7 @@ export class SDK {
         return result;
     }
 
-    // ope4 apis for ONTO
+    // ope4 apis for TSTO
     static queryOep4Balance(
         contractHash: string,
         account: string,

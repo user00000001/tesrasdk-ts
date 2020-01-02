@@ -8,7 +8,7 @@ Identity has the following structure:
 
 ```
 {
-	"ontid": "did:ont:ATcHA9eYKyve8M74CB4p6Ssx7kwXjmREUa",
+	"tstId": "did:tst:ATcHA9eYKyve8M74CB4p6Ssx7kwXjmREUa",
     "label": "mickey",
     "lock": false,
     "controls": [{
@@ -24,7 +24,7 @@ Identity has the following structure:
     }]
 }
 ```
-`ontid` ONT ID 
+`tstId` TST ID 
 
 `label` Name of the identity
 
@@ -50,13 +50,13 @@ Identity has the following structure:
 
 ## 1.1 Generate identity
 
-ONT ID is a decentralized identity that manages various digital identity authentications of a user. Identity is one of the core categories exposed from ONT SDK containing the ONT ID, which represents identity.
+TST ID is a decentralized identity that manages various digital identity authentications of a user. Identity is one of the core categories exposed from TST SDK containing the TST ID, which represents identity.
 
-> For more information, see [ONT TS SDK]().
+> For more information, see [TST TS SDK]().
 
-You can use SDK to create a digital identity. During the process, SDK will generate an ONT ID base on a user's private key.
+You can use SDK to create a digital identity. During the process, SDK will generate an TST ID base on a user's private key.
 
-> For ONT ID specifications, see [ONT ID Generation Specifications](./ONTID_protocol_spec.md/#1.1_ONT_ID生成).
+> For TST ID specifications, see [TST ID Generation Specifications](./TSTID_protocol_spec.md/#1.1_TST_ID生成).
 
 The method needs the following parameters:
 
@@ -69,33 +69,33 @@ The method needs the following parameters:
 **params** Optional scrypt params used to encrypt the private key.
 
 ```
-import {Identity, Crypto} from 'ontology-ts-sdk';
+import {Identity, Crypto} from 'tesra-ts-sdk';
 //generate a random private key
 const privateKey = Crypto.PrivateKey.random();
 
 var identity = Identity.create(privateKey, password, label)
-console.log(identity.ontid)
+console.log(identity.tstId)
 ```
 
-## 1.2 Register ONT ID to the blockchain
+## 1.2 Register TST ID to the blockchain
 
-After the identity is created, the user needs to send the ONT ID to the blockchain to make it a truly decentralized identity.
+After the identity is created, the user needs to send the TST ID to the blockchain to make it a truly decentralized identity.
 
-Sending ONT IDs to the blockchain requires sending specific transactions. The transaction object can be done by calling the methods provided by the SDK.
+Sending TST IDs to the blockchain requires sending specific transactions. The transaction object can be done by calling the methods provided by the SDK.
 
 ### Create Transaction
 
 ````typescript
-import {OntidContract} from 'ontology-ts-sdk';
-import {TransactionBuilder} from 'ontology-ts-sdk'
+import {TstidContract} from 'tesra-ts-sdk';
+import {TransactionBuilder} from 'tesra-ts-sdk'
 
 //suppose we already got a identity
-const did = identity.ontid;
+const did = identity.tstId;
 //we need the public key, which can be generate from private key
 const pk = privateKey.getPublicKey();
 const gasPrice = '0';
 const gasLimit = '20000;
-const tx = OntidContract.buildRegisterOntidTx(did, pk, gasPrice, gasLimit);
+const tx = TstidContract.buildRegisterTstidTx(did, pk, gasPrice, gasLimit);
 Transaction.signTransaction(tx, privateKey);
 
 ````
@@ -103,7 +103,7 @@ Transaction.signTransaction(tx, privateKey);
 The transaction also needs signatures from the payer.
 
 ```typescript
-import {TransactionBuilder} from 'ontology-ts-sdk'
+import {TransactionBuilder} from 'tesra-ts-sdk'
 //we also need an account to pay for the gas
 //supporse we have an account and the privateKey
 tx.payer = account.address
@@ -119,9 +119,9 @@ We can set the URL of the node that we want to send transaction to. You can run 
 A notice will pop up when we use the WebSocket API.
 
 ```typescript
-import {RestClient, CONST} from 'ontology-ts-sdk'
+import {RestClient, CONST} from 'tesra-ts-sdk'
 
-const rest = new RestClient(CONST.TEST_ONT_URL.REST_URL);
+const rest = new RestClient(CONST.TEST_TST_URL.REST_URL);
 rest.sendRawTransaction(tx.serialize()).then(res => {
 	console.log(res)
 })
@@ -135,23 +135,23 @@ The response will look like:
   Result: 'dfc598649e0f3d9ff94486a80020a2775e1d474b843255f8680a3ac862c58741',
   Version: '1.0.0' }
 ````
-Now the transaction is sent to the blockchain. Then we can check if the ONT ID is registered on the chain by querying the DDO( Description object of ONT ID). This info is stored on the chain.
+Now the transaction is sent to the blockchain. Then we can check if the TST ID is registered on the chain by querying the DDO( Description object of TST ID). This info is stored on the chain.
 
 ## 1.3 Query DDO
 We also send the specific transaction to query the DDO.
 
 ### Create transaction
 ```typescript
-import {OntidContract} from 'ontology-ts-sdk';
-//we use identity's ONT ID to create the transaction
-const tx = OntidContract.buildGetDDOTx(identity.ontid)
+import {TstidContract} from 'tesra-ts-sdk';
+//we use identity's TST ID to create the transaction
+const tx = TstidContract.buildGetDDOTx(identity.tstId)
 
 ```
 ### Send transaction
 There is no need to pay transaction gas if the transaction is a query, and there is no need to sign this kind of transaction - we can send it directly.
 
 ```typescript
-import {RestClient} from 'ontology-ts-sdk';
+import {RestClient} from 'tesra-ts-sdk';
 const rest = new RestClient();
 rest.sendRawTransaction(tx, true).then(res => {
 	console.log(res);
@@ -173,18 +173,18 @@ The response will look like:
       Version: '1.0.0' }
 ``` 
 `Result` of the response is a hex encoded DDO object. You can deserialize a DDO object from it.
-Now the ONT ID is registered to the blockchain successfully.
+Now the TST ID is registered to the blockchain successfully.
 
 
 ## 2 Issuing a verifiable claim
 
 A user can have several types of identities. For example, a user with an ID card issued by the China Ministry of Public Security will all have the identity as "Chinese National". A user can present his ID card in certain scenarios to declare his identity; the ID card is the Ministry of Public Security's citizenship certification.
 
-For example, a student who graduates from a university wants to obtain the status of the diploma from the university. This status can be received by issuing the diploma issued from the school to the student. Now there is a new way to authenticate the identity of this university graduate through blockchain technology, by binding a verifiable claim (a trusted statement) to the user's ONT ID. Similarly, users can obtain different verifiable claims from multiple different organizations and/or platforms.
+For example, a student who graduates from a university wants to obtain the status of the diploma from the university. This status can be received by issuing the diploma issued from the school to the student. Now there is a new way to authenticate the identity of this university graduate through blockchain technology, by binding a verifiable claim (a trusted statement) to the user's TST ID. Similarly, users can obtain different verifiable claims from multiple different organizations and/or platforms.
 
-Owner of an ONT ID can issue a verifiable claim to himself or others.
+Owner of an TST ID can issue a verifiable claim to himself or others.
 
-Government agencies, universities, banks, third-party authentication service agencies (such as CA), biometrics technology companies and etc., can serve as trusted institutions and join the Ontology ecosystem as partners. If you think you could be a certification service partner, please visit [Certification Service Partner Assessment Standard](./verification_provider_specification.md).
+Government agencies, universities, banks, third-party authentication service agencies (such as CA), biometrics technology companies and etc., can serve as trusted institutions and join the Tersa ecosystem as partners. If you think you could be a certification service partner, please visit [Certification Service Partner Assessment Standard](./verification_provider_specification.md).
 
 We use a digital diploma issued by China's Fudan University as an example to illustrate how users can obtain a third-party claim.
 
@@ -193,14 +193,14 @@ Suppose Alice is a student from Fudan University and wants to apply a digital gr
 ### 2.1 Construct a claim
 
 ````
-import {Claim} from 'ontology-ts-sdk';
+import {Claim} from 'tesra-ts-sdk';
 
 const signature = null;
 const useProof = false;
 const claim = new Claim({
 	messageId: '1',
-	issuer: 'did:ont:AJTMXN8LQEFv3yg8cYKWGWPbkz9KEB36EM',
-	subject: 'did:ont:AUEKhXNsoAT27HJwwqFGbpRy8QLHUMBMPz',
+	issuer: 'did:tst:AJTMXN8LQEFv3yg8cYKWGWPbkz9KEB36EM',
+	subject: 'did:tst:AUEKhXNsoAT27HJwwqFGbpRy8QLHUMBMPz',
 	issueAt: 1525800823
 }, signature, useProof);
 
@@ -222,9 +222,9 @@ These attributes of claim are described as follows:
 
 **messageId** String value.
 
-**issuer** Issuser's ONT ID.
+**issuer** Issuser's TST ID.
 
-**subject** Subject's ONT ID.
+**subject** Subject's TST ID.
 
 **issueAt** Timestamp of when the claim is created.
 
@@ -242,7 +242,7 @@ The issuer should attest the claim the the blockchain.
 
 The parameters are as below:
 
-**url** Websocket endpoint of Ontology node
+**url** Websocket endpoint of Tersa node
 
 **privateKey** Private key to sign the transaction
 
@@ -267,7 +267,7 @@ The issuer can also issuer the claim.
 
 The parameters are as below:
 
-**url** Websocket endpoint of Ontology node
+**url** Websocket endpoint of Tersa node
 
 **privateKey** Private key to sign the transaction
 
@@ -294,11 +294,11 @@ In the above section we illustrated how to obtain an identity claim granted by a
 
 The process of verifying a verifiable claim is illustrated with the example of Alice seeking employment.
 
-When Alice applies for company B she provides a digital diploma certificate issued by Fudan University. The certificate is a JSON file that match to the claim format. Company B can verify the statement by calling on the ONT SDK. Anyone who wants to verify the claim can query the status of the claim from blockchain.
+When Alice applies for company B she provides a digital diploma certificate issued by Fudan University. The certificate is a JSON file that match to the claim format. Company B can verify the statement by calling on the TST SDK. Anyone who wants to verify the claim can query the status of the claim from blockchain.
 
 The parameters are as below:
 
-**url** Restful endpoint of Ontology node.
+**url** Restful endpoint of Tersa node.
 
 ````
 const url = 'http://polaris1.ont.io:20335';

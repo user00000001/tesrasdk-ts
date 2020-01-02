@@ -1,5 +1,5 @@
 
-<h1 align="center">Ontology TypeScript SDK </h1>
+<h1 align="center">Tersa TypeScript SDK </h1>
 <h4 align="center">Version V1.1.0 </h4>
 
 - [Overview](#overview)
@@ -19,25 +19,25 @@
 
 ## Overview
 
-This is the official Ontology TypeScript SDK - a comprehensive library for developing with the [Ontology blockchain](https://ont.io) in both TypeScript and JavaScript. It currently supports management of wallets, digital identities and digital assets - as well as the deployment and invocation of smart contracts.
+This is the official Tersa TypeScript SDK - a comprehensive library for developing with the [Tersa blockchain](https://www.tesra.me) in both TypeScript and JavaScript. It currently supports management of twallets, digital identities and digital assets - as well as the deployment and invocation of smart contracts.
 
 ## Getting Started
 
-* 进入 [中文版](https://ontio.github.io/documentation/ontology_ts_sdk_zh.html).
-* Enter [English Version](https://ontio.github.io/documentation/ontology_ts_sdk_en.html).
+* 进入 [中文版](https://TesraSupernet.github.io/documentation/tesra_ts_sdk_zh.html).
+* Enter [English Version](https://TesraSupernet.github.io/documentation/tesra_ts_sdk_en.html).
 
 ## Installation
 
 ### Download Through npm/Yarn
 
 ````
-npm install 'ontology-ts-sdk' --save
+npm install 'tesra-ts-sdk' --save
 ````
 
 or
 
 ```
-yarn add 'ontology-ts-sdk'
+yarn add 'tesra-ts-sdk'
 ```
 
 ### Build from Source Code
@@ -45,7 +45,7 @@ yarn add 'ontology-ts-sdk'
 #### Downloading
 
 ```
-git clone 'https://github.com/ontio/ontology-ts-sdk.git'
+git clone 'https://github.com/TesraSupernet/tesra-ts-sdk.git'
 ```
 
 Then install the dependencies with:
@@ -94,20 +94,20 @@ yarn run test
 
 #### Import
 
-Using `import` to include the modules from `'ontology-ts-sdk'`:
+Using `import` to include the modules from `'tesra-ts-sdk'`:
 
 ```
-import {Wallet} from 'ontology-ts-sdk';
-var wallet = Wallet.create('test');
+import {TWallet} from 'tesra-ts-sdk';
+var twallet = TWallet.create('test');
 ```
 
 #### Require
 
-Using `require` to include the modules from `'ontology-ts-sdk'`:
+Using `require` to include the modules from `'tesra-ts-sdk'`:
 
 ````
-var Ont = require('ontology-ts-sdk');
-var wallet = Ont.Wallet.create('test');
+var Tst = require('tesra-ts-sdk');
+var twallet = Tst.TWallet.create('test');
 ````
 
 #### In the Browser
@@ -120,18 +120,18 @@ Include it into the project with a `<script>` tag:
 <script src="./lib/browser.js"></script>
 ````
 
-Everything will be available under the `Ont` variable, just like in the `require` example above.
+Everything will be available under the `Tst` variable, just like in the `require` example above.
 
 ```
-var wallet = Ont.Wallet.create('test');
+var twallet = Tst.TWallet.create('test');
 ```
 
 ## Contributing
 
-Contributors are welcome to the `ontology-ts-sdk`. Before beginning, please take a look at our [contributing guidelines](CONTRIBUTING.md). You can open an issue by [clicking here](https://github.com/ontio/ontology-ts-sdk/issues/new).
+Contributors are welcome to the `tesra-ts-sdk`. Before beginning, please take a look at our [contributing guidelines](CONTRIBUTING.md). You can open an issue by [clicking here](https://github.com/TesraSupernet/tesra-ts-sdk/issues/new).
 
-If you have any issues getting setup, open an issue or reach out in the [Ontology Discord](https://discordapp.com/invite/4TQujHj).
+If you have any issues getting setup, open an issue or reach out in the [Tersa Discord](https://discordapp.com/invite/4TQujHj).
 
 ## License
 
-The Ontology TypeScript SDK is availabl under the [LGPL-3.0 License](LICENSE).
+The Tersa TypeScript SDK is availabl under the [LGPL-3.0 License](LICENSE).

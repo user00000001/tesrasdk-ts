@@ -1,15 +1,15 @@
-# Wallet File Specification
+# TWallet File Specification
 
-## Wallet
+## TWallet
 
-A wallet file in JSON format has the following basic structure:
+A twallet file in JSON format has the following basic structure:
 
 ```
 {
-  "name": "MyWallet",
+  "name": "MyTWallet",
   "version": "1.0",
   "scrypt": {},
-  "defaultOntid": "did:ont:TJNxJe2Ty8eSCjCDxDPwiS78NRAn8XPTFL",
+  "defaultTstid": "did:tst:TJNxJe2Ty8eSCjCDxDPwiS78NRAn8XPTFL",
   "defaultAccountAddress": "TJNxJe2Ty8eSCjCDxDPwiS78NRAn8XPTFL",
   "createTime": "2018-03-14T03:12:30.862Z",
   "identities": [],
@@ -17,21 +17,21 @@ A wallet file in JSON format has the following basic structure:
   "extra": null
 }
 ```
-```name``` is a label that the user has made to the wallet file.
+```name``` is a label that the user has made to the twallet file.
 
 ```version``` is currently fixed at 1.0 and will be used for functional upgrades in the future.
 
-```scrypt``` is a ScryptParameters object which describe the parameters of SCrypt algorithm used for encrypting and decrypting the private keys in the wallet.
+```scrypt``` is a ScryptParameters object which describe the parameters of SCrypt algorithm used for encrypting and decrypting the private keys in the twallet.
 
-```defaultOntid``` indicates the default identity in this wallet.
+```defaultTstid``` indicates the default identity in this twallet.
 
-```defaultAccountAddress``` indicates the default digital assert account's address in this wallet.
+```defaultAccountAddress``` indicates the default digital assert account's address in this twallet.
 
-```createTime``` is the createTime of this wallet, in UTC format.
+```createTime``` is the createTime of this twallet, in UTC format.
 
-```identities``` is an array of identity objects which describe the details of each identity in the wallet.
+```identities``` is an array of identity objects which describe the details of each identity in the twallet.
 
-```accounts``` is an array of account objects which describe the details of each account in the wallet.
+```accounts``` is an array of account objects which describe the details of each account in the twallet.
 
 ```extra``` is an object that is defined by the implementor of the client for storing extra data. This field can be null.
 
@@ -40,7 +40,7 @@ Here is an example as below:
 ```
 {
 	"name": "mickey",
-	"defaultOntid": "",
+	"defaultTstid": "",
 	"defaultAccountAddress": "",
 	"createTime": "2018-06-30T08:52:01.519Z",
 	"version": "1.0",
@@ -51,7 +51,7 @@ Here is an example as below:
 		"dkLen": 64
 	},
 	"identities": [{
-		"ontid": "did:ont:ATcHA9eYKyve8M74CB4p6Ssx7kwXjmREUa",
+		"tstId": "did:tst:ATcHA9eYKyve8M74CB4p6Ssx7kwXjmREUa",
 		"label": "mickey",
 		"lock": false,
 		"controls": [{
@@ -110,14 +110,14 @@ ScryptParameters object has the following structure:
 Identity object has the following structure:
 ```
 {
-  "ontid": "did:ont:TQLASLtT6pWbThcSCYU1biVqhMnzhTgLFq",
+  "tstId": "did:tst:TQLASLtT6pWbThcSCYU1biVqhMnzhTgLFq",
   "label": "MyIdentity",
   "lock": false,
   "isDefault" : false,
   "controls": []
 }
 ```
-```ontid``` is the ontid of the identity.
+```tstId``` is the tstId of the identity.
 
 ```label``` is a label that the user has made to the identity.
 

@@ -5,13 +5,13 @@
 
 ## 1.1 创建身份
 
-ONT ID是一个去中心化的身份标识，能够管理用户的各种数字身份认证。数字身份(Identity)是ONT SDK导出的一个核心类，该类包含代表身份的ONT ID属性。
+TST ID是一个去中心化的身份标识，能够管理用户的各种数字身份认证。数字身份(Identity)是TST SDK导出的一个核心类，该类包含代表身份的TST ID属性。
 
-> 关于数字身份的具体信息请查阅[ONT TS SDk]() 中相关内容。
+> 关于数字身份的具体信息请查阅[TST TS SDk]() 中相关内容。
 
-可以通过SDK来创建一个身份。创建身份的过程中会基于用户的私钥生成ONT ID。
+可以通过SDK来创建一个身份。创建身份的过程中会基于用户的私钥生成TST ID。
 
-> 关于ONT ID 的规范参见[ONT ID生成规范](./ONTID_protocol_spec.md/#1.1_ONT_ID生成)
+> 关于TST ID 的规范参见[TST ID生成规范](./TSTID_protocol_spec.md/#1.1_TST_ID生成)
 
 创建身份需要提供的参数如下：
 
@@ -33,44 +33,44 @@ ONT ID是一个去中心化的身份标识，能够管理用户的各种数字�
 ```
 
 ```
-import {Identity, Crypto} from 'ontology-ts-sdk';
+import {Identity, Crypto} from 'tesra-ts-sdk';
 //generate a random private key
 const privateKey = Crypto.PrivateKey.random();
 
 var identity = Identity.create(privateKey, password, label)
-console.log(identity.ontid)
+console.log(identity.tstId)
 ```
 
-## 1.2 将ONT ID登记到链上
+## 1.2 将TST ID登记到链上
 
-身份创建完成后，还需要将身份的ONT ID注册到链上，身份才算真正地创建完成。
+身份创建完成后，还需要将身份的TST ID注册到链上，身份才算真正地创建完成。
 
-发送ONT ID上链是需要发送交易的过程。可以通过调用SDK提供的方法构造交易对象。
+发送TST ID上链是需要发送交易的过程。可以通过调用SDK提供的方法构造交易对象。
 
-一种比较典型的场景是通过传递刚刚创建的ONT ID和用户的私钥来构造交易对象。
+一种比较典型的场景是通过传递刚刚创建的TST ID和用户的私钥来构造交易对象。
 
 ### 构建交易
 ````
-import {OntidContract} from 'ontology-ts-sdk';
-import {TransactionBuilder} from 'ontology-ts-sdk'
+import {TstidContract} from 'tesra-ts-sdk';
+import {TransactionBuilder} from 'tesra-ts-sdk'
 
 //suppose we already got a identity
-const did = identity.ontid;
+const did = identity.tstId;
 //we need the public key, which can be generate from private key
 const pk = privateKey.getPublicKey();
 const gasPrice = '0';
 const gasLimit = '20000;
-const tx = OntidContract.buildRegisterOntidTx(did, pk, gasPrice, gasLimit);
+const tx = TstidContract.buildRegisterTstidTx(did, pk, gasPrice, gasLimit);
 Transaction.signTransaction(tx, privateKey);
 ````
 
-该方法返回的是交易对象序列化好的参数，接下来是发送该参数。可以通过websocket或者http请求的方式发送。这里我们以websocket为例，这样能够监听链上推送回来的消息，来确认ONT ID是否上链成功。
+该方法返回的是交易对象序列化好的参数，接下来是发送该参数。可以通过websocket或者http请求的方式发送。这里我们以websocket为例，这样能够监听链上推送回来的消息，来确认TST ID是否上链成功。
 
 ### 添加交易Payer的签名
-发送ONT ID上链的交易需要消耗手续费，我们需要给交易指定一个Payer，并添加Payer的签名。
+发送TST ID上链的交易需要消耗手续费，我们需要给交易指定一个Payer，并添加Payer的签名。
 
 ````
-import {TransactionBuilder} from 'ontology-ts-sdk'
+import {TransactionBuilder} from 'tesra-ts-sdk'
 //we also need an account to pay for the gas
 //supporse we have an account and the privateKey
 tx.payer = account.address
@@ -83,9 +83,9 @@ TransactionBuilder.addSign(tx, privateKeyOfAccount)
 我们多种发送交易的方式，如Websocket, Restful和RPC。这里以Restful的方式为例。我们可以指定交易发送到的节点，如果不指定，默认发送到测试网。
 
 ````
-import {RestClient, CONST} from 'ontology-ts-sdk'
+import {RestClient, CONST} from 'tesra-ts-sdk'
 
-const rest = new RestClient(CONST.TEST_ONT_URL.REST_URL);
+const rest = new RestClient(CONST.TEST_TST_URL.REST_URL);
 rest.sendRawTransaction(tx.serialize()).then(res => {
     console.log(res)
 })
@@ -101,21 +101,21 @@ rest.sendRawTransaction(tx.serialize()).then(res => {
   Version: '1.0.0' }
 ````
 
-如果结果返回状态成功，表明ONT ID上链成功。我们可以通过查询接口查询链上ONT ID的相关信息。
+如果结果返回状态成功，表明TST ID上链成功。我们可以通过查询接口查询链上TST ID的相关信息。
 
 ### 1.3 查询DDO
 
 ###构建交易
 
 ````
-import {OntidContract} from 'ontology-ts-sdk';
-//we use identity's ONT ID to create the transaction
-const tx = OntidContract.buildGetDDOTx(identity.ontid)
+import {TstidContract} from 'tesra-ts-sdk';
+//we use identity's TST ID to create the transaction
+const tx = TstidContract.buildGetDDOTx(identity.tstId)
 ````
 ###发送交易
 查询交易不需要消耗gas，也就不需要指定payer和payer的签名。发送交易方法的第二个参数表示发送的是否是预执行的交易。预执行的交易只在接收到它的节点上运行，不需要等待共识。一般用来查询数据。
 ````
-import {RestClient} from 'ontology-ts-sdk';
+import {RestClient} from 'tesra-ts-sdk';
 const rest = new RestClient();
 rest.sendRawTransaction(tx, true).then(res => {
     console.log(res);
@@ -134,7 +134,7 @@ rest.sendRawTransaction(tx, true).then(res => {
       Version: '1.0.0' }
       
 ````
-**Result** 就是序列化后的DDO（ONT ID object）
+**Result** 就是序列化后的DDO（TST ID object）
 我们可以通过反序列化得到详细数据。
 
 ````
@@ -146,11 +146,11 @@ console.log(ddo);
 
 用户可能会有多种不同的身份。比如拥有公安部颁发的身份证的用户，都拥有中国公民这种身份，用户可以在生活中的某些场景中，出示自己的身份证，来声明自己的这种身份；身份证就是公安部对我们公民身份的认证。
 
-再比如某所大学毕业的学生，可以获得该大学的毕业生的身份。这个身份可以通过学校给学生颁发的毕业证来证明。现在，还有一种新的方式来认证这种某大学毕业生的身份。这就是通过区块链技术，将某种可信声明同用户的ONT ID绑定起来。同样地，用户可以向多个不同的机构或平台获取不同的可信声明。
+再比如某所大学毕业的学生，可以获得该大学的毕业生的身份。这个身份可以通过学校给学生颁发的毕业证来证明。现在，还有一种新的方式来认证这种某大学毕业生的身份。这就是通过区块链技术，将某种可信声明同用户的TST ID绑定起来。同样地，用户可以向多个不同的机构或平台获取不同的可信声明。
 
-> 任何一个ONT ID的所有者（Owner）均可以向自己或他人签发可信声明。 
+> 任何一个TST ID的所有者（Owner）均可以向自己或他人签发可信声明。 
 
-> 政府机关、大学、银行、第三方认证服务机构（比如CA机构）、生物识别科技公司等等可作为现实信任机构，可以作为特定的合作方，加入到在本体生态中。
+> 政府机关、大学、银行、第三方认证服务机构（比如CA机构）、生物识别科技公司等等可作为现实信任机构，可以作为特定的合作方，加入到在超算网络生态中。
 如果你可能成为认证服务合作方，请参见[认证服务合作方接入标准](./verification_provider_specification.md)。
 
 我们以中国复旦大学颁发数字毕业证书来举例，说明如何获取第三方授予用户的的身份声明。
@@ -160,14 +160,14 @@ console.log(ddo);
 ### 构建可信声明
 
 ````
-import {Claim} from 'ontology-ts-sdk';
+import {Claim} from 'tesra-ts-sdk';
 
 const signature = null;
 const useProof = false;
 const claim = new Claim({
 	messageId: '1',
-	issuer: 'did:ont:AJTMXN8LQEFv3yg8cYKWGWPbkz9KEB36EM',
-	subject: 'did:ont:AUEKhXNsoAT27HJwwqFGbpRy8QLHUMBMPz',
+	issuer: 'did:tst:AJTMXN8LQEFv3yg8cYKWGWPbkz9KEB36EM',
+	subject: 'did:tst:AUEKhXNsoAT27HJwwqFGbpRy8QLHUMBMPz',
 	issueAt: 1525800823
 }, signature, useProof);
 
@@ -189,9 +189,9 @@ claim.content = {
 
 **messageId** 声明的ID
 
-**issuer** 声明签发者的ONT ID.
+**issuer** 声明签发者的TST ID.
 
-**subject** 声明接收者的ONT ID.
+**subject** 声明接收者的TST ID.
 
 **issueAt** 创建声明时的时间。以时间戳表示。
 
@@ -254,7 +254,7 @@ const result = await claim.revoke(url, gasPrice, gasLimit, payer, privateKey);
 
 我们以Alice同学求职的情况为例说明验证可信声明的过程。
 
-Alice向公司B求职时，提供了复旦大学授予的数字毕业证书，该证书是一份符合claim声明格式的JSON文件。公司B可以通过调用ONT SDK的方法来验证该声明。任何需要验证声明的用户都可以调用相关方法，查询声明在链上的状态，验证声明。
+Alice向公司B求职时，提供了复旦大学授予的数字毕业证书，该证书是一份符合claim声明格式的JSON文件。公司B可以通过调用TST SDK的方法来验证该声明。任何需要验证声明的用户都可以调用相关方法，查询声明在链上的状态，验证声明。
 
 方法的参数如下：
 **url** 节点的Restful接口url

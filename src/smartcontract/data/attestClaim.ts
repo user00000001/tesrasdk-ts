@@ -30,7 +30,7 @@ export default {
             name: 'claimId',
             type: 'ByteArray'
         }, {
-            name: 'ontId',
+            name: 'tstId',
             type: 'ByteArray'
         }],
         returntype: 'Boolean'

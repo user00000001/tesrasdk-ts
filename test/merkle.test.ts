@@ -3,7 +3,7 @@ import { PrivateKey } from '../src/crypto';
 import { Identity } from '../src/identity';
 import { constructClaimProof, getProofNodes, verifyClaimProof, verifyLeafHashInclusion } from '../src/merkle';
 import { WebsocketClient } from '../src/network/websocket/websocketClient';
-import { buildRegisterOntidTx } from '../src/smartcontract/nativevm/ontidContractTxBuilder';
+import { buildRegisterTstidTx } from '../src/smartcontract/nativevm/tstidContractTxBuilder';
 import { signTransaction } from '../src/transaction/transactionBuilder';
 
 // tslint:disable:no-console
@@ -15,14 +15,14 @@ describe('test merkle proofs', () => {
     const publicKey = privateKey.getPublicKey();
     const account = Account.create(privateKey, '123456', '');
     const identity = Identity.create(privateKey, '123456', '');
-    const ontId =  identity.ontid;
+    const tstId =  identity.tstId;
     const address = account.address;
 
     /**
-     * Registers new ONT ID to create transaction
+     * Registers new TST ID to create transaction
      */
     beforeAll(async () => {
-        const tx = buildRegisterOntidTx(ontId, publicKey, '0', '30000');
+        const tx = buildRegisterTstidTx(tstId, publicKey, '0', '30000');
         tx.payer = account.address;
         signTransaction(tx, privateKey);
 

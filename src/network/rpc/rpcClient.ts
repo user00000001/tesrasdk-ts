@@ -1,23 +1,23 @@
 /*
- * Copyright (C) 2018 The ontology Authors
- * This file is part of The ontology library.
+ * Copyright (C) 2019-2020 The TersaSupernet Authors
+ * This file is part of The TesraSupernet library.
  *
- * The ontology is free software: you can redistribute it and/or modify
+ * The TesraSupernet is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ontology is distributed in the hope that it will be useful,
+ * The TesraSupernet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+ * along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 import axios from 'axios';
-import { TEST_ONT_URL } from '../../consts';
+import { TEST_TST_URL } from '../../consts';
 import { Address } from '../../crypto/address';
 import { ERROR_CODE } from '../../error';
 
@@ -31,7 +31,7 @@ export default class RpcClient {
     url: string;
 
     constructor( url ?: string ) {
-        this.url = url || TEST_ONT_URL.RPC_URL;
+        this.url = url || TEST_TST_URL.RPC_URL;
     }
 
     /**
@@ -59,7 +59,7 @@ export default class RpcClient {
 
     /**
      * Get the balance of some address.
-     * The result contains ONT and ONG.
+     * The result contains TST and TSG.
      * @param address Address
      */
     getBalance(address: Address): Promise<any> {
@@ -279,12 +279,12 @@ export default class RpcClient {
 
     /**
      * Get allowanece
-     * @param asset Asset's type.Only ONT and ONG supported.
+     * @param asset Asset's type.Only TST and TSG supported.
      * @param from Address of allowance's sender.
      * @param to Address of allowance's receiver.
      */
     getAllowance(asset: string, from: Address, to: Address): Promise<any> {
-        if (asset !== 'ont' && asset !== 'ong') {
+        if (asset !== 'tst' && asset !== 'tsg') {
             throw ERROR_CODE.INVALID_PARAMS;
         }
         const req = this.makeRequest('getallowance', asset, from.toBase58(), to.toBase58());
@@ -293,8 +293,8 @@ export default class RpcClient {
         });
     }
 
-    getUnboundOng(address: Address): Promise<any> {
-        const req = this.makeRequest('getunboundong', 'ong', address.toBase58(), address.toBase58());
+    getUnboundTsg(address: Address): Promise<any> {
+        const req = this.makeRequest('getunboundtsg', 'tsg', address.toBase58(), address.toBase58());
         return axios.post(this.url, req).then((res) => {
             return res.data;
         });
@@ -314,8 +314,8 @@ export default class RpcClient {
         });
     }
 
-    getGrantOng(address: Address): Promise<any> {
-        const req = this.makeRequest('getgrantong', address.toBase58());
+    getGrantTsg(address: Address): Promise<any> {
+        const req = this.makeRequest('getgranttsg', address.toBase58());
         return axios.post(this.url, req).then((res) => {
             return res.data;
         });

@@ -1,19 +1,19 @@
 /*
-* Copyright (C) 2018 The ontology Authors
-* This file is part of The ontology library.
+* Copyright (C) 2019-2020 The TersaSupernet Authors
+* This file is part of The TesraSupernet library.
 *
-* The ontology is free software: you can redistribute it and/or modify
+* The TesraSupernet is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* The ontology is distributed in the hope that it will be useful,
+* The TesraSupernet is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public License
-* along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+* along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import { Address  } from '../../crypto';
@@ -34,8 +34,8 @@ const contractAddress = new Address(reverseHex(contractHash));
  * Attests the claim.
  *
  * @param claimId Unique id of the claim
- * @param issuer Issuer's ONT ID
- * @param subject Subject's ONT ID
+ * @param issuer Issuer's TST ID
+ * @param subject Subject's TST ID
  * @param gasPrice Gas price
  * @param gasLimit Gas limit
  * @param payer Payer's address
@@ -62,24 +62,24 @@ export function buildCommitRecordTx(claimId: string, issuer: string, subject: st
  * Revokes the claim.
  *
  * @param claimId Unique id of the claim
- * @param revokerOntid Revoker's ONT ID
+ * @param revokerTstid Revoker's TST ID
  * @param gasPrice Gas price
  * @param gasLimit Gas limit
  * @param payer Payer's address
  */
-export function buildRevokeRecordTx(claimId: string, revokerOntid: string,
+export function buildRevokeRecordTx(claimId: string, revokerTstid: string,
                                     gasPrice: string, gasLimit: string, payer: Address) {
     const f = abiInfo.getFunction('Revoke');
 
     const name1 = f.parameters[0].getName();
     const type1 = ParameterType.ByteArray;
 
-    if (revokerOntid.substr(0, 3) === 'did') {
-        revokerOntid = str2hexstr(revokerOntid);
+    if (revokerTstid.substr(0, 3) === 'did') {
+        revokerTstid = str2hexstr(revokerTstid);
     }
 
     const p1 = new Parameter(name1, type1, str2hexstr(claimId));
-    const p2 = new Parameter(f.parameters[1].getName(), ParameterType.ByteArray, revokerOntid);
+    const p2 = new Parameter(f.parameters[1].getName(), ParameterType.ByteArray, revokerTstid);
 
     return makeInvokeTransaction(f.name, [p1, p2], contractAddress, gasPrice, gasLimit, payer);
 }

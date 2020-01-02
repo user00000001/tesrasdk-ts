@@ -1,19 +1,19 @@
 /*
- * Copyright (C) 2018 The ontology Authors
- * This file is part of The ontology library.
+ * Copyright (C) 2019-2020 The TersaSupernet Authors
+ * This file is part of The TesraSupernet library.
  *
- * The ontology is free software: you can redistribute it and/or modify
+ * The TesraSupernet is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ontology is distributed in the hope that it will be useful,
+ * The TesraSupernet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+ * along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 import * as bip39 from 'bip39';
@@ -21,7 +21,7 @@ import * as elliptic from 'elliptic';
 import * as secureRandom from 'secure-random';
 import { sm2 } from 'sm.js';
 import * as wif from 'wif';
-import { DEFAULT_ALGORITHM, DEFAULT_SM2_ID, ONT_BIP44_PATH } from '../consts';
+import { DEFAULT_ALGORITHM, DEFAULT_SM2_ID, TST_BIP44_PATH } from '../consts';
 import { ERROR_CODE } from '../error';
 import { decryptWithGcm, encryptWithGcm, ScryptParams } from '../scrypt';
 import { ab2hexstring, hexstring2ab, isBase64, str2hexstr } from '../utils';
@@ -58,7 +58,7 @@ export class PrivateKey extends Key {
     }
 
     /**
-     * Creates PrivateKey from Wallet Import Format (WIF) representation.
+     * Creates PrivateKey from TWallet Import Format (WIF) representation.
      *
      * @param wifkey WIF private key representation
      *
@@ -74,7 +74,7 @@ export class PrivateKey extends Key {
      * @param mnemonic Space separated list of words
      *
      */
-    static generateFromMnemonic(mnemonic: string, derivePath: string = ONT_BIP44_PATH): PrivateKey {
+    static generateFromMnemonic(mnemonic: string, derivePath: string = TST_BIP44_PATH): PrivateKey {
         if (mnemonic.split(' ').length < 12) {
             throw ERROR_CODE.INVALID_PARAMS;
         }
@@ -301,7 +301,7 @@ export class PrivateKey extends Key {
     }
 
     /**
-     * Gets Wallet Import Format (WIF) representation of the PrivateKey.
+     * Gets TWallet Import Format (WIF) representation of the PrivateKey.
      *
      */
     serializeWIF(): string {

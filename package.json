@@ -1,7 +1,7 @@
 {
-    "name": "ontology-ts-sdk",
-    "version": "1.1.0",
-    "description": "Comprehensive TypeScript library for the Ontology blockchain.",
+    "name": "tesra-ts-sdk",
+    "version": "0.0.1",
+    "description": "Comprehensive TypeScript library for the Tersa blockchain.",
     "main": "./lib/index.js",
     "types": "./lib/types/index.d.ts",
     "scripts": {
@@ -23,20 +23,20 @@
         "testEnvironment": "node",
         "testRegex": "/test/.*\\.(ts|tsx|js)$"
     },
-    "author": "ontologyNetwork",
+    "author": "TesraSupernet",
     "license": "LGPL-3.0",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/ontio/ontology-ts-sdk"
+        "url": "git+https://github.com/TesraSupernet/tesra-ts-sdk"
     },
     "keywords": [
-        "ontology",
-        "ont",
+        "tesra",
+        "tst",
         "typescript",
         "sdk"
     ],
     "bugs": {
-        "url": "https://github.com/ontio/ontology-ts-sdk/issues"
+        "url": "https://github.com/TesraSupernet/tesra-ts-sdk/issues"
     },
     "devDependencies": {
         "@types/base64-url": "^2.2.0",

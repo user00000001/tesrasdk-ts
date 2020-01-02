@@ -1,19 +1,19 @@
 /*
-* Copyright (C) 2018 The ontology Authors
-* This file is part of The ontology library.
+* Copyright (C) 2019-2020 The TersaSupernet Authors
+* This file is part of The TesraSupernet library.
 *
-* The ontology is free software: you can redistribute it and/or modify
+* The TesraSupernet is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* The ontology is distributed in the hope that it will be useful,
+* The TesraSupernet is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public License
-* along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+* along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
 */
 import { Address, PublicKey } from '../../crypto';
 import { DDOAttribute } from '../../transaction/ddo';
@@ -24,14 +24,14 @@ import { buildNativeCodeScript } from '../abi/nativeVmParamsBuilder';
 import Struct from '../abi/struct';
 
 /**
- * Address of ONT ID contract
+ * Address of TST ID contract
  */
-export const ONTID_CONTRACT = '0000000000000000000000000000000000000003';
+export const TSTID_CONTRACT = '0000000000000000000000000000000000000003';
 
 /**
- * Method names in ONT ID contract
+ * Method names in TST ID contract
  */
-const ONTID_METHOD  = {
+const TSTID_METHOD  = {
     regIDWithPublicKey: 'regIDWithPublicKey',
     regIDWithAttributes: 'regIDWithAttributes',
     addAttributes: 'addAttributes',
@@ -51,33 +51,33 @@ const ONTID_METHOD  = {
  *
  * GAS calculation: gasLimit * gasPrice is equal to the amount of gas consumed.
  *
- * @param ontid User's ONT ID
+ * @param tstId User's TST ID
  * @param publicKey Public key
  * @param gasPrice Gas price
  * @param gasLimit Gas limit
  * @param payer Payer
  */
-export function buildRegisterOntidTx(
-    ontid: string,
+export function buildRegisterTstidTx(
+    tstId: string,
     publicKey: PublicKey,
     gasPrice: string,
     gasLimit: string,
     payer?: Address
 ): Transaction {
-    const method = ONTID_METHOD.regIDWithPublicKey;
+    const method = TSTID_METHOD.regIDWithPublicKey;
 
-    if (ontid.substr(0, 3) === 'did') {
-        ontid = str2hexstr(ontid);
+    if (tstId.substr(0, 3) === 'did') {
+        tstId = str2hexstr(tstId);
     }
     const struct = new Struct();
-    struct.add(ontid, publicKey.serializeHex());
+    struct.add(tstId, publicKey.serializeHex());
     const list = [struct];
     const params = buildNativeCodeScript(list);
 
     const tx = makeNativeContractTx(
         method,
         params,
-        new Address(ONTID_CONTRACT),
+        new Address(TSTID_CONTRACT),
         gasPrice,
         gasLimit,
         payer
@@ -89,7 +89,7 @@ export function buildRegisterOntidTx(
 /**
  * Registers Identity with initial attributes.
  *
- * @param ontid User's ONT ID
+ * @param tstId User's TST ID
  * @param attributes Array of DDOAttributes
  * @param publicKey User's public key
  * @param gasPrice Gas price
@@ -97,16 +97,16 @@ export function buildRegisterOntidTx(
  * @param payer Payer
  */
 export function buildRegIdWithAttributes(
-    ontid: string,
+    tstId: string,
     attributes: DDOAttribute[],
     publicKey: PublicKey,
     gasPrice: string,
     gasLimit: string,
     payer?: Address
 ) {
-    const method = ONTID_METHOD.regIDWithAttributes;
-    if (ontid.substr(0, 3) === 'did') {
-        ontid = str2hexstr(ontid);
+    const method = TSTID_METHOD.regIDWithAttributes;
+    if (tstId.substr(0, 3) === 'did') {
+        tstId = str2hexstr(tstId);
     }
 
     // let attrs = '';
@@ -114,13 +114,13 @@ export function buildRegIdWithAttributes(
     //     attrs += a.serialize();
     // }
 
-    // const p1 = new Parameter(f.parameters[0].getName(), ParameterType.ByteArray, ontid);
+    // const p1 = new Parameter(f.parameters[0].getName(), ParameterType.ByteArray, tstId);
     // const p2 = new Parameter(f.parameters[1].getName(), ParameterType.ByteArray, publicKey.serializeHex());
     // const p3 = new Parameter(f.parameters[2].getName(), ParameterType.ByteArray, attrs);
     // f.setParamsValue(p1, p2, p3);
     const attrLen = attributes.length;
     const struct = new Struct();
-    struct.add(ontid, publicKey.serializeHex(), attrLen);
+    struct.add(tstId, publicKey.serializeHex(), attrLen);
     for (const a of attributes) {
         const key = str2hexstr(a.key);
         const type = str2hexstr(a.type);
@@ -131,7 +131,7 @@ export function buildRegIdWithAttributes(
     const tx = makeNativeContractTx(
         method,
         params,
-        new Address(ONTID_CONTRACT),
+        new Address(TSTID_CONTRACT),
         gasPrice,
         gasLimit,
         payer
@@ -141,9 +141,9 @@ export function buildRegIdWithAttributes(
 }
 
 /**
- * Adds attributes to ONT ID.
+ * Adds attributes to TST ID.
  *
- * @param ontid User's ONT ID
+ * @param tstId User's TST ID
  * @param attributes Array of DDOAttributes
  * @param publicKey User's public key
  * @param gasPrice Gas price
@@ -151,20 +151,20 @@ export function buildRegIdWithAttributes(
  * @param payer Payer
  */
 export function buildAddAttributeTx(
-    ontid: string,
+    tstId: string,
     attributes: DDOAttribute[],
     publicKey: PublicKey,
     gasPrice: string,
     gasLimit: string,
     payer?: Address
 ): Transaction {
-    const method = ONTID_METHOD.addAttributes;
+    const method = TSTID_METHOD.addAttributes;
 
-    if (ontid.substr(0, 3) === 'did') {
-        ontid = str2hexstr(ontid);
+    if (tstId.substr(0, 3) === 'did') {
+        tstId = str2hexstr(tstId);
     }
     const struct = new Struct();
-    struct.add(ontid, attributes.length);
+    struct.add(tstId, attributes.length);
     for (const a of attributes) {
         const key = str2hexstr(a.key);
         const type = str2hexstr(a.type);
@@ -177,7 +177,7 @@ export function buildAddAttributeTx(
     const tx = makeNativeContractTx(
         method,
         params,
-        new Address(ONTID_CONTRACT),
+        new Address(TSTID_CONTRACT),
         gasPrice,
         gasLimit,
         payer
@@ -186,9 +186,9 @@ export function buildAddAttributeTx(
 }
 
 /**
- * Removes attribute from ONT ID.
+ * Removes attribute from TST ID.
  *
- * @param ontid User's ONT ID
+ * @param tstId User's TST ID
  * @param key Key of attribute to remove
  * @param publicKey User's public key
  * @param gasPrice Gas price
@@ -197,26 +197,26 @@ export function buildAddAttributeTx(
  *
  */
 export function buildRemoveAttributeTx(
-    ontid: string,
+    tstId: string,
     key: string,
     publicKey: PublicKey,
     gasPrice: string,
     gasLimit: string,
     payer?: Address
 ): Transaction {
-    const method = ONTID_METHOD.removeAttribute;
+    const method = TSTID_METHOD.removeAttribute;
 
-    if (ontid.substr(0, 3) === 'did') {
-        ontid = str2hexstr(ontid);
+    if (tstId.substr(0, 3) === 'did') {
+        tstId = str2hexstr(tstId);
     }
 
     const struct = new Struct();
-    struct.add(ontid, str2hexstr(key), publicKey.serializeHex());
+    struct.add(tstId, str2hexstr(key), publicKey.serializeHex());
     const params = buildNativeCodeScript([struct]);
     const tx = makeNativeContractTx(
         method,
         params,
-        new Address(ONTID_CONTRACT),
+        new Address(TSTID_CONTRACT),
         gasPrice,
         gasLimit,
         payer
@@ -225,46 +225,46 @@ export function buildRemoveAttributeTx(
 }
 
 /**
- * Queries attributes attached to ONT ID.
+ * Queries attributes attached to TST ID.
  *
- * @param ontid User's ONT ID
+ * @param tstId User's TST ID
  */
-export function buildGetAttributesTx(ontid: string) {
-    const method = ONTID_METHOD.getAttributes;
+export function buildGetAttributesTx(tstId: string) {
+    const method = TSTID_METHOD.getAttributes;
 
-    if (ontid.substr(0, 3) === 'did') {
-        ontid = str2hexstr(ontid);
+    if (tstId.substr(0, 3) === 'did') {
+        tstId = str2hexstr(tstId);
     }
 
     const struct = new Struct();
-    struct.add(ontid);
+    struct.add(tstId);
     const params = buildNativeCodeScript([struct]);
 
-    const tx = makeNativeContractTx(method, params, new Address(ONTID_CONTRACT));
+    const tx = makeNativeContractTx(method, params, new Address(TSTID_CONTRACT));
     return tx;
 }
 
 /**
- * Queries Description Object of ONT ID(DDO).
+ * Queries Description Object of TST ID(DDO).
  *
- * @param ontid User's ONT ID
+ * @param tstId User's TST ID
  */
-export function buildGetDDOTx(ontid: string) {
-    const method = ONTID_METHOD.getDDO;
-    if (ontid.substr(0, 3) === 'did') {
-        ontid = str2hexstr(ontid);
+export function buildGetDDOTx(tstId: string) {
+    const method = TSTID_METHOD.getDDO;
+    if (tstId.substr(0, 3) === 'did') {
+        tstId = str2hexstr(tstId);
     }
 
     const struct = new Struct();
-    struct.add(ontid);
+    struct.add(tstId);
     const params = buildNativeCodeScript([struct]);
-    const tx = makeNativeContractTx(method, params, new Address(ONTID_CONTRACT));
+    const tx = makeNativeContractTx(method, params, new Address(TSTID_CONTRACT));
     return tx;
 }
 /**
- * Adds a new public key to ONT ID.
+ * Adds a new public key to TST ID.
  *
- * @param ontid User's ONT ID
+ * @param tstId User's TST ID
  * @param newPk New public key to be added
  * @param userKey User's public key or address
  * @param gasPrice Gas price
@@ -272,20 +272,20 @@ export function buildGetDDOTx(ontid: string) {
  * @param payer Payer
  */
 export function buildAddControlKeyTx(
-    ontid: string,
+    tstId: string,
     newPk: PublicKey,
     userKey: PublicKey | Address,
     gasPrice: string,
     gasLimit: string,
     payer?: Address
 ): Transaction {
-    const method = ONTID_METHOD.addKey;
+    const method = TSTID_METHOD.addKey;
 
-    if (ontid.substr(0, 3) === 'did') {
-        ontid = str2hexstr(ontid);
+    if (tstId.substr(0, 3) === 'did') {
+        tstId = str2hexstr(tstId);
     }
 
-    const p1 = ontid;
+    const p1 = tstId;
     const p2 = newPk.serializeHex();
     let p3;
     if (userKey instanceof PublicKey) {
@@ -299,7 +299,7 @@ export function buildAddControlKeyTx(
     const tx = makeNativeContractTx(
         method,
         params,
-        new Address(ONTID_CONTRACT),
+        new Address(TSTID_CONTRACT),
         gasPrice,
         gasLimit,
         payer
@@ -309,9 +309,9 @@ export function buildAddControlKeyTx(
 }
 
 /**
- * Revokes a public key from ONT ID.
+ * Revokes a public key from TST ID.
  *
- * @param ontid User's ONT ID
+ * @param tstId User's TST ID
  * @param pk2Remove Public key to be removed
  * @param sender User's public key or address
  * @param gasPrice Gas price
@@ -319,20 +319,20 @@ export function buildAddControlKeyTx(
  * @param payer Payer
  */
 export function buildRemoveControlKeyTx(
-    ontid: string,
+    tstId: string,
     pk2Remove: PublicKey,
     sender: PublicKey | Address,
     gasPrice: string,
     gasLimit: string,
     payer?: Address
 ): Transaction {
-    const method = ONTID_METHOD.removeKey;
+    const method = TSTID_METHOD.removeKey;
 
-    if (ontid.substr(0, 3) === 'did') {
-        ontid = str2hexstr(ontid);
+    if (tstId.substr(0, 3) === 'did') {
+        tstId = str2hexstr(tstId);
     }
 
-    const p1 = ontid;
+    const p1 = tstId;
     const p2 = pk2Remove.serializeHex();
     let p3;
     if (sender instanceof PublicKey) {
@@ -347,7 +347,7 @@ export function buildRemoveControlKeyTx(
     const tx = makeNativeContractTx(
         method,
         params,
-        new Address(ONTID_CONTRACT),
+        new Address(TSTID_CONTRACT),
         gasPrice,
         gasLimit,
         payer
@@ -356,28 +356,28 @@ export function buildRemoveControlKeyTx(
 }
 
 /**
- * Queries public keys attached to ONT ID.
+ * Queries public keys attached to TST ID.
  *
- * @param ontid User's ONT ID
+ * @param tstId User's TST ID
  */
-export function buildGetPublicKeysTx(ontid: string) {
-    const method = ONTID_METHOD.getPublicKeys;
+export function buildGetPublicKeysTx(tstId: string) {
+    const method = TSTID_METHOD.getPublicKeys;
 
-    if (ontid.substr(0, 3) === 'did') {
-        ontid = str2hexstr(ontid);
+    if (tstId.substr(0, 3) === 'did') {
+        tstId = str2hexstr(tstId);
     }
     const struct = new Struct();
-    struct.add(ontid);
+    struct.add(tstId);
     const params = buildNativeCodeScript([struct]);
 
-    const tx = makeNativeContractTx(method, params, new Address(ONTID_CONTRACT));
+    const tx = makeNativeContractTx(method, params, new Address(TSTID_CONTRACT));
     return tx;
 }
 
 /**
- * Adds recovery address to ONT ID.
+ * Adds recovery address to TST ID.
  *
- * @param ontid User's ONT ID
+ * @param tstId User's TST ID
  * @param recovery Recovery address, must have not be set
  * @param publicKey User's public key, must be user's existing public key
  * @param gasPrice Gas price
@@ -385,35 +385,35 @@ export function buildGetPublicKeysTx(ontid: string) {
  * @param payer Payer
  */
 export function buildAddRecoveryTx(
-    ontid: string,
+    tstId: string,
     recovery: Address,
     publicKey: PublicKey,
     gasPrice: string,
     gasLimit: string,
     payer?: Address
 ): Transaction {
-    const method = ONTID_METHOD.addRecovery;
+    const method = TSTID_METHOD.addRecovery;
 
-    if (ontid.substr(0, 3) === 'did') {
-        ontid = str2hexstr(ontid);
+    if (tstId.substr(0, 3) === 'did') {
+        tstId = str2hexstr(tstId);
     }
 
-    const p1 = ontid;
+    const p1 = tstId;
     const p2 = recovery;
     const p3 = publicKey.serializeHex();
     const struct = new Struct();
     struct.add(p1, p2, p3);
     const params = buildNativeCodeScript([struct]);
-    const tx = makeNativeContractTx(method, params, new Address(ONTID_CONTRACT), gasPrice, gasLimit, payer);
+    const tx = makeNativeContractTx(method, params, new Address(TSTID_CONTRACT), gasPrice, gasLimit, payer);
     return tx;
 }
 
 /**
- * Changes recovery address of ONT ID.
+ * Changes recovery address of TST ID.
  *
  * This contract call must be initiated by the original recovery address.
  *
- * @param ontid user's ONT ID
+ * @param tstId user's TST ID
  * @param newrecovery New recovery address
  * @param oldrecovery Original recoevery address
  * @param gasPrice Gas price
@@ -421,47 +421,47 @@ export function buildAddRecoveryTx(
  * @param payer Payer
  */
 export function buildChangeRecoveryTx(
-    ontid: string,
+    tstId: string,
     newrecovery: Address,
     oldrecovery: Address,
     gasPrice: string,
     gasLimit: string,
     payer?: Address
 ): Transaction {
-    const method = ONTID_METHOD.changeRecovery;
+    const method = TSTID_METHOD.changeRecovery;
 
-    if (ontid.substr(0, 3) === 'did') {
-        ontid = str2hexstr(ontid);
+    if (tstId.substr(0, 3) === 'did') {
+        tstId = str2hexstr(tstId);
     }
 
-    const p1 = ontid;
+    const p1 = tstId;
     const p2 = newrecovery;
     const p3 = oldrecovery;
     const struct = new Struct();
     struct.add(p1, p2, p3);
     const params = buildNativeCodeScript([struct]);
 
-    const tx = makeNativeContractTx(method, params, new Address(ONTID_CONTRACT),
+    const tx = makeNativeContractTx(method, params, new Address(TSTID_CONTRACT),
     gasPrice, gasLimit);
     tx.payer = payer || oldrecovery;
     return tx;
 }
 
 /**
- * Queries the state of the public key associated with ONT ID.
+ * Queries the state of the public key associated with TST ID.
  *
- * @param ontid user's ONT ID
+ * @param tstId user's TST ID
  * @param pkId User's public key Id
  */
-export function buildGetPublicKeyStateTx(ontid: string, pkId: number) {
-    const method = ONTID_METHOD.getKeyState;
+export function buildGetPublicKeyStateTx(tstId: string, pkId: number) {
+    const method = TSTID_METHOD.getKeyState;
 
-    if (ontid.substr(0, 3) === 'did') {
-        ontid = str2hexstr(ontid);
+    if (tstId.substr(0, 3) === 'did') {
+        tstId = str2hexstr(tstId);
     }
 
     // tslint:disable-next-line:no-console
-    console.log('did: ' + ontid);
+    console.log('did: ' + tstId);
 
     const index = num2hexstring(pkId, 4, true);
 
@@ -469,9 +469,9 @@ export function buildGetPublicKeyStateTx(ontid: string, pkId: number) {
     console.log('index: ' + index);
 
     const struct = new Struct();
-    struct.add(ontid, pkId);
+    struct.add(tstId, pkId);
     const params = buildNativeCodeScript([struct]);
 
-    const tx = makeNativeContractTx(method, params, new Address(ONTID_CONTRACT));
+    const tx = makeNativeContractTx(method, params, new Address(TSTID_CONTRACT));
     return tx;
 }

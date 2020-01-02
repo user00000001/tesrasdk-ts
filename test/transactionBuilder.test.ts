@@ -1,19 +1,19 @@
 /*
-* Copyright (C) 2018 The ontology Authors
-* This file is part of The ontology library.
+* Copyright (C) 2019-2020 The TersaSupernet Authors
+* This file is part of The TesraSupernet library.
 *
-* The ontology is free software: you can redistribute it and/or modify
+* The TesraSupernet is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* The ontology is distributed in the hope that it will be useful,
+* The TesraSupernet is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public License
-* along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+* along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
 */
 import { DDO } from '../src';
 import { Address, PrivateKey } from '../src/crypto';
@@ -124,7 +124,7 @@ describe('test AbiInfo', () => {
         const addressParam1 = new Address(address);
         const addressParam2 = new Address('AecaeSEBkt5GcBCxwz1F41TvdjX3dnKBkJ');
 
-        const param = new Parameter('arg0', ParameterType.String, 'ont');
+        const param = new Parameter('arg0', ParameterType.String, 'tst');
         const param2 = new Parameter('arg1', ParameterType.ByteArray, addressParam1.serialize());
         const param3 = new Parameter('arg2', ParameterType.ByteArray, addressParam2.serialize());
         const param4 = new Parameter('arg3', ParameterType.Integer, 1000000000);
@@ -149,7 +149,7 @@ describe('test AbiInfo', () => {
         expect(match2).toEqual(true);
     });
 
-    test('makeTxFromJSON_transferONG', async () => {
+    test('makeTxFromJSON_transferTSG', async () => {
         const socketClient = new WebsocketClient('ws://polaris1.ont.io:20335');
         const adminPrivateKey = new PrivateKey('7c47df9664e7db85c1308c080f398400cb24283f5d922e76b478b5429e821b97');
         const adminAddress = new Address('AdLUBSSHUuFaak9j169hiamXUmPuCTnaRz');
@@ -190,7 +190,7 @@ describe('test AbiInfo', () => {
         expect(res.Error).toEqual(0);
     });
 
-    test('makeTxFromJSON_regOntid', async () => {
+    test('makeTxFromJSON_regTstid', async () => {
         const socketClient = new WebsocketClient('ws://polaris1.ont.io:20335');
         const adminPrivateKey = new PrivateKey('7c47df9664e7db85c1308c080f398400cb24283f5d922e76b478b5429e821b97');
         const adminAddress = new Address('AdLUBSSHUuFaak9j169hiamXUmPuCTnaRz');
@@ -206,8 +206,8 @@ describe('test AbiInfo', () => {
                     functions: [{
                         operation: 'regIDWithPublicKey',
                         args: [{
-                            name: 'arg0-ontid',
-                            value: 'String:did:ont:AdLUBSSHUuFaak9j169hiamXUmPuCTnaRz'
+                            name: 'arg0-tstId',
+                            value: 'String:did:tst:AdLUBSSHUuFaak9j169hiamXUmPuCTnaRz'
                         },
                         {
                             name: 'arg1-publickey',
@@ -244,8 +244,8 @@ describe('test AbiInfo', () => {
                     functions: [{
                         operation: 'getDDO',
                         args: [{
-                            name: 'arg0-ontid',
-                            value: 'String:did:ont:AdLUBSSHUuFaak9j169hiamXUmPuCTnaRz'
+                            name: 'arg0-tstId',
+                            value: 'String:did:tst:AdLUBSSHUuFaak9j169hiamXUmPuCTnaRz'
                         }
                         ]
                     }],

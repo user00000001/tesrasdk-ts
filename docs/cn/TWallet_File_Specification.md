@@ -1,11 +1,11 @@
-# Wallet File Specification
+# TWallet File Specification
 
-## Wallet
-A wallet file in JSON format has the following basic structure:
+## TWallet
+A twallet file in JSON format has the following basic structure:
 
 ```
 {
-  "name": "MyWallet",
+  "name": "MyTWallet",
   "version": "1.0",
   "scrypt": {},
   "identities": [],
@@ -13,15 +13,15 @@ A wallet file in JSON format has the following basic structure:
   "extra": null
 }
 ```
-```name``` is a label that the user has made to the wallet file.
+```name``` is a label that the user has made to the twallet file.
 
 ```version``` is currently fixed at 1.0 and will be used for functional upgrades in the future.
 
-```scrypt``` is a ScryptParameters object which describe the parameters of SCrypt algorithm used for encrypting and decrypting the private keys in the wallet.
+```scrypt``` is a ScryptParameters object which describe the parameters of SCrypt algorithm used for encrypting and decrypting the private keys in the twallet.
 
-```identities``` is an array of Identity objects which describe the details of each Identity in the wallet.
+```identities``` is an array of Identity objects which describe the details of each Identity in the twallet.
 
-```accounts``` is an array of Account objects which describe the details of each account in the wallet.
+```accounts``` is an array of Account objects which describe the details of each account in the twallet.
 
 ```extra``` is an object that is defined by the implementor of the client for storing extra data. This field can be null.
 
@@ -45,7 +45,7 @@ ScryptParameters object has the following structure:
 Identity object has the following structure:
 ```
 {
-  "ontid": "did:ont:TQLASLtT6pWbThcSCYU1biVqhMnzhTgLFq",
+  "tstId": "did:tst:TQLASLtT6pWbThcSCYU1biVqhMnzhTgLFq",
   "label": "MyIdentity",
   "isDefault": true,
   "lock": false,
@@ -53,7 +53,7 @@ Identity object has the following structure:
   "extra": null
 }
 ```
-```ontid``` is the ontid of the identity.
+```tstId``` is the tstId of the identity.
 
 ```label``` is a label that the user has made to the identity.
 

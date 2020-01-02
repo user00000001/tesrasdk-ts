@@ -1,19 +1,19 @@
 /*
-* Copyright (C) 2018 The ontology Authors
-* This file is part of The ontology library.
+* Copyright (C) 2019-2020 The TersaSupernet Authors
+* This file is part of The TesraSupernet library.
 *
-* The ontology is free software: you can redistribute it and/or modify
+* The TesraSupernet is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* The ontology is distributed in the hope that it will be useful,
+* The TesraSupernet is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public License
-* along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+* along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
 */
 import { Address, JsonKey, PrivateKey } from './crypto';
 import { deserializeFromJson } from './crypto/PrivateKeyFactory';
@@ -105,15 +105,15 @@ export class Identity {
             label = ab2hexstring (generateRandomArray(4));
         }
 
-        // generate ontid from p
+        // generate tstId from p
         const publicKey = privateKey.getPublicKey();
-        identity.ontid = Address.generateOntid(publicKey);
+        identity.tstId = Address.generateTstid(publicKey);
         identity.label = label;
         identity.lock = false;
         identity.isDefault = false;
 
         // control
-        const control = new ControlData('1', encryptedPrivateKey, Address.fromOntid(identity.ontid), saltBase64);
+        const control = new ControlData('1', encryptedPrivateKey, Address.fromTstid(identity.tstId), saltBase64);
         control.publicKey = publicKey.serializeHex();
         identity.controls.push(control);
 
@@ -132,15 +132,15 @@ export class Identity {
      */
     static create(privateKey: PrivateKey, keyphrase: string, label: string, params?: ScryptParams) {
         const identity = new Identity();
-        identity.ontid = '';
+        identity.tstId = '';
         identity.label = label;
         identity.lock = false;
         identity.isDefault = false;
 
-        // ontid
+        // tstId
         const publicKey = privateKey.getPublicKey();
-        identity.ontid = Address.generateOntid(publicKey);
-        const address = Address.fromOntid(identity.ontid);
+        identity.tstId = Address.generateTstid(publicKey);
+        const address = Address.fromTstid(identity.tstId);
         const salt = randomBytes(16);
         const encryptedPrivateKey = privateKey.encrypt(keyphrase, address, salt, params);
         // start from 1
@@ -165,7 +165,7 @@ export class Identity {
      */
     static parseJsonObj(obj: any): Identity {
         const id = new Identity();
-        id.ontid = obj.ontid;
+        id.tstId = obj.tstId;
         id.label = obj.label;
         id.lock = obj.lock;
         id.isDefault = obj.isDefault;
@@ -174,7 +174,7 @@ export class Identity {
         return id;
     }
 
-    ontid: string;
+    tstId: string;
     label: string;
     lock: boolean;
     isDefault: boolean;
@@ -203,7 +203,7 @@ export class Identity {
      */
     toJsonObj(): any {
         const obj = {
-            ontid: this.ontid,
+            tstId: this.tstId,
             label: this.label,
             lock: this.lock,
             isDefault: this.isDefault,

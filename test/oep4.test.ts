@@ -8,21 +8,21 @@ import { Oep4State, Oep4TxBuilder } from './../src/smartcontract/neovm/oep4TxBui
 import { addSign, signTransaction } from './../src/transaction/transactionBuilder';
 import { hexstr2str, reverseHex } from './../src/utils';
 /*
- * Copyright (C) 2018 The ontology Authors
- * This file is part of The ontology library.
+ * Copyright (C) 2019-2020 The TersaSupernet Authors
+ * This file is part of The TesraSupernet library.
  *
- * The ontology is free software: you can redistribute it and/or modify
+ * The TesraSupernet is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ontology is distributed in the hope that it will be useful,
+ * The TesraSupernet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+ * along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 describe('test oep4', () => {
@@ -40,7 +40,7 @@ describe('test oep4', () => {
     const oep4 = new Oep4TxBuilder(contractAddr);
     const gasPrice = '500';
     const gasLimit = '200000';
-    // const url = TEST_ONT_URL.REST_URL;
+    // const url = TEST_TST_URL.REST_URL;
     const url = 'http://polaris2.ont.io:';
     const restClient = new RestClient(url + '20334');
     const socketClient = new WebsocketClient(url + '20335');

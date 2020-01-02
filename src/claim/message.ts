@@ -1,26 +1,26 @@
 /*
- * Copyright (C) 2018 The ontology Authors
- * This file is part of The ontology library.
+ * Copyright (C) 2019-2020 The TersaSupernet Authors
+ * This file is part of The TesraSupernet library.
  *
- * The ontology is free software: you can redistribute it and/or modify
+ * The TesraSupernet is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ontology is distributed in the hope that it will be useful,
+ * The TesraSupernet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+ * along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 import * as b64 from 'base64-url';
 import * as uuid from 'uuid';
 import { PrivateKey, PublicKey, PublicKeyStatus, Signature, SignatureScheme } from '../crypto';
 import RestClient from '../network/rest/restClient';
-import { buildGetDDOTx, buildGetPublicKeyStateTx } from '../smartcontract/nativevm/ontidContractTxBuilder';
+import { buildGetDDOTx, buildGetPublicKeyStateTx } from '../smartcontract/nativevm/tstidContractTxBuilder';
 import { DDO } from '../transaction/ddo';
 import { now } from '../utils';
 
@@ -155,7 +155,7 @@ export abstract class Message {
      *
      * If the algorithm is not specified, then default algorithm for Private key type is used.
      *
-     * @param url Restful endpoint of Ontology node
+     * @param url Restful endpoint of Tersa node
      * @param publicKeyId The ID of a signature public key
      * @param privateKey Private key to sign the request with
      * @param algorithm Signature algorithm used
@@ -177,9 +177,9 @@ export abstract class Message {
     }
 
     /**
-     * Verifies the signature and check ownership of specified ONT ID through smart contract call.
+     * Verifies the signature and check ownership of specified TST ID through smart contract call.
      *
-     * @param url Restful endpoint of Ontology node
+     * @param url Restful endpoint of Tersa node
      * @returns Boolean if the ownership is confirmed
      */
     async verify(url: string): Promise<boolean> {
@@ -299,9 +299,9 @@ export abstract class Message {
         const signature = this.signature;
 
         if (signature !== undefined && signature.publicKeyId !== undefined) {
-            const ontId = extractOntId(signature.publicKeyId);
+            const tstId = extractTstId(signature.publicKeyId);
 
-            return ontId === this.metadata.issuer;
+            return tstId === this.metadata.issuer;
         } else {
             return false;
         }
@@ -326,17 +326,17 @@ export abstract class Message {
 }
 
 /**
- * Gets the public key associated with ONT ID from blockchain.
+ * Gets the public key associated with TST ID from blockchain.
  *
  * @param publicKeyId The ID of a signature public key
- * @param url Restful endpoint of Ontology node
+ * @param url Restful endpoint of Tersa node
  */
 export async function retrievePublicKey(publicKeyId: string, url: string): Promise<PublicKey> {
-    const ontId = extractOntId(publicKeyId);
+    const tstId = extractTstId(publicKeyId);
     const keyId = extractKeyId(publicKeyId);
 
     const client = new RestClient(url);
-    const tx = buildGetDDOTx(ontId);
+    const tx = buildGetDDOTx(tstId);
     const response = await client.sendRawTransaction(tx.serialize(), true);
 
     if (response.Result && response.Result.Result) {
@@ -355,17 +355,17 @@ export async function retrievePublicKey(publicKeyId: string, url: string): Promi
 }
 
 /**
- * Gets the state of public key associated with ONT ID from blockchain.
+ * Gets the state of public key associated with TST ID from blockchain.
  *
  * @param publicKeyId The ID of a signature public key
- * @param url Restful endpoint of Ontology node
+ * @param url Restful endpoint of Tersa node
  */
 export async function retrievePublicKeyState(publicKeyId: string, url: string): Promise<PublicKeyStatus> {
-    const ontId = extractOntId(publicKeyId);
+    const tstId = extractTstId(publicKeyId);
     const keyId = extractKeyId(publicKeyId);
 
     const client = new RestClient(url);
-    const tx = buildGetPublicKeyStateTx(ontId, keyId);
+    const tx = buildGetPublicKeyStateTx(tstId, keyId);
     const response = await client.sendRawTransaction(tx.serialize(), true);
 
     if (response.Result && response.Result.Result) {
@@ -376,11 +376,11 @@ export async function retrievePublicKeyState(publicKeyId: string, url: string): 
 }
 
 /**
- * Extracts ONT ID from public key Id.
+ * Extracts TST ID from public key Id.
  *
  * @param publicKeyId The ID of a signature public key
  */
-export function extractOntId(publicKeyId: string): string {
+export function extractTstId(publicKeyId: string): string {
     const index = publicKeyId.indexOf('#keys-');
 
     if (index === -1) {

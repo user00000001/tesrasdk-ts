@@ -7,12 +7,12 @@ import { ParameterType } from './../src/smartcontract/abi/parameter';
 import { RestClient } from '../src/index';
 import { Parameter } from '../src/smartcontract/abi/parameter';
 import { getAttributes, getAuthorizeInfo, getGlobalParam, getGovernanceView,
-    getPeerPoolMap, getPeerUnboundOng, getSplitFeeAddress, getTotalStake,
+    getPeerPoolMap, getPeerUnboundTsg, getSplitFeeAddress, getTotalStake,
     makeAuthorizeForPeerTx, makeChangeAuthorizationTx, makeSetPeerCostTx,
-    makeUnauthorizeForPeerTx, makeWithdrawFeeTx, makeWithdrawPeerUnboundOngTx, makeWithdrawTx, getConfiguration
+    makeUnauthorizeForPeerTx, makeWithdrawFeeTx, makeWithdrawPeerUnboundTsgTx, makeWithdrawTx, getConfiguration
 } from '../src/smartcontract/nativevm/governanceContractTxBuilder';
 import { makeInvokeTransaction, signTransaction } from '../src/transaction/transactionBuilder';
-import { calcUnboundOng, reverseHex, StringReader } from '../src/utils';
+import { calcUnboundTsg, reverseHex, StringReader } from '../src/utils';
 import { Key } from './../src/crypto/Key';
 
 describe('test governance authorization', () => {
@@ -22,8 +22,8 @@ describe('test governance authorization', () => {
     const gasPrice = '0';
     const gasLimit = '20000';
     const stake1 = {
-        ontid: 'did:ont:AJTMXN8LQEFv3yg8cYKWGWPbkz9KEB36EM',
-        ontidPass: '920410',
+        tstId: 'did:tst:AJTMXN8LQEFv3yg8cYKWGWPbkz9KEB36EM',
+        tstIdPass: '920410',
         peerPubkey: '02f4c0a18ae38a65b070820e3e51583fd3aea06fee2dc4c03328e4b4115c622567',
         address: 'AHqbLqY8wCXFcEGK5cKZzQig2bAfxTrpnL',
         addrPass: '123456'
@@ -31,8 +31,8 @@ describe('test governance authorization', () => {
     const stake1Account = { 'address': 'AHqbLqY8wCXFcEGK5cKZzQig2bAfxTrpnL', 'label': 'wwww', 'lock': false, 'algorithm': 'ECDSA', 'parameters': { curve: 'P-256' }, 'key': 'p6+xORnKA3uWYOpLECWJ5tCMmxeK/0ZD2m7mOO10i+nx6KuPBtnsCe9tls0J68+f', 'enc-alg': 'aes-256-gcm', 'salt': '1b8neI2vZr8rUVEbmRCzWQ==', 'isDefault': true, 'publicKey': '02f2a7a368f515a40e1c9a626d29df2b845e73aaec742a20ca968a8fe542a674e9', 'signatureScheme': 'SHA256withECDSA' };
 
     const stake2 = {
-        ontid: 'did:ont:AUEKhXNsoAT27HJwwqFGbpRy8QLHUMBMPz',
-        ontidPass: '111111',
+        tstId: 'did:tst:AUEKhXNsoAT27HJwwqFGbpRy8QLHUMBMPz',
+        tstIdPass: '111111',
         peerPubkey: '03f6149b3a982c046912731d6374305e2bc8e278fa90892f6f20a8ee85c1d5443f',
         address: 'ANYR5cPbKfSeHJXHrK1fP6q5uzqXsg1MmF',
         addrPass: '123456'
@@ -128,7 +128,7 @@ describe('test governance authorization', () => {
         console.log(JSON.stringify(response));
     }, 10000);
 
-    test('Ontwithdraw', async () => {
+    test('Tstwithdraw', async () => {
         const account = account1;
         const address = new Address(account.address);
         const peerPubkeyList = [stake1.peerPubkey];
@@ -194,15 +194,15 @@ describe('test governance authorization', () => {
         console.log(ts);
     });
 
-    test('getUnboundOng', async () => {
+    test('getUnboundTsg', async () => {
         const addr = new Address(stake1.address);
-        const unbound = await getPeerUnboundOng(addr, nodeUrl);
+        const unbound = await getPeerUnboundTsg(addr, nodeUrl);
         console.log(unbound);
     });
 
-    test('withdrawOng', async () => {
+    test('withdrawTsg', async () => {
         const addr = new Address(stake2.address);
-        const tx = await makeWithdrawPeerUnboundOngTx(addr, addr, gasPrice, gasLimit);
+        const tx = await makeWithdrawPeerUnboundTsgTx(addr, addr, gasPrice, gasLimit);
         const pri = getPrivatekey(stake2Account, '123456');
         signTransaction(tx, pri);
         const response = await socketClient.sendRawTransaction(tx.serialize(), false, true);

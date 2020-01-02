@@ -1,14 +1,14 @@
 import { Account } from '../src/account';
-import { TEST_ONT_URL } from '../src/consts';
+import { TEST_TST_URL } from '../src/consts';
 import { Address, PrivateKey } from '../src/crypto';
 import { Identity } from '../src/identity';
 import { WebsocketClient } from '../src/network/websocket/websocketClient';
-import { buildGetDDOTx, buildRegisterOntidTx } from '../src/smartcontract/nativevm/ontidContractTxBuilder';
+import { buildGetDDOTx, buildRegisterTstidTx } from '../src/smartcontract/nativevm/tstidContractTxBuilder';
 import { signTransaction } from '../src/transaction/transactionBuilder';
 import { addSign } from './../src/transaction/transactionBuilder';
 
 describe('test websocket', () => {
-    const client = new WebsocketClient(TEST_ONT_URL.SOCKET_URL, true, false);
+    const client = new WebsocketClient(TEST_TST_URL.SOCKET_URL, true, false);
     client.addNotifyListener((result) => {
         console.log('listener: ' + result);
     });
@@ -24,17 +24,17 @@ describe('test websocket', () => {
     const publicKey = privateKey.getPublicKey();
     const account = Account.create(privateKey, '123456', '');
     const identity = Identity.create(privateKey, '123456', '');
-    const ontid =  identity.ontid;
+    const tstId =  identity.tstId;
     const address = account.address;
 
     const adminPrivateKey = new PrivateKey('7c47df9664e7db85c1308c080f398400cb24283f5d922e76b478b5429e821b97');
     const adminAddress = new Address('AdLUBSSHUuFaak9j169hiamXUmPuCTnaRz');
 
     /**
-     * Registers new ONT ID to create transaction with Events and new block
+     * Registers new TST ID to create transaction with Events and new block
      */
     beforeAll(async () => {
-        const tx = buildRegisterOntidTx(ontid, publicKey, '500', '30000');
+        const tx = buildRegisterTstidTx(tstId, publicKey, '500', '30000');
         tx.payer = adminAddress;
         signTransaction(tx, privateKey);
         addSign(tx, adminPrivateKey);
@@ -81,10 +81,10 @@ describe('test websocket', () => {
         expect(result.Desc).toBe('SUCCESS');
     });
 
-    test.skip('test getGrantOng', async () => {
-        const result = await client.getGrantOng(address);
+    test.skip('test getGrantTsg', async () => {
+        const result = await client.getGrantTsg(address);
 
-        expect(result.Action).toBe('getgrantong');
+        expect(result.Action).toBe('getgranttsg');
         expect(result.Desc).toBe('SUCCESS');
         expect(typeof result.Result).toBe('number');
     });
@@ -164,7 +164,7 @@ describe('test websocket', () => {
     });
 
     test('send sendRawTransaction', async () => {
-        const tx = buildGetDDOTx(ontid);
+        const tx = buildGetDDOTx(tstId);
         const result = await client.sendRawTransaction(tx.serialize(), true);
 
         expect(result.Action).toBe('sendrawtransaction');
@@ -227,8 +227,8 @@ describe('test websocket', () => {
         expect(result.Action).toBe('getbalance');
         expect(result.Desc).toBe('SUCCESS');
         expect(typeof result.Result).toBe('object');
-        expect(result.Result.ont).toBeDefined();
-        expect(result.Result.ong).toBeDefined();
+        expect(result.Result.tst).toBeDefined();
+        expect(result.Result.tsg).toBeDefined();
     });
 
     test('test getContract', async () => {

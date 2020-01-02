@@ -20,7 +20,7 @@ export default {
             name: 'regIDWithPublicKey',
             parameters: [
                 {
-                    name: 'ontId',
+                    name: 'tstId',
                     type: 'ByteArray'
                 },
                 {
@@ -34,7 +34,7 @@ export default {
             name: 'regIDWithAttributes',
             parameters: [
                 {
-                    name: 'ontId',
+                    name: 'tstId',
                     type: 'ByteArray'
                 },
                 {
@@ -52,7 +52,7 @@ export default {
             name: 'addKey',
             parameters: [
                 {
-                    name: 'ontId',
+                    name: 'tstId',
                     type: 'ByteArray'
                 },
                 {
@@ -70,7 +70,7 @@ export default {
             name: 'removeKey',
             parameters: [
                 {
-                    name: 'ontId',
+                    name: 'tstId',
                     type: 'ByteArray'
                 },
                 {
@@ -88,7 +88,7 @@ export default {
             name: 'addRecovery',
             parameters: [
                 {
-                    name: 'ontId',
+                    name: 'tstId',
                     type: 'ByteArray'
                 },
                 {
@@ -106,7 +106,7 @@ export default {
             name: 'changeRecovery',
             parameters: [
                 {
-                    name: 'ontId',
+                    name: 'tstId',
                     type: 'ByteArray'
                 },
                 {
@@ -124,7 +124,7 @@ export default {
             name: 'addAttributes',
             parameters: [
                 {
-                    name: 'ontId',
+                    name: 'tstId',
                     type: 'ByteArray'
                 },
                 {
@@ -142,7 +142,7 @@ export default {
             name: 'removeAttribute',
             parameters: [
                 {
-                    name: 'ontId',
+                    name: 'tstId',
                     type: 'ByteArray'
                 },
                 {
@@ -160,7 +160,7 @@ export default {
             name: 'getPublicKeys',
             parameters: [
                 {
-                    name: 'ontId',
+                    name: 'tstId',
                     type: 'ByteArray'
                 }
             ],
@@ -170,7 +170,7 @@ export default {
             name: 'getAttributes',
             parameters: [
                 {
-                    name: 'ontId',
+                    name: 'tstId',
                     type: 'ByteArray'
                 }
             ],
@@ -180,7 +180,7 @@ export default {
             name: 'GetPublicKeyId',
             parameters: [
                 {
-                    name: 'ontId',
+                    name: 'tstId',
                     type: 'ByteArray'
                 },
                 {
@@ -194,7 +194,7 @@ export default {
             name: 'getKeyState',
             parameters: [
                 {
-                    name: 'ontId',
+                    name: 'tstId',
                     type: 'ByteArray'
                 },
                 {
@@ -208,7 +208,7 @@ export default {
             name: 'GetRecovery',
             parameters: [
                 {
-                    name: 'ontId',
+                    name: 'tstId',
                     type: 'ByteArray'
                 }
             ],
@@ -234,7 +234,7 @@ export default {
                     type: 'String'
                 },
                 {
-                    name: 'ontId',
+                    name: 'tstId',
                     type: 'ByteArray'
                 }
             ],
@@ -248,7 +248,7 @@ export default {
                     type: 'String'
                 },
                 {
-                    name: 'ontId',
+                    name: 'tstId',
                     type: 'ByteArray'
                 },
                 {
@@ -266,7 +266,7 @@ export default {
                     type: 'String'
                 },
                 {
-                    name: 'ontId',
+                    name: 'tstId',
                     type: 'ByteArray'
                 },
                 {

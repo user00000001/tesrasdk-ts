@@ -20,6 +20,6 @@
 | 44004 		 | UNKNWN_CONTRACT               | Contract not found                                                   |
 | 45001       | INTERNAL_ERROR                | Internal error                                   |
 | 47001 | SMARTCODE_ERROR| Smart contract error |
-| 51000 | UNKNOWN_ONTID  | Unknown ONT ID |
+| 51000 | UNKNOWN_TSTID  | Unknown TST ID |
 | 52000 | NETWORK_ERROR  | Network error |
 | 53000 | Decrypto_ERROR | Decryption error |                       | 

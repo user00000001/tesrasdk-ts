@@ -1,22 +1,22 @@
 /*
- * Copyright (C) 2018 The ontology Authors
- * This file is part of The ontology library.
+ * Copyright (C) 2019-2020 The TersaSupernet Authors
+ * This file is part of The TesraSupernet library.
  *
- * The ontology is free software: you can redistribute it and/or modify
+ * The TesraSupernet is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ontology is distributed in the hope that it will be useful,
+ * The TesraSupernet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+ * along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
  */
 import * as bip39 from 'bip39';
-import { ONT_BIP44_PATH } from './consts';
+import { TST_BIP44_PATH } from './consts';
 import { Address, PrivateKey } from './crypto';
 import { deserializeFromJson } from './crypto/PrivateKeyFactory';
 import { ERROR_CODE } from './error';
@@ -87,7 +87,7 @@ export class Account {
         }
         const seed = bip39.mnemonicToSeedHex(mnemonic);
         const hdkey = HDKey.fromMasterSeed(Buffer.from(seed, 'hex'));
-        const pri = hdkey.derive(ONT_BIP44_PATH);
+        const pri = hdkey.derive(TST_BIP44_PATH);
         const key = Buffer.from(pri.privateKey).toString('hex');
         const privateKey = new PrivateKey(key);
         const account = Account.create(privateKey, password, label, params);
@@ -165,7 +165,7 @@ export class Account {
     encryptedKey: PrivateKey;
     extra: null;
 
-    // to compatible with cli wallet
+    // to compatible with cli twallet
     'enc-alg': string = 'aes-256-gcm';
     hash: string = 'sha256';
     salt: string;

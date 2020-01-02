@@ -1,19 +1,19 @@
 /*
-* Copyright (C) 2018 The ontology Authors
-* This file is part of The ontology library.
+* Copyright (C) 2019-2020 The TersaSupernet Authors
+* This file is part of The TesraSupernet library.
 *
-* The ontology is free software: you can redistribute it and/or modify
+* The TesraSupernet is free software: you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* The ontology is distributed in the hope that it will be useful,
+* The TesraSupernet is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public License
-* along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+* along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 import * as uuid from 'uuid';
@@ -31,7 +31,7 @@ describe('test attest claim', () => {
     const publicKey = privateKey.getPublicKey();
     const account = Account.create(privateKey, '123456', '');
     const identity = Identity.create(privateKey, '123456', '');
-    const ontId =  identity.ontid;
+    const tstId =  identity.tstId;
     const address = account.address;
 
     const adminPrivateKey = new PrivateKey('7c47df9664e7db85c1308c080f398400cb24283f5d922e76b478b5429e821b97');
@@ -42,8 +42,8 @@ describe('test attest claim', () => {
 
     function randomClaim(): Claim {
         return new Claim({
-            issuer: ontId,
-            subject: ontId,
+            issuer: tstId,
+            subject: tstId,
             issuedAt: now()
         }, undefined);
     }
@@ -51,8 +51,8 @@ describe('test attest claim', () => {
     function claimWithId(id: string): Claim {
         return new Claim({
             messageId: id,
-            issuer: ontId,
-            subject: ontId,
+            issuer: tstId,
+            subject: tstId,
             issuedAt: now()
         }, undefined);
     }
@@ -97,7 +97,7 @@ describe('test attest claim', () => {
 
     test('test getStatus ATTESTED by different attester', async () => {
         const claim = claimWithId('4df086e3-713d-489d-96fe-8c1bb08ce3eb');
-        claim.metadata.issuer = 'did:ont:TVgarJ2yuWDqXk5WjUwHZEgFqJZUKDNX1C';
+        claim.metadata.issuer = 'did:tst:TVgarJ2yuWDqXk5WjUwHZEgFqJZUKDNX1C';
         const result = await claim.getStatus(restUrl);
 
         expect(result).toBeFalsy();

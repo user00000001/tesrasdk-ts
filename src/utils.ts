@@ -1,26 +1,26 @@
 /*
- * Copyright (C) 2018 The ontology Authors
- * This file is part of The ontology library.
+ * Copyright (C) 2019-2020 The TersaSupernet Authors
+ * This file is part of The TesraSupernet library.
  *
- * The ontology is free software: you can redistribute it and/or modify
+ * The TesraSupernet is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ontology is distributed in the hope that it will be useful,
+ * The TesraSupernet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+ * along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
  */
 import axios from 'axios';
 import * as bip39 from 'bip39';
 import * as cryptoJS from 'crypto-js';
 import * as Long from 'long';
 import * as secureRandom from 'secure-random';
-import { ONT_TOTAL_SUPPLY, UNBOUND_GENERATION_AMOUNT, UNBOUND_TIME_INTERVAL, WEBVIEW_SCHEME } from './consts';
+import { TST_TOTAL_SUPPLY, UNBOUND_GENERATION_AMOUNT, UNBOUND_TIME_INTERVAL, WEBVIEW_SCHEME } from './consts';
 import { ERROR_CODE } from './error';
 /**
  * Turn hex string into array buffer
@@ -533,13 +533,13 @@ export function unboundDeadline() {
     count *= UNBOUND_TIME_INTERVAL;
     const numInterval = UNBOUND_GENERATION_AMOUNT.length;
     if (UNBOUND_GENERATION_AMOUNT[numInterval - 1] !== 1 ||
-        !((count - UNBOUND_TIME_INTERVAL < ONT_TOTAL_SUPPLY) && ONT_TOTAL_SUPPLY <= count)) {
+        !((count - UNBOUND_TIME_INTERVAL < TST_TOTAL_SUPPLY) && TST_TOTAL_SUPPLY <= count)) {
         throw new Error('incompatible constants setting');
     }
-    return UNBOUND_TIME_INTERVAL * numInterval - (count - ONT_TOTAL_SUPPLY);
+    return UNBOUND_TIME_INTERVAL * numInterval - (count - TST_TOTAL_SUPPLY);
 }
 
-export function calcUnboundOng(balance: number, startOffset: number, endOffset: number) {
+export function calcUnboundTsg(balance: number, startOffset: number, endOffset: number) {
     let amount = 0;
     if (startOffset >= endOffset) {
         return 0;

@@ -1,19 +1,19 @@
 /*
- * Copyright (C) 2018 The ontology Authors
- * This file is part of The ontology library.
+ * Copyright (C) 2019-2020 The TersaSupernet Authors
+ * This file is part of The TesraSupernet library.
  *
- * The ontology is free software: you can redistribute it and/or modify
+ * The TesraSupernet is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ontology is distributed in the hope that it will be useful,
+ * The TesraSupernet is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with The ontology.  If not, see <http://www.gnu.org/licenses/>.
+ * along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 import { Account } from './account';
@@ -32,9 +32,9 @@ import AbiInfo from './smartcontract/abi/abiInfo';
 import { Parameter, ParameterType } from './smartcontract/abi/parameter';
 import Struct from './smartcontract/abi/struct';
 import * as GovernanceTxBuilder from './smartcontract/nativevm/governanceContractTxBuilder';
-import * as OntAssetTxBuilder from './smartcontract/nativevm/ontAssetTxBuilder';
-import * as OntidContract from './smartcontract/nativevm/ontidContractTxBuilder';
 import * as Token from './smartcontract/nativevm/token';
+import * as TstAssetTxBuilder from './smartcontract/nativevm/tstAssetTxBuilder';
+import * as TstidContract from './smartcontract/nativevm/tstidContractTxBuilder';
 import * as Oep4 from './smartcontract/neovm/oep4TxBuilder';
 import * as Oep5 from './smartcontract/neovm/oep5TxBuilder';
 import * as Oep8 from './smartcontract/neovm/oep8TxBuilder';
@@ -44,10 +44,10 @@ import { Transaction } from './transaction/transaction';
 import * as TransactionBuilder from './transaction/transactionBuilder';
 import { Transfer } from './transaction/transfer';
 import { TxSignature } from './transaction/txSignature';
+import { TWallet } from './twallet';
 import * as utils from './utils';
-import { Wallet } from './wallet';
 
-class ONT {
+class TST {
     Account: any;
     Identity: any;
     Claim: any;
@@ -57,7 +57,7 @@ class ONT {
     Transfer: any;
     TxSignature: any;
     TransactionBuilder: any;
-    OntAssetTxBuilder: any;
+    TstAssetTxBuilder: any;
     Parameter: any;
     ParameterType: any;
     AbiFunction: any;
@@ -65,10 +65,10 @@ class ONT {
     utils: any;
     scrypt: any;
     CONST: any;
-    Wallet: any;
+    TWallet: any;
     SDK: any;
     Token: any;
-    OntidContract: any;
+    TstidContract: any;
     GovernanceTxBuilder: any;
     RestClient: any;
     RpcClient: any;
@@ -91,7 +91,7 @@ class ONT {
         this.Transfer = Transfer;
         this.TxSignature = TxSignature;
         this.TransactionBuilder = TransactionBuilder;
-        this.OntAssetTxBuilder = OntAssetTxBuilder;
+        this.TstAssetTxBuilder = TstAssetTxBuilder;
         this.GovernanceTxBuilder = GovernanceTxBuilder;
         this.Parameter = Parameter;
         this.ParameterType = ParameterType;
@@ -100,10 +100,10 @@ class ONT {
         this.utils = utils;
         this.scrypt = scrypt;
         this.CONST = CONST;
-        this.Wallet = Wallet;
+        this.TWallet = TWallet;
         this.SDK = SDK;
         this.Token = Token;
-        this.OntidContract = OntidContract;
+        this.TstidContract = TstidContract;
         this.RestClient = RestClient;
         this.RpcClient = RpcClient;
         this.WebsocketClient = WebsocketClient;
@@ -132,7 +132,7 @@ class ONT {
     }
 }
 
-export default ONT;
+export default TST;
 
 export {
     Account,
@@ -148,15 +148,15 @@ export {
     AbiFunction,
     AbiInfo,
     TransactionBuilder,
-    OntAssetTxBuilder,
+    TstAssetTxBuilder,
     GovernanceTxBuilder,
     utils,
     scrypt,
     CONST,
-    Wallet,
+    TWallet,
     SDK,
     Token,
-    OntidContract,
+    TstidContract,
     RestClient,
     RpcClient,
     WebsocketClient,
