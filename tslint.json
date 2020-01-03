@@ -27,5 +27,12 @@
     ],
     "no-bitwise": false
   },
-  "rulesDirectory": []
+  "rulesDirectory": [],
+  "linterOptions": {
+		"exclude": [
+      "src/html5-websocket/**/*",
+      "src/hdkey-secp256r1/**/*"
+		]
+	}
+
 }

@@ -20,6 +20,7 @@ import { Account } from './account';
 import { Claim } from './claim';
 import * as CONST from './consts';
 import * as Crypto from './crypto';
+import * as Html5Websocket from './html5-websocket';
 import { Identity } from './identity';
 import * as NeoCore from './neocore';
 import RestClient from './network/rest/restClient';
@@ -166,5 +167,6 @@ export {
     NeoCore,
     Oep4,
     Oep8,
-    Oep5
+    Oep5,
+    Html5Websocket
 };

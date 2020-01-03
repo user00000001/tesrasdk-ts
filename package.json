@@ -70,14 +70,13 @@
         "webpack-node-externals": "^1.7.2"
     },
     "dependencies": {
-        "@ont-community/hdkey-secp256r1": "^1.0.1",
-        "@ont-community/html5-websocket": "^2.0.2",
         "axios": "^0.19.0",
         "babel-polyfill": "^6.26.0",
         "base-58": "^0.0.1",
         "base64-url": "^2.2.0",
         "bignumber.js": "^7.2.1",
         "bip39": "^2.5.0",
+        "coinstring": "^2.0.0",
         "crypto-js": "^3.1.9-1",
         "ecdsa": "^0.7.0",
         "ecurve": "^1.0.6",
