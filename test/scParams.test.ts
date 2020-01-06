@@ -250,7 +250,7 @@ describe('test smarct contract params', () => {
 
         const tx = makeInvokeTransaction('PutItem', params, contractAddr, '500', '20000', account.address);
         signTransaction(tx, privateKey);
-        const socket = new WebsocketClient('ws://13.57.184.209:20335');
+        const socket = new WebsocketClient('ws://dapp2.tesra.me:25771');
         const res = await socket.sendRawTransaction(tx.serialize(), false, true);
         console.log(JSON.stringify(res));
     }, 10000);
@@ -267,7 +267,7 @@ describe('test smarct contract params', () => {
         const tx = makeInvokeTransaction('balanceOf', params, contractAddr, '500', '20000', account.address);
         console.log(tx.payload.code);
         signTransaction(tx, privateKey);
-        const socket = new WebsocketClient('ws://13.57.184.209:20335');
+        const socket = new WebsocketClient('ws://dapp2.tesra.me:25771');
         const res = await socket.sendRawTransaction(tx.serialize(), true);
         console.log(JSON.stringify(res));
     }, 10000);

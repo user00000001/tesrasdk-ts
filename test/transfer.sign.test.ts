@@ -17,7 +17,7 @@
 */
 
 import { Address, PrivateKey, Signature, SignatureScheme } from '../src/crypto';
-import { makeTransferTx } from '../src/smartcontract/nativevm/ontAssetTxBuilder';
+import { makeTransferTx } from '../src/smartcontract/nativevm/tstAssetTxBuilder';
 import { signTransaction } from './../src/transaction/transactionBuilder';
 
 // tslint:disable:no-console

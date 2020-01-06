@@ -69,7 +69,7 @@ The method needs the following parameters:
 **params** Optional scrypt params used to encrypt the private key.
 
 ```
-import {Identity, Crypto} from 'tesra-ts-sdk';
+import {Identity, Crypto} from 'tesrasdk-ts';
 //generate a random private key
 const privateKey = Crypto.PrivateKey.random();
 
@@ -86,8 +86,8 @@ Sending TST IDs to the blockchain requires sending specific transactions. The tr
 ### Create Transaction
 
 ````typescript
-import {TstidContract} from 'tesra-ts-sdk';
-import {TransactionBuilder} from 'tesra-ts-sdk'
+import {TstidContract} from 'tesrasdk-ts';
+import {TransactionBuilder} from 'tesrasdk-ts'
 
 //suppose we already got a identity
 const did = identity.tstId;
@@ -103,7 +103,7 @@ Transaction.signTransaction(tx, privateKey);
 The transaction also needs signatures from the payer.
 
 ```typescript
-import {TransactionBuilder} from 'tesra-ts-sdk'
+import {TransactionBuilder} from 'tesrasdk-ts'
 //we also need an account to pay for the gas
 //supporse we have an account and the privateKey
 tx.payer = account.address
@@ -119,7 +119,7 @@ We can set the URL of the node that we want to send transaction to. You can run 
 A notice will pop up when we use the WebSocket API.
 
 ```typescript
-import {RestClient, CONST} from 'tesra-ts-sdk'
+import {RestClient, CONST} from 'tesrasdk-ts'
 
 const rest = new RestClient(CONST.TEST_TST_URL.REST_URL);
 rest.sendRawTransaction(tx.serialize()).then(res => {
@@ -142,7 +142,7 @@ We also send the specific transaction to query the DDO.
 
 ### Create transaction
 ```typescript
-import {TstidContract} from 'tesra-ts-sdk';
+import {TstidContract} from 'tesrasdk-ts';
 //we use identity's TST ID to create the transaction
 const tx = TstidContract.buildGetDDOTx(identity.tstId)
 
@@ -151,7 +151,7 @@ const tx = TstidContract.buildGetDDOTx(identity.tstId)
 There is no need to pay transaction gas if the transaction is a query, and there is no need to sign this kind of transaction - we can send it directly.
 
 ```typescript
-import {RestClient} from 'tesra-ts-sdk';
+import {RestClient} from 'tesrasdk-ts';
 const rest = new RestClient();
 rest.sendRawTransaction(tx, true).then(res => {
 	console.log(res);
@@ -193,7 +193,7 @@ Suppose Alice is a student from Fudan University and wants to apply a digital gr
 ### 2.1 Construct a claim
 
 ````
-import {Claim} from 'tesra-ts-sdk';
+import {Claim} from 'tesrasdk-ts';
 
 const signature = null;
 const useProof = false;
@@ -253,7 +253,7 @@ The parameters are as below:
 **payer** payer
 
 ````
-const url = 'http://polaris1.ont.io:20335';
+const url = 'http://dapp1.tesra.me:25771';
 const gasPrice = '500';
 const gasLimit = '20000';
 const payer = new Address('AMLn5W7rz1sYd1hGpuQUfsnmUuUco22pM8');
@@ -278,7 +278,7 @@ The parameters are as below:
 **payer** payer
 
 ````
-const url = 'http://polaris1.ont.io:20335';
+const url = 'http://dapp1.tesra.me:25771';
 const gasPrice = '500';
 const gasLimit = '20000';
 const payer = new Address('AMLn5W7rz1sYd1hGpuQUfsnmUuUco22pM8');
@@ -301,7 +301,7 @@ The parameters are as below:
 **url** Restful endpoint of Tersa node.
 
 ````
-const url = 'http://polaris1.ont.io:20335';
+const url = 'http://dapp1.tesra.me:25771';
 const result = await claim.getStatus(url);
 
 ````

@@ -31,13 +31,13 @@ This is the official Tersa TypeScript SDK - a comprehensive library for developi
 ### Download Through npm/Yarn
 
 ````
-npm install 'tesra-ts-sdk' --save
+npm install 'tesrasdk-ts' --save
 ````
 
 or
 
 ```
-yarn add 'tesra-ts-sdk'
+yarn add 'tesrasdk-ts'
 ```
 
 ### Build from Source Code
@@ -45,7 +45,7 @@ yarn add 'tesra-ts-sdk'
 #### Downloading
 
 ```
-git clone 'https://github.com/TesraSupernet/tesra-ts-sdk.git'
+git clone 'https://github.com/TesraSupernet/tesrasdk-ts.git'
 ```
 
 Then install the dependencies with:
@@ -94,19 +94,19 @@ yarn run test
 
 #### Import
 
-Using `import` to include the modules from `'tesra-ts-sdk'`:
+Using `import` to include the modules from `'tesrasdk-ts'`:
 
 ```
-import {TWallet} from 'tesra-ts-sdk';
+import {TWallet} from 'tesrasdk-ts';
 var twallet = TWallet.create('test');
 ```
 
 #### Require
 
-Using `require` to include the modules from `'tesra-ts-sdk'`:
+Using `require` to include the modules from `'tesrasdk-ts'`:
 
 ````
-var Tst = require('tesra-ts-sdk');
+var Tst = require('tesrasdk-ts');
 var twallet = Tst.TWallet.create('test');
 ````
 
@@ -128,7 +128,7 @@ var twallet = Tst.TWallet.create('test');
 
 ## Contributing
 
-Contributors are welcome to the `tesra-ts-sdk`. Before beginning, please take a look at our [contributing guidelines](CONTRIBUTING.md). You can open an issue by [clicking here](https://github.com/TesraSupernet/tesra-ts-sdk/issues/new).
+Contributors are welcome to the `tesrasdk-ts`. Before beginning, please take a look at our [contributing guidelines](CONTRIBUTING.md). You can open an issue by [clicking here](https://github.com/TesraSupernet/tesrasdk-ts/issues/new).
 
 If you have any issues getting setup, open an issue or reach out in the [Tersa Discord](https://discordapp.com/invite/4TQujHj).
 

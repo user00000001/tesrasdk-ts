@@ -70,7 +70,7 @@ const HDKey = require('./../hdkey-secp256r1/hdkey.js');
 // neo contract
 const CONTRACT_HASH = 'ceab719b8baa2310f232ee0d277c061704541cfb';
 // neo node
-const NEO_NODE = 'http://neonode1.ont.network:10332';
+const NEO_NODE = 'http://121.41.17.61:3000';
 // neo abi
 // tslint:disable-next-line:max-line-length
 const NEP5_ABI = '{"hash":"0x5bb169f915c916a5e30a3c13a5e0cd228ea26826","entrypoint":"Main","functions":[{"name":"Name","parameters":[],"returntype":"String"},{"name":"Symbol","parameters":[],"returntype":"String"},{"name":"Decimals","parameters":[],"returntype":"Integer"},{"name":"Main","parameters":[{"name":"operation","type":"String"},{"name":"args","type":"Array"}],"returntype":"Any"},{"name":"Init","parameters":[],"returntype":"Boolean"},{"name":"TotalSupply","parameters":[],"returntype":"Integer"},{"name":"Transfer","parameters":[{"name":"from","type":"ByteArray"},{"name":"to","type":"ByteArray"},{"name":"value","type":"Integer"}],"returntype":"Boolean"},{"name":"BalanceOf","parameters":[{"name":"address","type":"ByteArray"}],"returntype":"Integer"}],"events":[{"name":"transfer","parameters":[{"name":"arg1","type":"ByteArray"},{"name":"arg2","type":"ByteArray"},{"name":"arg3","type":"Integer"}],"returntype":"Void"}]}';

@@ -50,7 +50,7 @@ describe('test TST ID contract', () => {
 
     const gasPrice = '500';
     const gasLimit = '20000';
-    const socketClient = new WebsocketClient('ws://polaris1.ont.io:20335');
+    const socketClient = new WebsocketClient('ws://dapp1.tesra.me:25771');
 
     const txSender = new TxSender(TEST_TST_URL.SOCKET_URL);
 
@@ -258,7 +258,7 @@ describe('test TST ID contract', () => {
     }, 10000);
 
     test('nodeId', async () => {
-        const socket = new WebsocketClient('ws://139.219.128.220:20335');
+        const socket = new WebsocketClient('ws://dapp2.tesra.me:25771');
         const keystore = { country: '', claimArray: [], address: 'ARTH2zCmyQp8RVMqXE6HaWNqmBjsYL9r21', salt: 'AKApq2LPAPL1J182gr7soQ==', label: '节点1', type: 'I', parameters: { curve: 'secp256r1' }, scrypt: { dkLen: 64, n: 4096, p: 8, r: 8 }, key: '6idIWIBRT5tJUPDGwGoNihjlfcXeAAId227H8pU6besfojWyhjqOQo7pzGDWlObq', algorithm: 'ECDSA' };
         const did = 'did:tst:' + keystore.address;
         const enc = new PrivateKey(keystore.key);

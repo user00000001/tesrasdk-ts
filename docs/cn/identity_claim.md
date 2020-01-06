@@ -33,7 +33,7 @@ TST ID是一个去中心化的身份标识，能够管理用户的各种数字�
 ```
 
 ```
-import {Identity, Crypto} from 'tesra-ts-sdk';
+import {Identity, Crypto} from 'tesrasdk-ts';
 //generate a random private key
 const privateKey = Crypto.PrivateKey.random();
 
@@ -51,8 +51,8 @@ console.log(identity.tstId)
 
 ### 构建交易
 ````
-import {TstidContract} from 'tesra-ts-sdk';
-import {TransactionBuilder} from 'tesra-ts-sdk'
+import {TstidContract} from 'tesrasdk-ts';
+import {TransactionBuilder} from 'tesrasdk-ts'
 
 //suppose we already got a identity
 const did = identity.tstId;
@@ -70,7 +70,7 @@ Transaction.signTransaction(tx, privateKey);
 发送TST ID上链的交易需要消耗手续费，我们需要给交易指定一个Payer，并添加Payer的签名。
 
 ````
-import {TransactionBuilder} from 'tesra-ts-sdk'
+import {TransactionBuilder} from 'tesrasdk-ts'
 //we also need an account to pay for the gas
 //supporse we have an account and the privateKey
 tx.payer = account.address
@@ -83,7 +83,7 @@ TransactionBuilder.addSign(tx, privateKeyOfAccount)
 我们多种发送交易的方式，如Websocket, Restful和RPC。这里以Restful的方式为例。我们可以指定交易发送到的节点，如果不指定，默认发送到测试网。
 
 ````
-import {RestClient, CONST} from 'tesra-ts-sdk'
+import {RestClient, CONST} from 'tesrasdk-ts'
 
 const rest = new RestClient(CONST.TEST_TST_URL.REST_URL);
 rest.sendRawTransaction(tx.serialize()).then(res => {
@@ -108,14 +108,14 @@ rest.sendRawTransaction(tx.serialize()).then(res => {
 ###构建交易
 
 ````
-import {TstidContract} from 'tesra-ts-sdk';
+import {TstidContract} from 'tesrasdk-ts';
 //we use identity's TST ID to create the transaction
 const tx = TstidContract.buildGetDDOTx(identity.tstId)
 ````
 ###发送交易
 查询交易不需要消耗gas，也就不需要指定payer和payer的签名。发送交易方法的第二个参数表示发送的是否是预执行的交易。预执行的交易只在接收到它的节点上运行，不需要等待共识。一般用来查询数据。
 ````
-import {RestClient} from 'tesra-ts-sdk';
+import {RestClient} from 'tesrasdk-ts';
 const rest = new RestClient();
 rest.sendRawTransaction(tx, true).then(res => {
     console.log(res);
@@ -160,7 +160,7 @@ console.log(ddo);
 ### 构建可信声明
 
 ````
-import {Claim} from 'tesra-ts-sdk';
+import {Claim} from 'tesrasdk-ts';
 
 const signature = null;
 const useProof = false;
@@ -216,7 +216,7 @@ claim.content = {
 **payer** 交易gas的payer
 
 ````
-const url = 'http://polaris1.ont.io:20335';
+const url = 'http://dapp1.tesra.me:25771';
 const gasPrice = '500';
 const gasLimit = '20000';
 const payer = new Address('AMLn5W7rz1sYd1hGpuQUfsnmUuUco22pM8');
@@ -239,7 +239,7 @@ const result = await claim.attest(url, gasPrice, gasLimit, payer, privateKey);
 **payer** 交易gas的payer
 
 ````
-const url = 'http://polaris1.ont.io:20335';
+const url = 'http://dapp1.tesra.me:25771';
 const gasPrice = '500';
 const gasLimit = '20000';
 const payer = new Address('AMLn5W7rz1sYd1hGpuQUfsnmUuUco22pM8');
@@ -260,7 +260,7 @@ Alice向公司B求职时，提供了复旦大学授予的数字毕业证书，�
 **url** 节点的Restful接口url
 
 ````
-const url = 'http://polaris1.ont.io:20335';
+const url = 'http://dapp1.tesra.me:25771';
 const result = await claim.getStatus(url);
 
 ````

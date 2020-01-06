@@ -105,7 +105,7 @@ const DEFAULT_SCRYPT = {
 ECDSA 是默认的算法. SECP256R1是默认的曲线。
 
 ```typescript
-import { Crypto } from 'tesra-ts-sdk';
+import { Crypto } from 'tesrasdk-ts';
 
 cont keyType = Crypto.KeyType.ECDSA;
 
@@ -120,7 +120,7 @@ const privateKey2 = Crypto.PrivateKey.random() // Use default params
 然后我们可以创建账户并添加到钱包中。
 
 ````
-import {Account, Crypto} from 'tesra-ts-sdk';
+import {Account, Crypto} from 'tesrasdk-ts';
 
 var account = Account.create( privateKey, password, name ); //Use the default scrypt params
 
@@ -180,7 +180,7 @@ twallet.addAccount(account)
 ###  创建账户
 
 ````
-import {Account} from 'tesra-ts-sdk'
+import {Account} from 'tesrasdk-ts'
 //@param {PrivateKey} The user's private key
 //@param {string} The user's password
 //@param {string} Optional. Name of the account
@@ -198,7 +198,7 @@ var account = Account.create(privateKey, password, label, params)
 导入账户的过程中会验证密码和加密后的私钥，如果不正确会抛出相应错误码。
 
 ````
-import { Account, Crypto } from 'tesra-ts-sdk'
+import { Account, Crypto } from 'tesrasdk-ts'
 
 //@param label {srint} Name of the account
 //@param encryptedPrivateKey {PrivateKey} The encrypted private key

@@ -62,7 +62,7 @@ Users could create their twallet from scratch.
 Users only need to pass the name of their twallets.
 
 ````
-import {TWallet} from 'tesra-ts-sdk';
+import {TWallet} from 'tesrasdk-ts';
 var twallet = TWallet.create('my_twallet')
 ````
 
@@ -110,7 +110,7 @@ We can generate a random private key with specific keypair algorithm and ellipti
 ECDSA is the default one. You can check TS SDK API reference for info.
 
 ```typescript
-import { Crypto } from 'tesra-ts-sdk';
+import { Crypto } from 'tesrasdk-ts';
 
 cont keyType = Crypto.KeyType.ECDSA;
 
@@ -123,7 +123,7 @@ const privateKey = Crypto.PrivateKey.random(keyType, keyParameters)
 Then we can create the account and add it to the twallet.
 
 ````
-import {Account, Crypto} from 'tesra-ts-sdk';
+import {Account, Crypto} from 'tesrasdk-ts';
 
 var account = Account.create( privateKey, password, name );
 
@@ -182,7 +182,7 @@ Account is used to manage user's assets.
 ###  Create an Account
 
 ````
-import {Account} from 'tesra-ts-sdk'
+import {Account} from 'tesrasdk-ts'
 //@param {PrivateKey} The user's private key
 //@param {string} The user's password
 //@param {string} Optional. Name of the account
@@ -197,7 +197,7 @@ Users can import an account by the backup data.
 This method will check the password and the private key, an error will be thrown if they are not match.
 
 ````
-import { Account } from 'tesra-ts-sdk'
+import { Account } from 'tesrasdk-ts'
 //@param label {srint} Name of the account
 //@param encryptedPrivateKey {PrivateKey} The encrypted private key
 //@param password {string} The password used to decrypt private key
@@ -252,7 +252,7 @@ The parameters are as below:
 In TestNet, we can set `gasPrice` as 0 for test.
 
 ````typescript
-import {TstAssetTxBuilder} from 'tesra-ts-sdk'
+import {TstAssetTxBuilder} from 'tesrasdk-ts'
 //supppose we have an account with enough TST and TSG
 //Sender's address
 const from = account.address;
@@ -276,7 +276,7 @@ We can use RESTful API, RPC API, or WebSocket API to send transaction. Here we u
 > Use WebSocket API and wait for the transaction notice.
 
 ````typescript
-import {RestClient, CONST, TransactionBuilder} from 'tesra-ts-sdk'
+import {RestClient, CONST, TransactionBuilder} from 'tesrasdk-ts'
 
 //we already got the transaction we created before
 
@@ -341,7 +341,7 @@ Withdraw generated TSG from user's account address and send to other address. Th
 
 
 ````typescript
-import {TstAssetTxBuilder} from 'tesra-ts-sdk'
+import {TstAssetTxBuilder} from 'tesrasdk-ts'
 
 //suppose we have an account already
 const from = account.address;
@@ -358,7 +358,7 @@ We can use RESTful API, RPC API, or WebSocket API to send a transaction. Here we
 
 ````typescript
 //sign transaction before send it
-import {RestClient, CONST, TransactionBuilder} from 'tesra-ts-sdk'
+import {RestClient, CONST, TransactionBuilder} from 'tesrasdk-ts'
 
 //we already got the transaction we created before
 

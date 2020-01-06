@@ -25,7 +25,7 @@ import { buildRegisterTstidTx } from '../src/smartcontract/nativevm/tstidContrac
 import { addSign, signTransaction } from '../src/transaction/transactionBuilder';
 
 describe('test claim', () => {
-    const restUrl = 'http://polaris1.ont.io:20334';
+    const restUrl = 'http://dapp1.tesra.me:25770';
 
     const privateKey = PrivateKey.random();
     const publicKey = privateKey.getPublicKey();
@@ -138,7 +138,7 @@ describe('test claim', () => {
         expect(result).toBeFalsy();
     });
     test('claim', async () => {
-        const restUrl = 'http://polaris1.ont.io:20334';
+        const restUrl = 'http://dapp1.tesra.me:25770';
         const tstId = 'did:tst:AN88DMMBZr5X9ChpMHX3LqRvQHqGxk2c3r';
         const publicKeyId = tstId + '#keys-1';
         const privateKey = new PrivateKey('4a8d6d61060998cf83acef4d6e7976d538b16ddeaa59a96752a4a7c0f7ec4860');
@@ -159,7 +159,7 @@ describe('test claim', () => {
             addr: '8055b362904715fd84536e754868f4c8d27ca3f6'
         };
         await claim.sign(restUrl, publicKeyId, privateKey);
-        const socketUrl = 'ws://polaris1.ont.io:20335';
+        const socketUrl = 'ws://dapp1.tesra.me:25771';
         const res = await claim.attest(socketUrl, '500', '20000', adminAddress, adminPrivateKey);
         console.log(res);
 

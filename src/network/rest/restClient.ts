@@ -115,7 +115,7 @@ export default class RestClient {
      * @example
      *
      * ```typescript
-     * import { utils, Transaction } from 'tesra-ts-sdk';
+     * import { utils, Transaction } from 'tesrasdk-ts';
      * const txHash = tx.getHash(); // tx is an instance of Transaction
      * restClient.getRawTransaction(utils.reverseHex(txHash)).then(res => {
      *   const tx = Transaction.deserialize(res.Result)

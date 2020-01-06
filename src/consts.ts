@@ -43,16 +43,15 @@ export const DEFAULT_ALGORITHM = {
 
 export const DEFAULT_SM2_ID = '1234567812345678';
 
-export const TEST_NODE = 'polaris1.ont.io'; // 0.9
-// export const TEST_NODE = '139.219.129.26'; // 0.81
+export const TEST_NODE = 'dapp4.tesra.me'; // 0.9
 // export const TEST_NODE = '192.168.50.74';
 // export const TEST_NODE = '127.0.0.1';
 
-export const MAIN_NODE = 'dappnode1.ont.io';
+export const MAIN_NODE = 'dapp3.tesra.me';
 
-export const HTTP_REST_PORT = '20334';
-export const HTTP_WS_PORT = '20335';
-export const HTTP_JSON_PORT = '20336';
+export const HTTP_REST_PORT = '25770';
+export const HTTP_WS_PORT = '25771';
+export const HTTP_JSON_PORT = '25768';
 
 export const REST_API = {
     getBalance: '/api/v1/balance',

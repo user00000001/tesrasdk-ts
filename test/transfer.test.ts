@@ -32,8 +32,8 @@ import { WebsocketClient } from './../src/network/websocket/websocketClient';
 import { signTransaction, signTx } from './../src/transaction/transactionBuilder';
 
 describe('test transfer asset', () => {
-    const socketClient = new WebsocketClient('ws://polaris1.ont.io:20335');
-    const restClient = new RestClient('http://polaris1.ont.io:20334');
+    const socketClient = new WebsocketClient('ws://dapp1.tesra.me:25771');
+    const restClient = new RestClient('http://dapp1.tesra.me:25770');
     const gasLimit = '20000';
     const gasPrice = '500';
     const adminPrivateKey = new PrivateKey('7c47df9664e7db85c1308c080f398400cb24283f5d922e76b478b5429e821b97');

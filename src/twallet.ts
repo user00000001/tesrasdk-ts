@@ -58,7 +58,7 @@ export class TWallet {
      * @example
      * ```typescript
      *
-     * import { TWallet } from 'tesra-ts-sdk';
+     * import { TWallet } from 'tesrasdk-ts';
      * const twallet = TWallet.create('test');
      * ```
      *
