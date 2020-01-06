@@ -56,8 +56,8 @@ describe('test deploy contract', () => {
     // tslint:disable-next-line:max-line-length
     const attestClaimAvmCode = '58c56b6a00527ac46a51527ac46a00c30548656c6c6f9c6416006a51c300c36a52527ac46a52c3650b006c756661006c756655c56b6a00527ac46a00c3681253797374656d2e52756e74696d652e4c6f6761516c7566';
 
-    // const url = 'http://polaris1.ont.io:20334';
-    const url = 'http://127.0.0.1:20334';
+    // const url = 'http://dapp1.tesra.me:25770';
+    const url = 'http://127.0.0.1:25770';
     const restClient = new RestClient(url);
     test('test deploy with avm code', async () => {
 

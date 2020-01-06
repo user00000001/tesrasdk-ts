@@ -42,7 +42,7 @@ describe('test AbiInfo', () => {
                         operation: 'transferNativeAsset',
                         args: [{
                             name: 'arg0',
-                            value: 'String:ont'
+                            value: 'String:tst'
                         }, {
                             name: 'arg1',
                             value: 'Address:AXK2KtCfcJnSMyRzSwTuwTKgNrtx5aXfFX'
@@ -87,7 +87,7 @@ describe('test AbiInfo', () => {
                         operation: 'transferNativeAsset',
                         args: [{
                             name: 'arg0',
-                            value: 'String:ont'
+                            value: 'String:tst'
                         }, {
                             name: 'arg1',
                             value: 'Address:AXK2KtCfcJnSMyRzSwTuwTKgNrtx5aXfFX'
@@ -150,7 +150,7 @@ describe('test AbiInfo', () => {
     });
 
     test('makeTxFromJSON_transferTSG', async () => {
-        const socketClient = new WebsocketClient('ws://polaris1.ont.io:20335');
+        const socketClient = new WebsocketClient('ws://dapp1.tesra.me:25771');
         const adminPrivateKey = new PrivateKey('7c47df9664e7db85c1308c080f398400cb24283f5d922e76b478b5429e821b97');
         const adminAddress = new Address('AdLUBSSHUuFaak9j169hiamXUmPuCTnaRz');
         // tslint:disable:align
@@ -191,7 +191,7 @@ describe('test AbiInfo', () => {
     });
 
     test('makeTxFromJSON_regTstid', async () => {
-        const socketClient = new WebsocketClient('ws://polaris1.ont.io:20335');
+        const socketClient = new WebsocketClient('ws://dapp1.tesra.me:25771');
         const adminPrivateKey = new PrivateKey('7c47df9664e7db85c1308c080f398400cb24283f5d922e76b478b5429e821b97');
         const adminAddress = new Address('AdLUBSSHUuFaak9j169hiamXUmPuCTnaRz');
         const pk = adminPrivateKey.getPublicKey().key;

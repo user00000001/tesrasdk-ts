@@ -24,8 +24,8 @@ import { now } from '../src/utils';
 import { Account } from './../src/account';
 
 describe('test attest claim', () => {
-    const sockUrl = 'ws://polaris1.ont.io:20335';
-    const restUrl = 'http://polaris1.ont.io:20334';
+    const sockUrl = 'ws://dapp1.tesra.me:25771';
+    const restUrl = 'http://dapp1.tesra.me:25770';
 
     const privateKey = new PrivateKey('7c47df9664e7db85c1308c080f398400cb24283f5d922e76b478b5429e821b95');
     const publicKey = privateKey.getPublicKey();

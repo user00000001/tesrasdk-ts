@@ -25,7 +25,7 @@ import { buildRegisterTstidTx } from '../src/smartcontract/nativevm/tstidContrac
 import { signTransaction } from '../src/transaction/transactionBuilder';
 
 describe('test message', () => {
-    const restUrl = 'http://polaris1.ont.io:20334';
+    const restUrl = 'http://dapp1.tesra.me:25770';
 
     const privateKey = PrivateKey.random();
     const publicKey = privateKey.getPublicKey();

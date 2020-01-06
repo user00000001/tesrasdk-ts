@@ -16,8 +16,8 @@ import { calcUnboundTsg, reverseHex, StringReader } from '../src/utils';
 import { Key } from './../src/crypto/Key';
 
 describe('test governance authorization', () => {
-    const socketClient = new WebsocketClient('ws://139.219.128.220:20335');
-    const nodeUrl = 'http://139.219.128.220:20334';
+    const socketClient = new WebsocketClient('ws://dapp2.tesra.me:25771');
+    const nodeUrl = 'http://dapp2.tesra.me:25770';
     const restClient = new RestClient(nodeUrl);
     const gasPrice = '0';
     const gasLimit = '20000';
@@ -143,7 +143,7 @@ describe('test governance authorization', () => {
 
     test('getAttributes', async () => {
         const pk = '032f6464df7c42b5a80953680165a23cb98453a1fcb5770f233664909847faf36f';
-        const url = 'http://dappnode1.ont.io:20334';
+        const url = 'http://dapp1.tesra.me:25770';
         const res = await getAttributes(pk, url);
         console.log(res);
     }, 10000);
@@ -155,7 +155,7 @@ describe('test governance authorization', () => {
     }, 10000);
 
     test('getPeerPoolMap', async () => {
-        const nodeUrl = 'http://dappnode1.ont.io:20334';
+        const nodeUrl = 'http://dapp1.tesra.me:25770';
         const res = await getPeerPoolMap(nodeUrl);
         const pk = '032f6464df7c42b5a80953680165a23cb98453a1fcb5770f233664909847faf36f';
         console.log(res[pk]);
@@ -166,7 +166,7 @@ describe('test governance authorization', () => {
         const pk = '032f6464df7c42b5a80953680165a23cb98453a1fcb5770f233664909847faf36f';
         // const userAddr = new Address(account4.address);
         const userAddr = new Address('ALaDrS5ZwMKZgTS3a8okgDDz84k3ttfP4x');
-        const nodeUrl = 'http://dappnode1.ont.io:20334';
+        const nodeUrl = 'http://dapp1.tesra.me:25770';
         const res = await getAuthorizeInfo(pk, userAddr, nodeUrl);
         console.log(res);
     }, 10000);
@@ -189,7 +189,7 @@ describe('test governance authorization', () => {
 
     test('getTotalStake', async () => {
         const addr = new Address('AKuiqSoKR2UVRPCBofsrmudF1CdZw4Y8mm');
-        const nodeUrl = 'http://dappnode1.ont.io:20334';
+        const nodeUrl = 'http://dapp1.tesra.me:25770';
         const ts = await getTotalStake(addr, nodeUrl);
         console.log(ts);
     });
@@ -211,7 +211,7 @@ describe('test governance authorization', () => {
     });
 
     test('getConfiguration', async () => {
-        const url = 'http://dappnode1.ont.io:20334';
+        const url = 'http://dapp1.tesra.me:25770';
         const config = await getConfiguration(url);
         console.log(config);
     });

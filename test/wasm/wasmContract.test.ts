@@ -43,7 +43,7 @@ describe('test deploy contract', () => {
         // tslint:disable:no-console
         console.log('contract address: ' + contract.serialize());
         console.log('codeHash: ' + codeHash);
-        const rest = new RestClient('http://13.57.184.209:20334');
+        const rest = new RestClient('http://dapp2.tesra.me:25770');
         const result = await restClient.getContractJson('d26bd5624d5fd809fdccd865cffaac766c61b6a0');
         console.log(result);
         expect(result.Result).toBeTruthy();
@@ -144,7 +144,7 @@ describe('test deploy contract', () => {
             '500', '20000', account.address);
         console.log(tx.payload.serialize());
         signTransaction(tx, privateKey);
-        const wsClient = new WebsocketClient('ws://13.57.184.209:20335');
+        const wsClient = new WebsocketClient('ws://dapp2.tesra.me:25771');
         const result = await wsClient.sendRawTransaction(tx.serialize(), true);
         console.log(result);
         console.log(hexstr2str(result.Result.Result));
@@ -162,7 +162,7 @@ describe('test deploy contract', () => {
             '500', '300000', account.address);
         console.log(tx.payload.serialize());
         signTransaction(tx, privateKey);
-        const wsClient = new WebsocketClient('ws://13.57.184.209:20335');
+        const wsClient = new WebsocketClient('ws://dapp2.tesra.me:25771');
         const result = await wsClient.sendRawTransaction(tx.serialize(), false);
         console.log(JSON.stringify(result));
         if (result.Result && result.Result.Result) {
@@ -171,7 +171,7 @@ describe('test deploy contract', () => {
         expect(result.Error).toEqual(0);
     }, 10000);
     test('smartCodeEvent', async () => {
-        const rest = new RestClient('http://13.57.184.209:20334');
+        const rest = new RestClient('http://dapp2.tesra.me:25770');
         const res = await rest.getSmartCodeEvent('377617131b99c4472e174e53b939234df278a23e705cfafacce5702dcd0f2c4e');
         console.log(JSON.stringify(res));
         expect(res.Result).toBeTruthy();

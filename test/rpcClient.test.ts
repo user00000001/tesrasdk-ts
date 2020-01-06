@@ -10,7 +10,7 @@ import { addSign } from './../src/transaction/transactionBuilder';
 
 // tslint:disable:no-console
 describe('test rpc client', () => {
-    const rpcClient = new RpcClient('http://139.219.128.220:20336');
+    const rpcClient = new RpcClient('http://dapp1.tesra.me:25768');
 
     const codeHash = '36bb5c053b6b839c8f6b923fe852f91239b9fccc';
 

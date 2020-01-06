@@ -1,7 +1,7 @@
 import { Signature } from '../src/crypto';
 import { Address } from '../src/crypto/address';
 import { deserializeTransferTx,
-    makeTransferTx, makeWithdrawTsgTx } from '../src/smartcontract/nativevm/ontAssetTxBuilder';
+    makeTransferTx, makeWithdrawTsgTx } from '../src/smartcontract/nativevm/tstAssetTxBuilder';
 import opcode from '../src/transaction/opcode';
 import { addSign, signTransaction } from '../src/transaction/transactionBuilder';
 import { num2hexstring, str2hexstr, StringReader } from '../src/utils';

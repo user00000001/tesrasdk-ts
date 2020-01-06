@@ -41,9 +41,9 @@ describe('test oep4', () => {
     const gasPrice = '500';
     const gasLimit = '200000';
     // const url = TEST_TST_URL.REST_URL;
-    const url = 'http://polaris2.ont.io:';
-    const restClient = new RestClient(url + '20334');
-    const socketClient = new WebsocketClient(url + '20335');
+    const url = 'http://dapp1.tesra.me:';
+    const restClient = new RestClient(url + '25770');
+    const socketClient = new WebsocketClient(url + '25771');
 
     test('init', async () => {
         const tx = oep4.init(gasPrice, gasLimit, address1);

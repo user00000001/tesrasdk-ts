@@ -253,7 +253,7 @@ The parameters are as below:
 **payer** payer
 
 ````
-const url = 'http://polaris1.ont.io:20335';
+const url = 'http://dapp1.tesra.me:25771';
 const gasPrice = '500';
 const gasLimit = '20000';
 const payer = new Address('AMLn5W7rz1sYd1hGpuQUfsnmUuUco22pM8');
@@ -278,7 +278,7 @@ The parameters are as below:
 **payer** payer
 
 ````
-const url = 'http://polaris1.ont.io:20335';
+const url = 'http://dapp1.tesra.me:25771';
 const gasPrice = '500';
 const gasLimit = '20000';
 const payer = new Address('AMLn5W7rz1sYd1hGpuQUfsnmUuUco22pM8');
@@ -301,7 +301,7 @@ The parameters are as below:
 **url** Restful endpoint of Tersa node.
 
 ````
-const url = 'http://polaris1.ont.io:20335';
+const url = 'http://dapp1.tesra.me:25771';
 const result = await claim.getStatus(url);
 
 ````

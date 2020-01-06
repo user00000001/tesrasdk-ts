@@ -216,7 +216,7 @@ claim.content = {
 **payer** 交易gas的payer
 
 ````
-const url = 'http://polaris1.ont.io:20335';
+const url = 'http://dapp1.tesra.me:25771';
 const gasPrice = '500';
 const gasLimit = '20000';
 const payer = new Address('AMLn5W7rz1sYd1hGpuQUfsnmUuUco22pM8');
@@ -239,7 +239,7 @@ const result = await claim.attest(url, gasPrice, gasLimit, payer, privateKey);
 **payer** 交易gas的payer
 
 ````
-const url = 'http://polaris1.ont.io:20335';
+const url = 'http://dapp1.tesra.me:25771';
 const gasPrice = '500';
 const gasLimit = '20000';
 const payer = new Address('AMLn5W7rz1sYd1hGpuQUfsnmUuUco22pM8');
@@ -260,7 +260,7 @@ Alice向公司B求职时，提供了复旦大学授予的数字毕业证书，�
 **url** 节点的Restful接口url
 
 ````
-const url = 'http://polaris1.ont.io:20335';
+const url = 'http://dapp1.tesra.me:25771';
 const result = await claim.getStatus(url);
 
 ````
