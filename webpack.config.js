@@ -32,8 +32,9 @@ module.exports = [
     output: {
       path: path.resolve(__dirname, 'lib'),
       filename: 'browser.js',
+      // libraryTarget: 'umd',
       libraryTarget: 'var',
-      library: 'Tst' // This is the var name in browser
+      library: 'tst' // This is the var name in browser
     },
     node: {
       fs: 'empty',
@@ -45,6 +46,7 @@ module.exports = [
     output: {
       path: path.resolve(__dirname, 'lib'),
       filename: 'index.js',
+      // libraryTarget: 'umd',
       libraryTarget: 'commonjs2',
     },
     externals: [nodeExternals()]

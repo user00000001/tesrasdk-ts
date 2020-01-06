@@ -62,9 +62,10 @@
   dependencies:
     "@types/base-x" "*"
 
-"@types/crypto-js@^3.1.38":
-  version "3.1.42"
-  resolved "https://registry.yarnpkg.com/@types/crypto-js/-/crypto-js-3.1.42.tgz#00f6b6a037693c2dc5e8dcf303e7e682751bb282"
+"@types/crypto-js@^3.1.43":
+  version "3.1.43"
+  resolved "https://registry.npm.taobao.org/@types/crypto-js/download/@types/crypto-js-3.1.43.tgz#b859347d6289ba13e347c335a4c9efa63337a748"
+  integrity sha1-uFk0fWKJuhPjR8M1pMnvpjM3p0g=
 
 "@types/ecurve@^1.0.0":
   version "1.0.0"
