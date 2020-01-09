@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2019-2020 The TersaSupernet Authors
+* Copyright (C) 2019-2020 The TesraSupernet Authors
 * This file is part of The TesraSupernet library.
 *
 * The TesraSupernet is free software: you can redistribute it and/or modify
@@ -97,7 +97,7 @@ export class Claim extends Message {
      *   VALID_CLAIM       : 'VALID_CLAIM'
      * };
      *
-     * @param url Restful endpoint of Tersa node
+     * @param url Restful endpoint of Tesra node
      * @param checkAttest Should be the attest tested
      */
     async verify(url: string, checkAttest = true): Promise<boolean> {
@@ -129,7 +129,7 @@ export class Claim extends Message {
     /**
      * Attests the claim onto blockchain.
      *
-     * @param url Websocket endpoint of Tersa node
+     * @param url Websocket endpoint of Tesra node
      * @param privateKey Private key to sign the transaction
      * @param gasPrice gasPrice
      * @param gasLimit gasLimit
@@ -161,7 +161,7 @@ export class Claim extends Message {
      * @param gas the cost of the transactoin
      * @param payer the payer of the cost
      * @param privateKey Private key to sign the transaction
-     * @param url Websocket endpoint of Tersa node
+     * @param url Websocket endpoint of Tesra node
      * @param gasPrice gasPrice
      * @param gasLimit gasLimit
      * @param payer payer
@@ -186,7 +186,7 @@ export class Claim extends Message {
     /**
      * Gets status of the claim attest.
      *
-     * @param url Restful endpoint of Tersa node
+     * @param url Restful endpoint of Tesra node
      */
     async getStatus(url: string): Promise<boolean> {
         const attesterId = this.metadata.issuer;
@@ -261,7 +261,7 @@ export class Claim extends Message {
 
 /**
  * Helper class for deserializing GetStatus response.
- * fixme: Tersa node changed the response
+ * fixme: Tesra node changed the response
  */
 export class GetStatusResponse {
     static deserialize(r: any): GetStatusResponse {

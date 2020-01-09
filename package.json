@@ -1,7 +1,7 @@
 {
     "name": "tesrasdk-ts",
     "version": "0.0.1",
-    "description": "Comprehensive TypeScript library for the Tersa blockchain.",
+    "description": "Comprehensive TypeScript library for the Tesra blockchain.",
     "main": "./lib/index.js",
     "types": "./lib/types/index.d.ts",
     "scripts": {

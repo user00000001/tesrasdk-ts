@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2020 The TersaSupernet Authors
+ * Copyright (C) 2019-2020 The TesraSupernet Authors
  * This file is part of The TesraSupernet library.
  *
  * The TesraSupernet is free software: you can redistribute it and/or modify
@@ -155,7 +155,7 @@ export abstract class Message {
      *
      * If the algorithm is not specified, then default algorithm for Private key type is used.
      *
-     * @param url Restful endpoint of Tersa node
+     * @param url Restful endpoint of Tesra node
      * @param publicKeyId The ID of a signature public key
      * @param privateKey Private key to sign the request with
      * @param algorithm Signature algorithm used
@@ -179,7 +179,7 @@ export abstract class Message {
     /**
      * Verifies the signature and check ownership of specified TST ID through smart contract call.
      *
-     * @param url Restful endpoint of Tersa node
+     * @param url Restful endpoint of Tesra node
      * @returns Boolean if the ownership is confirmed
      */
     async verify(url: string): Promise<boolean> {
@@ -329,7 +329,7 @@ export abstract class Message {
  * Gets the public key associated with TST ID from blockchain.
  *
  * @param publicKeyId The ID of a signature public key
- * @param url Restful endpoint of Tersa node
+ * @param url Restful endpoint of Tesra node
  */
 export async function retrievePublicKey(publicKeyId: string, url: string): Promise<PublicKey> {
     const tstId = extractTstId(publicKeyId);
@@ -358,7 +358,7 @@ export async function retrievePublicKey(publicKeyId: string, url: string): Promi
  * Gets the state of public key associated with TST ID from blockchain.
  *
  * @param publicKeyId The ID of a signature public key
- * @param url Restful endpoint of Tersa node
+ * @param url Restful endpoint of Tesra node
  */
 export async function retrievePublicKeyState(publicKeyId: string, url: string): Promise<PublicKeyStatus> {
     const tstId = extractTstId(publicKeyId);

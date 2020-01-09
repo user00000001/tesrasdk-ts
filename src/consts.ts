@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2020 The TersaSupernet Authors
+ * Copyright (C) 2019-2020 The TesraSupernet Authors
  * This file is part of The TesraSupernet library.
  *
  * The TesraSupernet is free software: you can redistribute it and/or modify
@@ -92,7 +92,7 @@ export const TOKEN_TYPE = {
 
 export const DEFAULT_GAS_LIMIT = 30000;
 
-export const NATIVE_INVOKE_NAME = 'Tersa.Native.Invoke';
+export const NATIVE_INVOKE_NAME = 'Tesra.Native.Invoke';
 
 export const TX_MAX_SIG_SIZE = 16;
 
