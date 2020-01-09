@@ -1,6 +1,6 @@
 [English](../en/README.md) | 中文
 
-<h1 align="center">Tersa TypeScript SDK 开发者手册</h1>
+<h1 align="center">Tesra TypeScript SDK 开发者手册</h1>
 <h4 align="center">Version V1.0.18 </h4>
 
 ## 总体介绍

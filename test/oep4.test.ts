@@ -8,7 +8,7 @@ import { Oep4State, Oep4TxBuilder } from './../src/smartcontract/neovm/oep4TxBui
 import { addSign, signTransaction } from './../src/transaction/transactionBuilder';
 import { hexstr2str, reverseHex } from './../src/utils';
 /*
- * Copyright (C) 2019-2020 The TersaSupernet Authors
+ * Copyright (C) 2019-2020 The TesraSupernet Authors
  * This file is part of The TesraSupernet library.
  *
  * The TesraSupernet is free software: you can redistribute it and/or modify

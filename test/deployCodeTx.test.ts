@@ -1,6 +1,6 @@
 import { VmType } from './../src/transaction/payload/deployCode';
 /*
- * Copyright (C) 2019-2020 The TersaSupernet Authors
+ * Copyright (C) 2019-2020 The TesraSupernet Authors
  * This file is part of The TesraSupernet library.
  *
  * The TesraSupernet is free software: you can redistribute it and/or modify

@@ -1,5 +1,5 @@
 
-<h1 align="center">Tersa TypeScript SDK </h1>
+<h1 align="center">Tesra TypeScript SDK </h1>
 <h4 align="center">Version V1.1.0 </h4>
 
 - [Overview](#overview)
@@ -19,7 +19,7 @@
 
 ## Overview
 
-This is the official Tersa TypeScript SDK - a comprehensive library for developing with the [Tersa blockchain](https://www.tesra.me) in both TypeScript and JavaScript. It currently supports management of twallets, digital identities and digital assets - as well as the deployment and invocation of smart contracts.
+This is the official Tesra TypeScript SDK - a comprehensive library for developing with the [Tesra blockchain](https://www.tesra.me) in both TypeScript and JavaScript. It currently supports management of twallets, digital identities and digital assets - as well as the deployment and invocation of smart contracts.
 
 ## Getting Started
 
@@ -130,8 +130,8 @@ var twallet = Tst.TWallet.create('test');
 
 Contributors are welcome to the `tesrasdk-ts`. Before beginning, please take a look at our [contributing guidelines](CONTRIBUTING.md). You can open an issue by [clicking here](https://github.com/TesraSupernet/tesrasdk-ts/issues/new).
 
-If you have any issues getting setup, open an issue or reach out in the [Tersa Discord](https://discordapp.com/invite/4TQujHj).
+If you have any issues getting setup, open an issue or reach out in the [Tesra Discord](https://discordapp.com/invite/4TQujHj).
 
 ## License
 
-The Tersa TypeScript SDK is availabl under the [LGPL-3.0 License](LICENSE).
+The Tesra TypeScript SDK is availabl under the [LGPL-3.0 License](LICENSE).

@@ -5,7 +5,7 @@
 
 ## 钱包 TWallet
 
-钱包TWallet是一个Json格式的数据存储文件。在超算网络Tersa中， TWallet既可存储数字身份，也可以存储数字资产。
+钱包TWallet是一个Json格式的数据存储文件。在超算网络Tesra中， TWallet既可存储数字身份，也可以存储数字资产。
 
 ### TWallet 数据规范
 
@@ -239,8 +239,8 @@ privateKey: 转账者公钥对应的私钥
 ####Token类型
 ````
 TOKEN_TYPE = {
-  TST : 'TST',  //Tersa Token
-  TSG : 'TSG'   //Tersa Gas
+  TST : 'TST',  //Tesra Token
+  TSG : 'TSG'   //Tesra Gas
 }
 ````
 

@@ -7,7 +7,7 @@
 
 # TWallet
 
-TWallet is a data storing file in JSON format. In Tersa, TWallet can store not only the digital identity but also digital assets.
+TWallet is a data storing file in JSON format. In Tesra, TWallet can store not only the digital identity but also digital assets.
 
 
 
@@ -217,15 +217,15 @@ try {
 # Digital Asset Transfer
 
 ##  Transfer native asset
-There are two kinds of native asset in Tersa: TST and TSG.
+There are two kinds of native asset in Tesra: TST and TSG.
 
 In order to transfer native asset, we can create the specific transaction and send it to the blockchain. After the transaction has been packaged in the block, the transaction will succeed.
 
 ### Type of native asset
 ````
 TOKEN_TYPE = {
-  TST : 'TST',  //Tersa Token
-  TSG : 'TSG'   //Tersa Gas
+  TST : 'TST',  //Tesra Token
+  TSG : 'TSG'   //Tesra Gas
 }
 ````
 

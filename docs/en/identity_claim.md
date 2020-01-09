@@ -184,7 +184,7 @@ For example, a student who graduates from a university wants to obtain the statu
 
 Owner of an TST ID can issue a verifiable claim to himself or others.
 
-Government agencies, universities, banks, third-party authentication service agencies (such as CA), biometrics technology companies and etc., can serve as trusted institutions and join the Tersa ecosystem as partners. If you think you could be a certification service partner, please visit [Certification Service Partner Assessment Standard](./verification_provider_specification.md).
+Government agencies, universities, banks, third-party authentication service agencies (such as CA), biometrics technology companies and etc., can serve as trusted institutions and join the Tesra ecosystem as partners. If you think you could be a certification service partner, please visit [Certification Service Partner Assessment Standard](./verification_provider_specification.md).
 
 We use a digital diploma issued by China's Fudan University as an example to illustrate how users can obtain a third-party claim.
 
@@ -242,7 +242,7 @@ The issuer should attest the claim the the blockchain.
 
 The parameters are as below:
 
-**url** Websocket endpoint of Tersa node
+**url** Websocket endpoint of Tesra node
 
 **privateKey** Private key to sign the transaction
 
@@ -267,7 +267,7 @@ The issuer can also issuer the claim.
 
 The parameters are as below:
 
-**url** Websocket endpoint of Tersa node
+**url** Websocket endpoint of Tesra node
 
 **privateKey** Private key to sign the transaction
 
@@ -298,7 +298,7 @@ When Alice applies for company B she provides a digital diploma certificate issu
 
 The parameters are as below:
 
-**url** Restful endpoint of Tersa node.
+**url** Restful endpoint of Tesra node.
 
 ````
 const url = 'http://dapp1.tesra.me:25771';
