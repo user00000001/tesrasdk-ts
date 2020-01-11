@@ -5,6 +5,7 @@ node_modules
 
 /docs/_build/
 lib/
+!/lib
 
 # Logs
 *.log
