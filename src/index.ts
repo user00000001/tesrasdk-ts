@@ -16,11 +16,11 @@
  * along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import * as Html5Websocket from 'html5-websocket';
 import { Account } from './account';
 import { Claim } from './claim';
 import * as CONST from './consts';
 import * as Crypto from './crypto';
-import * as Html5Websocket from './html5-websocket';
 import { Identity } from './identity';
 import * as NeoCore from './neocore';
 import RestClient from './network/rest/restClient';

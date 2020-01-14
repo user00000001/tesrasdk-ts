@@ -15,9 +15,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with The TesraSupernet.  If not, see <http://www.gnu.org/licenses/>.
  */
+import * as Html5WebSocket from 'html5-websocket';
 import * as WebSocketAsPromised from 'websocket-as-promised';
 import { TEST_TST_URL } from '../../consts';
-import * as Html5WebSocket from '../../html5-websocket';
 
 /**
  * We can import html5-websocket directly, because webpack will use html5-websocket/browser.js

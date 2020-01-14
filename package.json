@@ -81,6 +81,8 @@
         "ecdsa": "^0.7.0",
         "ecurve": "^1.0.6",
         "elliptic": "^6.4.0",
+        "hdkey-secp256r1": "git+http://113.204.194.92:9000/independent/hdkey-secp256r1.git",
+        "html5-websocket": "git+http://113.204.194.92:9000/independent/html5-websocket.git",
         "js-sha3": "^0.7.0",
         "long": "^4.0.0",
         "milagro-crypto-js": "^3.3.0",

@@ -26,7 +26,7 @@ import { signTransaction } from './transaction/transactionBuilder';
 import { ab2hexstring, generateRandomArray, randomBytes } from './utils';
 
 // tslint:disable-next-line:no-var-requires
-const HDKey = require('./hdkey-secp256r1/hdkey.js');
+const HDKey = require('hdkey-secp256r1');
 
 export class Account {
     /**
