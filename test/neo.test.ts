@@ -18,8 +18,8 @@ describe('test neo tx', () => {
     const contractHash = '5bb169f915c916a5e30a3c13a5e0cd228ea26826';
     // const contractHash = 'ceab719b8baa2310f232ee0d277c061704541cfb';
     const contractAddr = new Address(reverseHex(contractHash));
-    const node = 'http://121.41.17.61:3000';
-    // const node = 'http://121.41.17.61:3000';
+    const node = 'http://dapp1.tesra.me:3000';
+    // const node = 'http://dapp2.tesra.me:3000';
     const account1 = Account.create(private1, '123456');
     console.log(account1.toJsonObj());
     const account2 = Account.create(private2, '123456');
